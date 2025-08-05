@@ -1,0 +1,10 @@
+package com.enosi.docktailor.docktailor.fxdock;
+
+/**
+ * Simple implementation of abstract class FxDockPane.
+ */
+public class FxSimpleDockPane extends FxDockPane{
+    public FxSimpleDockPane(String type) {
+        super(type);
+    }
+}

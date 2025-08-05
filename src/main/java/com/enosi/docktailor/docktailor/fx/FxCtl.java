@@ -1,0 +1,16 @@
+package com.enosi.docktailor.docktailor.fx;
+
+/**
+ * Simple tags to simplify creation of nodes, labels, and text controls.
+ */
+public enum FxCtl {
+	BOLD,
+	EDITABLE,
+	FOCUSABLE,
+	FORCE_MAX_WIDTH,
+	FORCE_MIN_HEIGHT,
+	FORCE_MIN_WIDTH,
+	NON_EDITABLE,
+	NON_FOCUSABLE,
+	WRAP_TEXT
+}

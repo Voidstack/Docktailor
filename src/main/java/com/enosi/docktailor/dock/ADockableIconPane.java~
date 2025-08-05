@@ -1,0 +1,61 @@
+package com.enosi.docktailor.dock;
+
+import com.enosi.docktailor.docktailor.fxdock.FxDockPane;
+import com.enosi.docktailor.docktailor.fxdock.FxDockStyles;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.HBox;
+
+public abstract class ADockableIconPane extends ADockablePane{
+    @Override
+    public FxDockPane createDockPane() {
+        /* Custom Toolbar */
+        FxDockPane fxDockPane = new FxDockPane(viewTuple.getCodeBehind().getTabName()){
+            @Override
+            public HBox getCustomTab() {
+                HBox hBox = super.getCustomTab();
+                hBox.getChildren().add(0, new Label("GRAPHIC"));
+                return hBox;
+            }
+
+            @Override
+            protected Node createToolBar(boolean tabMode) {
+                if(tabMode)
+                {
+                    return null;
+                }
+                else
+                {
+                    Button b = new Button("✕");
+                    b.prefHeightProperty().bind(b.widthProperty());
+                    b.minHeightProperty().bind(b.widthProperty());
+                    b.maxHeightProperty().bind(b.widthProperty());
+                    b.setStyle("-fx-background-color: -fx-background !important; -fx-padding : 0px 3px");
+                    FxDockStyles.TOOLBAR_CLOSE_BUTTON.set(b);
+                    closeAction.attach(b);
+                    
+                    ToolBar t = new ToolBar();
+                    t.setOnMouseClicked(event -> {
+                        if(event.getButton() == MouseButton.SECONDARY){
+                            ContextMenu contextMenu = new ContextMenu();
+                            contextMenu.getItems().add(new CustomMenuItem(new Label(getInformation())));
+                            contextMenu.getItems().add(new SeparatorMenuItem());
+                            contextMenu.getItems().add(new MenuItem("TODO : MenuItem dock"));
+                            t.setContextMenu(contextMenu);
+                        }
+                    });
+                 //   t.setTooltip(new CustomTooltip(getInformation()));
+                    FxDockStyles.TOOLBAR.set(t);
+                    t.getItems().addAll(svgPath, titleField, b);
+                    return t;
+                }
+            }
+        };
+
+        fxDockPane.setTitle(viewTuple.getCodeBehind().getTabName());
+        fxDockPane.setContent(viewTuple.getView());
+
+        return fxDockPane;
+    }
+}

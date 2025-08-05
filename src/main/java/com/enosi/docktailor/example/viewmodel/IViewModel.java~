@@ -1,0 +1,5 @@
+package com.enosi.docktailor.example.viewmodel;
+
+public interface IViewModel {
+    
+}

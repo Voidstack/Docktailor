@@ -1,0 +1,12 @@
+package com.enosi.docktailor.dock;
+
+import com.enosi.docktailor.docktailor.fxdock.FxDockPane;
+import javafx.geometry.Side;
+
+public interface IDockablePane {
+    Side getDefaultSide();
+    String getTabName();
+    String getTabIcon();
+    String getInformation();
+    FxDockPane createDockPane();
+}

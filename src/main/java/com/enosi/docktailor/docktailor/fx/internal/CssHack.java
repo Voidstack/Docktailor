@@ -1,0 +1,71 @@
+// Copyright © 2021-2025 Andy Goryachev <andy@goryachev.com>
+package org.esioc.docktailor.fx.internal;
+
+import javafx.scene.Node;
+import lombok.Getter;
+import org.esioc.docktailor.common.util.SB;
+
+
+/**
+ * FX has rather poor support for programmating setting of certain properties, such as TableView row height.  This class
+ * plugs into CssLoader and its global styles to provide an easy way to set these properies. This hack requires
+ * CssLoader to be initialized.
+ */
+public class CssHack<T> {
+    @Getter
+    private final String name;
+    private final String css;
+    @Getter
+    private final T value;
+    private final double doubleValue;
+
+    public CssHack(String name, String css, T value, double doubleValue) {
+        this.name = name;
+        this.css = css;
+        this.value = value;
+        this.doubleValue = doubleValue;
+    }
+
+    public String getCSS() {
+        return css;
+    }
+
+    public double doubleValue() {
+        return doubleValue;
+    }
+
+    public static String generateName(String prefix, String suffix) {
+        SB sb = new SB();
+        sb.a(prefix);
+        sb.a(suffix);
+
+        sb.replace(' ', '∘');
+        sb.replace('-', '−');
+        sb.replace('.', '·');
+
+        return sb.toString();
+    }
+
+    public static <X> CssHack<X> get(Node owner, Object key) {
+        Object x = owner.getProperties().get(key);
+        if (x instanceof CssHack) {
+            return (CssHack) x;
+        }
+        return null;
+    }
+
+    public static void remove(Node owner, Object key) {
+        CssHack<Object> h = get(owner, key);
+        if (h != null) {
+            String name = h.getName();
+            owner.getStyleClass().remove(name);
+        }
+    }
+
+    public void attachTo(Node owner, Object key) {
+        owner.getStyleClass().add(name);
+        owner.getProperties().put(key, this);
+
+        CssLoader.addGlobalStyle(css);
+    }
+}

@@ -1,0 +1,13 @@
+
+package com.enosi.docktailor.docktailor.fx;
+
+/**
+ * String Stream Converter.
+ */
+public interface SSConverter<T>
+{
+    public abstract SStream toStream(T object);
+
+
+    public abstract T fromStream(SStream s);
+}
