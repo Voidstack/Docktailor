@@ -1,7 +1,7 @@
 // Copyright © 2018-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util;
 
-import com.enosi.docktailor.common.log.Log;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Java Version.
@@ -15,9 +15,8 @@ import com.enosi.docktailor.common.log.Log;
  * details such as build version.  In the cases where these details are still needed, the raw system property should be
  * used, or, starting with Java 9, a Runtime.Version class.
  */
-public class JavaVersion
-        implements Comparable<JavaVersion> {
-    protected static final Log log = Log.get("JavaVersion");
+@Slf4j(topic = "JavaVersion")
+public class JavaVersion implements Comparable<JavaVersion> {
     private final String version;
     private final int[] ver;
 
@@ -73,7 +72,7 @@ public class JavaVersion
                 ver[i] = parseNumber(ss[i]);
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error("", e);
             ver = new int[0];
         }
 
@@ -84,8 +83,7 @@ public class JavaVersion
     public boolean equals(Object x) {
         if (x == this) {
             return true;
-        } else if (x instanceof JavaVersion) {
-            JavaVersion v = (JavaVersion) x;
+        } else if (x instanceof JavaVersion v) {
             return version.equals(v.version);
         } else {
             return false;

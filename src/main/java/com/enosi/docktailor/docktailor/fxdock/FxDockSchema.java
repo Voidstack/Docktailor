@@ -1,6 +1,5 @@
 package com.enosi.docktailor.docktailor.fxdock;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.ASettingsStore;
 import com.enosi.docktailor.common.util.SB;
 import com.enosi.docktailor.common.util.SStream;
@@ -12,11 +11,12 @@ import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * FxDock framework schema for the layout storage.
  */
+@Slf4j(topic = "FxDockSchema")
 public abstract class FxDockSchema
         extends FxSettingsSchema {
     private static final String NAME_PANE = ".P";
@@ -32,7 +32,6 @@ public abstract class FxDockSchema
     private static final String TYPE_HSPLIT = "H";
     private static final String TYPE_VSPLIT = "V";
     private static final String TYPE_TAB = "T";
-    private static final Log log = Log.get("FxDockSchema");
     public FxDockSchema(ASettingsStore s) {
         super(s);
     }

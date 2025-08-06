@@ -1,24 +1,25 @@
 // Copyright © 2012-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.platform.ApplicationSupport;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
-
-public abstract class CJob
-        implements Runnable {
-    protected static final Log log = Log.get("CJob");
+@Slf4j(topic = "CJob")
+public abstract class CJob implements Runnable {
     private static final Object NULL = new Object();
     private static final ParallelExecutor exec = createExecutor();
 
     //
     private static final ThreadLocal<CJob> currentJob = new ThreadLocal<>();
+    @Getter
     private String name;
     private volatile Object result;
     private CList<CJob> children;
+    @Getter
     private volatile boolean cancelled;
     public CJob(String name) {
         this.name = name;
@@ -68,7 +69,7 @@ public abstract class CJob
         try {
             j.waitForCompletion();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
     }
 
@@ -108,11 +109,7 @@ public abstract class CJob
     }
 
     protected void handleJobError(Throwable e) {
-        log.error(e);
-    }
-
-    public String getName() {
-        return name;
+        log.error(e.getMessage());
     }
 
     @Override
@@ -151,7 +148,7 @@ public abstract class CJob
         try {
             onThisJobCompleted();
         } catch (Throwable e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
 
         currentJob.set(null);
@@ -193,7 +190,7 @@ public abstract class CJob
                     // FIX something is wrong here, should not need the timeout parameter
                     wait(100);
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getMessage());
                 }
             }
         }
@@ -238,7 +235,4 @@ public abstract class CJob
     }
 
 
-    public boolean isCancelled() {
-        return cancelled;
-    }
 }

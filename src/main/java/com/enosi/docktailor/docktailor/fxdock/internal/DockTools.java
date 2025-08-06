@@ -1,6 +1,5 @@
 package com.enosi.docktailor.docktailor.fxdock.internal;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.CList;
 import com.enosi.docktailor.docktailor.fx.FX;
 import com.enosi.docktailor.docktailor.fx.FxFramework;
@@ -16,16 +15,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Window;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Objects;
 
 
 /**
  * Docking Framework Tools.
  */
+@Slf4j(topic = "DockTools")
 public class DockTools {
-    private static final Log log = Log.get("DockTools");
-
 
     private static boolean isEmpty(Node n) {
         if (n == null) {
@@ -51,7 +51,7 @@ public class DockTools {
             Node oldp = prop.get();
             if (oldp != null) {
                 if (oldp == p) {
-                    log.warn("same parent: %s", p); // FIX ???
+                    log.warn(String.format("same parent: %s", p)); // FIX ???
                 } else {
                     int ix = indexInParent(child);
                     if (ix >= 0) {
@@ -120,7 +120,6 @@ public class DockTools {
         for (Window w : Window.getWindows()) {
             if (w instanceof FxDockWindow dw) {
                 if (dw.isIconified()) {
-                    continue;
                 } else if (contains(dw, screenx, screeny)) {
                     if (list == null) {
                         list = new CList<>();
@@ -172,7 +171,7 @@ public class DockTools {
 
     // returns true if the window has been closed
     public static boolean closeWindowUnlessLast(Node n) {
-        log.debug(n);
+        log.debug(n.toString());
         FxDockWindow w = getWindow(n);
         if (w != null) {
             if (getWindows().size() > 1) {
@@ -203,19 +202,14 @@ public class DockTools {
         double y = w.getY();
         if (screeny < y) {
             return false;
-        } else if (screeny > (y + w.getHeight())) {
-            return false;
-        }
-
-        return true;
+        } else return !(screeny > (y + w.getHeight()));
     }
 
 
     public static List<Pane> collectDividers(FxDockSplitPane sp) {
         CList<Pane> rv = new CList<>();
         for (Node n : sp.lookupAll(".split-pane-divider")) {
-            if (n instanceof Pane) {
-                Pane p = (Pane) n;
+            if (n instanceof Pane p) {
                 if (p.getParent() == sp) {
                     rv.add(p);
                 }
@@ -235,14 +229,9 @@ public class DockTools {
                     return n;
                 } else if (n instanceof FxDockSplitPane p) {
                     Node ch = findDockElement(p.getPanes(), screenx, screeny);
-                    if (ch == null) {
-                        return n;
-                    } else {
-                        // on a divider
-                        return ch;
-                    }
-                } else if (n instanceof FxDockTabPane) {
-                    FxDockTabPane t = (FxDockTabPane) n;
+                    // on a divider
+                    return Objects.requireNonNullElse(ch, n);
+                } else if (n instanceof FxDockTabPane t) {
                     return t.getSelectedTab();
                 }
 
@@ -309,8 +298,7 @@ public class DockTools {
 
         // check if nested splits are not needed
         Node p = getParent(old);
-        if (p instanceof FxDockSplitPane) {
-            FxDockSplitPane sp = (FxDockSplitPane) p;
+        if (p instanceof FxDockSplitPane sp) {
             if (sp.getOrientation() == Orientation.HORIZONTAL) {
                 switch (where) {
                     case LEFT:
@@ -385,9 +373,7 @@ public class DockTools {
 
 
     public static void collapseEmptySpace(Node parent) {
-        if (parent instanceof FxDockSplitPane) {
-            FxDockSplitPane p = (FxDockSplitPane) parent;
-
+        if (parent instanceof FxDockSplitPane p) {
             // remove deleted panes
             for (int i = p.getPaneCount() - 1; i >= 0; --i) {
                 Node n = p.getPane(i);

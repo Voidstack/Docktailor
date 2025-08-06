@@ -1,6 +1,5 @@
 package com.enosi.docktailor.dock;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.CKit;
 import com.enosi.docktailor.common.util.CSystem;
 import com.enosi.docktailor.docktailor.fx.*;
@@ -19,13 +18,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.web.WebErrorEvent;
 import javafx.scene.web.WebEvent;
 import javafx.scene.web.WebView;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Demo Browser.
  */
-public class DemoBrowser
-        extends FxDockPane {
-    protected static final Log log = Log.get("DemoBrowser");
+@Slf4j(topic = "DemoBrowser")
+public class DemoBrowser extends FxDockPane {
     public final TextField addressField;
     public final WebView view;
     public final FxAction reloadAction = new FxAction(this::reload);
@@ -51,10 +50,10 @@ public class DemoBrowser
         w.stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
             public void changed(ObservableValue v, Worker.State old, Worker.State cur) {
-                log.debug(cur);
+                log.debug(cur.toString());
 
                 if (w.getException() != null && cur == State.FAILED) {
-                    log.error(w.getException());
+                    log.error("", w.getException());
                 }
             }
         });
@@ -105,7 +104,7 @@ public class DemoBrowser
 
 
     protected void handleError(WebErrorEvent ev) {
-        log.error(ev);
+        log.error(ev.getMessage());
     }
 
     public String getUrl() {

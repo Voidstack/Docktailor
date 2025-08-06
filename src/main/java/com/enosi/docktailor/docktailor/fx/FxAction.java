@@ -1,12 +1,12 @@
 package com.enosi.docktailor.docktailor.fx;
 
-import com.enosi.docktailor.common.log.Log;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.function.Consumer;
 
@@ -14,10 +14,10 @@ import java.util.function.Consumer;
  * An AbstractAction equivalent for FX, using method references. Usage: public final FxAction backAction = new
  * FxAction(this::actionBack);
  */
+@Slf4j(topic = "FxAction")
 public class FxAction
         implements EventHandler<ActionEvent> {
     public static final FxAction DISABLED = new FxAction(null, false);
-    protected static final Log log = Log.get("FxAction");
     private final SimpleBooleanProperty selectedProperty = new SimpleBooleanProperty();
     private final SimpleBooleanProperty disabledProperty = new SimpleBooleanProperty();
     @Setter
@@ -57,7 +57,7 @@ public class FxAction
             try {
                 onAction.run();
             } catch (Throwable e) {
-                log.error(e);
+                log.error("", e);
             }
         }
     }
@@ -155,7 +155,7 @@ public class FxAction
         try {
             invokeAction();
         } catch (Throwable e) {
-            log.error(e);
+            log.error("", e);
         }
     }
 
@@ -164,7 +164,7 @@ public class FxAction
         try {
             onSelected.accept(on);
         } catch (Throwable e) {
-            log.error(e);
+            log.error("", e);
         }
     }
 

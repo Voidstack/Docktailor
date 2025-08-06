@@ -1,16 +1,15 @@
 // Copyright © 2011-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util;
 
-import com.enosi.docktailor.common.log.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 
 /**
  * Convenience methods that attempt to extract requested value, returning null if the said value can not be extracted.
  */
+@Slf4j(topic = "Parsers")
 public class Parsers {
-    protected static final Log log = Log.get("Parsers");
-
     public static Double parseDouble(Object x) {
         if (x instanceof Number) {
             return ((Number) x).doubleValue();
@@ -99,7 +98,7 @@ public class Parsers {
                     return new File((String) x);
                 }
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getMessage());
             }
         }
         return null;

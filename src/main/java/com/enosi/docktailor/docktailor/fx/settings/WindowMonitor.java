@@ -1,7 +1,6 @@
 // Copyright © 2024-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.docktailor.fx.settings;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.CList;
 import com.enosi.docktailor.common.util.CSet;
 import com.enosi.docktailor.docktailor.fx.ClosingWindowOperation;
@@ -23,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Objects;
@@ -31,8 +31,8 @@ import java.util.Objects;
 /**
  * Window Monitor. Remembers the location/size and attributes of windows. Keeps track of Z order of open windows.
  */
+@Slf4j(topic = "WindowMonitor")
 public class WindowMonitor {
-    private static final Log log = Log.get("WindowMonitor");
     private static final String SEPARATOR = "_";
     private static final Object PROP_CLOSING = new Object();
     private static final Object PROP_MONITOR = new Object();
@@ -154,7 +154,6 @@ public class WindowMonitor {
         }
     }
 
-
     private static void init() {
         FX.addChangeListener(Window.getWindows(), (ch) ->
         {
@@ -164,7 +163,7 @@ public class WindowMonitor {
                 if (ch.wasAdded()) {
                     for (Window w : ch.getAddedSubList()) {
                         if (!isIgnore(w)) {
-                            log.debug("added: %s", w);
+                            log.debug(String.format("added: %s", w));
                             FxFramework.restore(w);
                             applyStyleSheet(w);
                         }
@@ -172,7 +171,7 @@ public class WindowMonitor {
                 } else if (ch.wasRemoved()) {
                     for (Window w : ch.getRemoved()) {
                         if (!isIgnore(w)) {
-                            log.debug("removed: %s", w);
+                            log.debug(String.format("removed: %s", w));
                             // the only problem here is that window is already hidden - does it matter?
                             // if it does, need to listen to WindowEvent.WINDOW_HIDING event
                             //	FxFramework.store(w);
@@ -193,15 +192,8 @@ public class WindowMonitor {
         dumpStack();
     }
 
-
     private static void dumpStack() {
-        log.debug(() ->
-        {
-            return stack.stream().
-                    map(FxTools::describe).
-                    toList().
-                    toString();
-        });
+        log.debug(stack.stream().map(FxTools::describe).toList().toString());
     }
 
     private static String createID(Window win, String useID) {
@@ -267,10 +259,7 @@ public class WindowMonitor {
     static boolean isIgnore(Window w) {
         if (w instanceof Tooltip) {
             return true;
-        } else if (w instanceof ContextMenu) {
-            return true;
-        }
-        return false;
+        } else return w instanceof ContextMenu;
     }
 
     private static WindowMonitor get(Window w) {
@@ -301,7 +290,7 @@ public class WindowMonitor {
             String style = CssLoader.getCurrentStyleSheet();
             FX.applyStyleSheet(w, null, style);
         } catch (Throwable e) {
-            log.error(e);
+            log.error("", e);
         }
     }
 
@@ -326,7 +315,7 @@ public class WindowMonitor {
     }
 
     static void updateFocusedWindow(Window w) {
-        log.debug(w);
+        log.debug(w.toString());
         stack.remove(w);
         stack.add(w);
         dumpStack();
@@ -334,7 +323,7 @@ public class WindowMonitor {
 
     static void updateFocusOwner(Node n) {
         if (n != null) {
-            log.debug(n);
+            log.debug(n.toString());
             lastFocusOwner.set(n);
         }
     }

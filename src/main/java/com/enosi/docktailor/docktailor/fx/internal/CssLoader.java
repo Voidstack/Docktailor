@@ -1,6 +1,5 @@
 package com.enosi.docktailor.docktailor.fx.internal;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.Base64;
 import com.enosi.docktailor.common.util.CKit;
 import com.enosi.docktailor.common.util.CSet;
@@ -10,6 +9,7 @@ import com.enosi.docktailor.docktailor.fx.FxFlags;
 import com.enosi.docktailor.docktailor.fx.FxStyleSheet;
 import com.enosi.docktailor.docktailor.fx.settings.WindowMonitor;
 import javafx.application.Platform;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.function.Supplier;
 
@@ -17,6 +17,7 @@ import java.util.function.Supplier;
  * JavaFX CSS Loader uses a URL stream factory to register a special protocol in order to be able to change fx style
  * sheets dynamically.
  */
+@Slf4j(topic = "CssLoader")
 public class CssLoader {
     /**
      * enables stylesheet auto refresh
@@ -26,8 +27,6 @@ public class CssLoader {
      * dumps the stylesheet to stdout
      */
     public static final boolean DUMP = Boolean.getBoolean(FxFlags.CSS_DUMP);
-    private static final Log log = Log.get("CssLoader");
-
     private static RefreshThread refreshThread;
     private static String url;
     private static Supplier<FxStyleSheet> generator;
@@ -101,10 +100,10 @@ public class CssLoader {
                 log.trace(css);
             }
         } catch (Error e) {
-            log.error(e);
+            log.error("", e);
             throw e;
         } catch (Throwable e) {
-            log.error(e);
+            log.error("", e);
         }
     }
 

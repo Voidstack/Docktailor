@@ -1,15 +1,14 @@
 // Copyright © 2008-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util.html;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 import java.net.URI;
 
-
+@Slf4j(topic = "HtmlTools")
 public class HtmlTools {
-    protected static final Log log = Log.get("HtmlTools");
     private static Html4SymbolEntities html4SymbolEntities;
     private static CSet<String> htmlTags;
 
@@ -294,12 +293,11 @@ public class HtmlTools {
                 URI uri = new URI(protocol, host, path, query, null);
                 return uri.toASCIIString();
             } catch (Exception e) {
-                log.error(e);
+                log.error("", e);
             }
         }
         return u;
     }
-
 
     // src= data:image/png;base64,iVBORw0K...
     public static byte[] parseBase64Data(String s) throws Exception {

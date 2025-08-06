@@ -1,7 +1,7 @@
 package com.enosi.docktailor.common.util;
 
-import com.enosi.docktailor.common.log.Log;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,10 +10,8 @@ import java.io.FileNotFoundException;
 /**
  * File-based Settings Provider.
  */
-@Setter
-public class FileSettingsProvider
-        extends SettingsProviderBase {
-    protected static final Log log = Log.get("FileSettingsProvider");
+@Setter @Slf4j(topic = "FileSettingsProvider")
+public class FileSettingsProvider extends SettingsProviderBase {
     private File file;
 
     public FileSettingsProvider(File f) {
@@ -27,7 +25,7 @@ public class FileSettingsProvider
             String s = asString();
             CKit.write(file, s);
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
     }
 
@@ -41,7 +39,7 @@ public class FileSettingsProvider
 			p.loadQuiet();*/
             CKit.write(target, s);
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
     }
 
@@ -67,7 +65,7 @@ public class FileSettingsProvider
         try {
             load();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
     }
 
@@ -82,7 +80,7 @@ public class FileSettingsProvider
         try {
             load(f);
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
     }
 }

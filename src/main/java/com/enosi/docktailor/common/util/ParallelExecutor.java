@@ -1,7 +1,7 @@
 // Copyright © 2012-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util;
 
-import com.enosi.docktailor.common.log.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
@@ -9,9 +9,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ParallelExecutor
-        implements ThreadFactory {
-    protected static final Log log = Log.get("ParallelExecutor");
+@Slf4j(topic = "ParallelExecutor")
+public class ParallelExecutor implements ThreadFactory {
     private String name;
     private AtomicInteger number = new AtomicInteger();
     private ThreadPoolExecutor exec;
@@ -52,7 +51,7 @@ public class ParallelExecutor
                 // why wait?
                 exec.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
             } catch (Exception e) {
-                log.error(e);
+                log.error("", e);
             }
             closed = true;
         }

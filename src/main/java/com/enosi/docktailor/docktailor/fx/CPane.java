@@ -1,6 +1,5 @@
 package com.enosi.docktailor.docktailor.fx;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.CKit;
 import com.enosi.docktailor.common.util.CList;
 import javafx.beans.value.ObservableValue;
@@ -16,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -25,8 +25,8 @@ import java.util.List;
  * TODO ignore unmanaged components
  * TODO snap to pixel!
  */
-public class CPane
-        extends Pane {
+@Slf4j(topic = "CPane")
+public class CPane extends Pane {
     public static final CssStyle STYLE = new CssStyle();
     public static final double FILL = -1.0;
     public static final double PREF = -2.0;
@@ -35,7 +35,6 @@ public class CPane
     public static final CC LEFT = new CC(true);
     public static final CC RIGHT = new CC(true);
     public static final CC CENTER = new CC(true);
-    private static final Log log = Log.get("CPane");
     private static final StyleablePropertyFactory<CPane> SPF = new StyleablePropertyFactory<>(Pane.getClassCssMetaData());
     protected CList<Entry> entries = new CList<>();
     protected CList<AC> cols = new CList<>();
@@ -413,7 +412,7 @@ public class CPane
         try {
             new Helper().layout();
         } catch (Exception e) {
-            log.error(e);
+            log.error("", e);
         }
     }
 
@@ -469,9 +468,6 @@ public class CPane
         }
     }
 
-
-    //
-
     /**
      * cell contstraints
      */
@@ -496,21 +492,17 @@ public class CPane
         public AL verAlign;
         public boolean border;
 
-
         public CC(int col, int row) {
             this(col, row, col, row);
         }
-
 
         public CC(int col, int row, int col2, int row2) {
             this(col, row, col2, row2, AL.FULL, AL.FULL);
         }
 
-
         public CC(boolean border) {
             this.border = border;
         }
-
 
         public CC(int col, int row, int col2, int row2, AL horAlign, AL verAlign) {
             this.col = col;
@@ -522,9 +514,6 @@ public class CPane
         }
     }
 
-
-    //
-
     /**
      * component-constraint pair
      */
@@ -532,9 +521,6 @@ public class CPane
         public Node node;
         public CC cc;
     }
-
-
-    //
 
     /**
      * axis helper. even though the comments talk about columns, the logic is used for both columns and rows: just
@@ -553,7 +539,6 @@ public class CPane
         public Entry center;
         public Entry right;
 
-        //
         /**
          * row/column snapped sizes
          */

@@ -1,6 +1,6 @@
 package com.enosi.docktailor.common.util;
 
-import com.enosi.docktailor.common.log.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
@@ -9,9 +9,8 @@ import java.util.function.Consumer;
 /**
  * Common Task eliminates the need to explicitly manage Threads. Tasks are run by the default ParallelExecutor.
  */
-public class CTask<T>
-        implements Runnable {
-    protected static final Log log = Log.get("CTask");
+@Slf4j(topic = "CTask")
+public class CTask<T> implements Runnable {
     protected static ParallelExecutor exec = initExecutor();
     protected ValueGenerator<? extends T> generator;
     protected Consumer<T> onSuccess;
@@ -76,20 +75,20 @@ public class CTask<T>
             try {
                 handleSuccess(result);
             } catch (Throwable e) {
-                log.error(e);
+                log.error("", e);
             }
         } catch (Throwable e) {
             try {
                 handleError(e);
             } catch (Throwable err) {
-                log.error(e);
+                log.error("", e);
             }
         }
 
         try {
             handleFinish();
         } catch (Throwable e) {
-            log.error(e);
+            log.error("", e);
         }
     }
 

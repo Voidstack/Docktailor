@@ -1,6 +1,5 @@
 package com.enosi.docktailor.docktailor.fx;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.CKit;
 import com.enosi.docktailor.common.util.Parsers;
 import javafx.geometry.HPos;
@@ -10,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -17,12 +17,10 @@ import java.util.List;
  * Horizontally arranged Pane that lays out its child nodes using the following constraints: PREF, FILL, percentage, or
  * exact pixels.
  */
-@Setter
-public class HPane
-        extends Pane {
+@Setter @Slf4j(topic = "HPane")
+public class HPane extends Pane {
     public static final double FILL = -1.0;
     public static final double PREF = -2.0;
-    private static final Log log = Log.get("HPane");
     private static final Object KEY_CONSTRAINT = new Object();
     private int gap;
 
@@ -169,7 +167,7 @@ public class HPane
         try {
             h().layout();
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
     }
 

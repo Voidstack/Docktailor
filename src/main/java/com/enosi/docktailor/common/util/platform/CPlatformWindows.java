@@ -1,16 +1,15 @@
 // Copyright © 2007-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util.platform;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.CKit;
 import com.enosi.docktailor.common.util.CPlatform;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.nio.charset.Charset;
 
-public class CPlatformWindows
-        extends CPlatform {
-    protected static final Log log = Log.get("CPlatformWindows");
+@Slf4j(topic = "CPlatformWindows")
+public class CPlatformWindows extends CPlatform {
     private static final String REGQUERY_UTIL = "reg query ";
     private static final String REGSTR_TOKEN = "REG_SZ";
     private static final String DESKTOP_FOLDER_CMD = REGQUERY_UTIL + "\"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v DESKTOP";
@@ -29,7 +28,7 @@ public class CPlatformWindows
                 return new File(s.substring(ix + REGSTR_TOKEN.length()).trim());
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error("", e);
         }
 
         return null;

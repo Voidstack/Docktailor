@@ -1,18 +1,17 @@
 // Copyright © 2006-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.docktailor.fx;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.CKit;
 import com.enosi.docktailor.common.util.Progress;
 import javafx.application.Platform;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
  * A cancellable thread that runs some computation in background, then updates the UI in an FX thread.
  */
-public abstract class FxThread
-        extends Thread {
-    protected static final Log log = Log.get("FxThread");
+@Slf4j(topic = "FxThread")
+public abstract class FxThread extends Thread {
     private long startTime;
 
     public FxThread(String name, int priority) {
@@ -46,7 +45,7 @@ public abstract class FxThread
      * exception.
      */
     protected void processError(Throwable e) {
-        log.error(e);
+        log.error("", e);
     }
 
     /**
@@ -75,7 +74,7 @@ public abstract class FxThread
                 try {
                     onProcessEnd();
                 } catch (Throwable e) {
-                    log.error(e);
+                    log.error("", e);
                 }
 
                 processSuccess();
@@ -86,7 +85,7 @@ public abstract class FxThread
                 try {
                     onProcessEnd();
                 } catch (Throwable e) {
-                    log.error(e);
+                    log.error("", e);
                 }
 
                 processError(err);
@@ -106,7 +105,6 @@ public abstract class FxThread
     public void comfortSleep(int minimumTimeMilliseconds) {
         CKit.comfortSleep(startTime, minimumTimeMilliseconds);
     }
-
 
     /**
      * sleeps, if necessary, to insure minimum delay from start

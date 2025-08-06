@@ -6,11 +6,13 @@ import com.enosi.docktailor.utils.R;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 public class MainApp extends Application {
     public final static List<String> ARGS = new ArrayList<>();
     public static final Image IMAGE = R.loadImage("images/icons/logo.png");
@@ -23,6 +25,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        log.info("Start");
         FxFramework.openDockSystemConf(GlobalSettings.getDEFAULT_FILE());
     }
 }

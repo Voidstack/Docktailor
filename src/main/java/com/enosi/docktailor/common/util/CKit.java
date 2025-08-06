@@ -2,7 +2,7 @@
 package com.enosi.docktailor.common.util;
 
 import com.enosi.docktailor.common.io.CWriter;
-import com.enosi.docktailor.common.log.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -19,12 +19,11 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
-
+@Slf4j(topic = "CKit")
 public final class CKit {
     public static final char BOM = '\ufeff';
     public static final String[] emptyStringArray = new String[0];
     public static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
-    private static final Log log = Log.get("CKit");
     private static final AtomicInteger id = new AtomicInteger();
     private static final double LOW_MEMORY_CHECK_THRESHOLD = 0.9;
     private static final double LOW_MEMORY_FAIL_AFTER_GC_THRESHOLD = 0.87;
@@ -70,8 +69,6 @@ public final class CKit {
                             return Arrays.equals((char[]) a, (char[]) b);
                         } else if (ta == short.class) {
                             return Arrays.equals((short[]) a, (short[]) b);
-                        } else if (ta == short.class) {
-                            return Arrays.equals((short[]) a, (short[]) b);
                         } else if (ta == int.class) {
                             return Arrays.equals((int[]) a, (int[]) b);
                         } else if (ta == long.class) {
@@ -112,7 +109,6 @@ public final class CKit {
             return true;
         } else return Character.isSpaceChar(c);
     }
-
 
     public static boolean isBlank(Object x) {
         if (x == null) {
@@ -781,7 +777,7 @@ public final class CKit {
                         }
                     }
                 } catch (Exception e) {
-                    log.error(e);
+                    log.error(e.getMessage());
                 }
             }
         }

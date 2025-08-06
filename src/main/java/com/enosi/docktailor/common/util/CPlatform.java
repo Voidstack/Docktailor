@@ -1,17 +1,16 @@
 // Copyright © 2008-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.platform.CPlatformLinux;
 import com.enosi.docktailor.common.util.platform.CPlatformMac;
 import com.enosi.docktailor.common.util.platform.CPlatformUnix;
 import com.enosi.docktailor.common.util.platform.CPlatformWindows;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 
-
+@Slf4j(topic = "CPlatform")
 public abstract class CPlatform {
-    protected static final Log log = Log.get("CPlatform");
     protected static final String SETTINGS_FOLDER = "goryachev.com";
     private static CPlatform instance;
 
@@ -119,7 +118,7 @@ public abstract class CPlatform {
                 return new CPlatformLinux();
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error("", e);
         }
 
         // for all practical purposes

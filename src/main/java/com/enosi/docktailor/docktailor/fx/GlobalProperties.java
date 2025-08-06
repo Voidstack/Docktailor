@@ -1,18 +1,17 @@
 package com.enosi.docktailor.docktailor.fx;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.GlobalSettings;
 import com.enosi.docktailor.common.util.WeakList;
 import javafx.util.StringConverter;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
  * Global Properties.
  */
+@Slf4j(topic = "GlobalProperties")
 public class GlobalProperties {
-    protected static final Log log = Log.get("GlobalProperties");
-    private static final WeakList<GlobalProperty<?>> properties = new WeakList();
-
+    private static final WeakList<GlobalProperty<?>> properties = new WeakList<>();
 
     /**
      * adds a property to the weak list of global properties.  no deduplication is performed though.
@@ -40,7 +39,7 @@ public class GlobalProperties {
             }
             GlobalSettings.setString(k, s);
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
     }
 
@@ -54,7 +53,7 @@ public class GlobalProperties {
                 p.setValue(v);
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
     }
 }

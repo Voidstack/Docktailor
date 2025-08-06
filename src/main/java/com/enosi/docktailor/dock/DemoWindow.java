@@ -34,6 +34,7 @@ public class DemoWindow extends FxDockWindow {
     public final Label statusField = new Label();
     //private static int seq;
 
+
     public DemoWindow() {
         super("DemoWindow");
 
@@ -49,7 +50,7 @@ public class DemoWindow extends FxDockWindow {
         Button fullscreenButton = new Button("⛶");
         fullscreenButton.setOnAction(event -> onBtnFullScreen());
 //        fullscreenButton.setTooltip(new CustomTooltip("Plein écran"));
-        box.getChildren().addAll(createMenu(), space/*, fullscreenButton*/);
+        box.getChildren().addAll(createMenu()/*, fullscreenButton*/);
         setTop(box);
 
         //setBottom(createStatusBar());

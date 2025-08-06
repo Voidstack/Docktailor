@@ -1,7 +1,7 @@
 // Copyright © 2020-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util;
 
-import com.enosi.docktailor.common.log.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,9 +12,8 @@ import java.util.TimerTask;
  * java.util.TimerTask, a thrown exception does not kill the timer. SystemTasks are being executed by a singleton daemon
  * Timer instance.
  */
-public abstract class SystemTask
-        extends TimerTask {
-    protected static final Log log = Log.get("SystemTask");
+@Slf4j(topic = "SystemTask")
+public abstract class SystemTask extends TimerTask {
     private static Timer timer;
     public SystemTask() {
     }
@@ -81,7 +80,7 @@ public abstract class SystemTask
         try {
             systemTaskBody();
         } catch (Throwable e) {
-            log.error(e);
+            log.error("", e);
         }
     }
 }

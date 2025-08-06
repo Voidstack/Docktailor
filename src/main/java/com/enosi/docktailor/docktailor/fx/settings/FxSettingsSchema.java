@@ -1,6 +1,5 @@
 package com.enosi.docktailor.docktailor.fx.settings;
 
-import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.ASettingsStore;
 import com.enosi.docktailor.common.util.SB;
 import com.enosi.docktailor.common.util.SStream;
@@ -26,6 +25,7 @@ import javafx.stage.Modality;
 import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -33,6 +33,7 @@ import java.util.List;
  * Stores and restores the UI state.
  */
 // TODO consider making it generic <ActualWindow>
+    @Slf4j(topic = "FxSettingsSchema")
 public abstract class FxSettingsSchema {
     protected static final String FX_PREFIX = "FX.";
     private static final String SFX_WINDOWS = "WINDOWS";
@@ -48,8 +49,8 @@ public abstract class FxSettingsSchema {
     private static final String WINDOW_MAXIMIZED = "X";
     private static final String WINDOW_ICONIFIED = "I";
     private static final String WINDOW_NORMAL = "N";
-    private static final Log log = Log.get("FxSettingsSchema");
     private final ASettingsStore store;
+
     public FxSettingsSchema(ASettingsStore store) {
         this.store = store;
     }
@@ -63,7 +64,7 @@ public abstract class FxSettingsSchema {
     }
 
     public void storeWindow(Window w) {
-        log.debug(() -> FxTools.describe(w));
+        log.debug(FxTools.describe(w));
 
         if (FX.isSkipSettings(w)) {
             return;
@@ -114,7 +115,7 @@ public abstract class FxSettingsSchema {
 
 
     public void restoreWindow(Window w) {
-        log.debug(() -> FxTools.describe(w));
+        log.debug(FxTools.describe(w));
 
         if (w instanceof PopupWindow) {
             return;
@@ -682,8 +683,6 @@ public abstract class FxSettingsSchema {
     }
 
     public void storeLayout(String fileName) {
-        log.debug();
-
         SStream ss = new SStream();
         List<Window> ws = WindowMonitor.getWindowStack();
 
@@ -707,8 +706,6 @@ public abstract class FxSettingsSchema {
     }
 
     public void storeLayout() {
-        log.debug();
-
         SStream ss = new SStream();
         List<Window> ws = WindowMonitor.getWindowStack();
 
@@ -731,7 +728,6 @@ public abstract class FxSettingsSchema {
         store.save();
     }
 
-
     public void save() {
         store.save();
     }
@@ -739,7 +735,6 @@ public abstract class FxSettingsSchema {
     public void resetRuntime() {
         store.resetRuntime();
     }
-
 
     protected ASettingsStore store() {
         return store;

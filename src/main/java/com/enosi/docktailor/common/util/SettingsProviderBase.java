@@ -1,18 +1,16 @@
 package com.enosi.docktailor.common.util;
 
 import com.enosi.docktailor.common.io.CReader;
-import com.enosi.docktailor.common.log.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 /**
  * In-memory map-based Settings Provider.
  */
+@Slf4j(topic = "SettingsProviderBase")
 public abstract class SettingsProviderBase
         implements GlobalSettingsProvider {
-    private static final Log log = Log.get("SettingsProviderBase");
-    private static final Log logReads = Log.get("SettingsProviderBase.reads");
-    private static final Log logWrites = Log.get("SettingsProviderBase.writes");
     // stores String or String[]
     protected CMap<String, Object> data = new CMap<>();
     public SettingsProviderBase() {
@@ -50,7 +48,7 @@ public abstract class SettingsProviderBase
             }
             return sb.toString();
         } catch (Exception e) {
-            log.error(e);
+            log.error("", e);
         }
         return null;
     }
@@ -113,10 +111,10 @@ public abstract class SettingsProviderBase
     protected String getStringPrivate(String key) {
         Object x = getValue(key);
         if (x instanceof String s) {
-            logReads.debug(Dump.spaces(key, s));
+            log.debug(Dump.spaces(key, s).get());
             return s;
         } else {
-            logReads.debug(Dump.spaces(key, "<null>"));
+            log.debug(Dump.spaces(key, "<null>").get());
             return null;
         }
     }
@@ -126,13 +124,13 @@ public abstract class SettingsProviderBase
         String[] rv;
         if (x instanceof String[] ss) {
             rv = ss;
-            logReads.debug(() -> key + " " + new CList<>(rv));
+            log.debug("{} {}", key, new CList<>(rv));
         } else if (x instanceof String s) {
             rv = new String[]{s};
-            logReads.debug(() -> key + " [" + s + "]");
+            log.debug("{} [{}]", key, s);
         } else {
             rv = null;
-            logReads.debug(() -> key + " <null>");
+            log.debug("{} <null>", key);
         }
         return rv;
     }
@@ -146,10 +144,10 @@ public abstract class SettingsProviderBase
     public synchronized void setString(String key, String val) {
         if (val == null) {
             data.remove(key);
-            logWrites.debug(Dump.spaces(key, "<null>"));
+            log.debug(Dump.spaces(key, "<null>").get());
         } else {
             data.put(key, val);
-            logWrites.debug(Dump.spaces(key, val));
+            log.debug(Dump.spaces(key, val).get());
         }
     }
 
@@ -162,7 +160,7 @@ public abstract class SettingsProviderBase
     @Override
     public synchronized void setStream(String key, SStream s) {
         String[] ss = s.toArray();
-        logWrites.debug(() -> key + " " + (ss == null ? "<null>" : new CList<>(ss)));
+        log.debug("{} {}", key, ss == null ? "<null>" : new CList<>(ss));
         data.put(key, ss);
     }
 
@@ -238,17 +236,14 @@ public abstract class SettingsProviderBase
     @Override
     public final void save() {
         saveSettings();
-        log.debug();
     }
 
     public final void save(String fileName) {
         saveSettings(fileName);
-        log.debug();
     }
 
     @Override
     public final void resetRuntime() {
         resetRuntimeSettings();
-        log.debug();
     }
 }
