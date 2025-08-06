@@ -1,4 +1,3 @@
-
 package com.enosi.docktailor.docktailor.fx.internal;
 
 import com.enosi.docktailor.common.util.CKit;
@@ -12,6 +11,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.FontSmoothingType;
+
 import java.text.DecimalFormat;
 
 

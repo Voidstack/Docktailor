@@ -1,28 +1,31 @@
 package com.enosi.docktailor.dock;
 
-import lombok.extern.slf4j.Slf4j;
-
-import javafx.geometry.Side;
+import com.enosi.docktailor.docktailor.fx.FxMenu;
+import com.enosi.docktailor.docktailor.fx.FxMenuBar;
+import com.enosi.docktailor.docktailor.fxdock.FxDockWindow;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 
 import javax.inject.Singleton;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Référence les différents IDraggableTab dans une liste via reflexion.
- * Le IDraggableTab doit obligatoirement être dans un sous package à celui dans lequel celle classe
- * est stocké.
+ * Référence les différents IDraggableTab dans une liste via reflexion. Le IDraggableTab doit obligatoirement être dans
+ * un sous package à celui dans lequel celle classe est stocké.
  */
 @Getter
 @Singleton
 @Slf4j
 public class ServiceDockableTab {
 
-    private final Map<Side, TabPaneDraggable> tabPanes = new HashMap<>();
+    // private final Map<Side, TabPaneDraggable> tabPanes = new HashMap<>();
 
     private static ServiceDockableTab instance;
 
@@ -62,8 +65,8 @@ public class ServiceDockableTab {
         return instance;
     }
 
-    public List<IControllerDockablePane<?>> getNewInstances() {
-        List<IControllerDockablePane<?>> values = new ArrayList<>();
+    public List<IControllerDockablePane> getNewInstances() {
+        List<IControllerDockablePane> values = new ArrayList<>();
         for (Class<? extends IControllerDockablePane> draggableTab : getDraggableTabs()) {
             try {
                 values.add(draggableTab.getDeclaredConstructor().newInstance());

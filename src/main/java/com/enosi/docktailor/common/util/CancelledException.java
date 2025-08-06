@@ -3,39 +3,32 @@ package com.enosi.docktailor.common.util;
 
 
 public class CancelledException
-	extends RuntimeException
-{
-	public CancelledException()
-	{
-	}
-	
-	
-	public CancelledException(Throwable cause)
-	{
-		super(cause);
-	}
-	
-	
-	public CancelledException(String message)
-	{
-		super(message);
-	}
-	
-	
-	public CancelledException(String message, Throwable cause)
-	{
-		super(message, cause);
-	}
+        extends RuntimeException {
+    public CancelledException() {
+    }
 
 
-	public static boolean isNot(Throwable e)
-	{
-		return !is(e);
-	}
+    public CancelledException(Throwable cause) {
+        super(cause);
+    }
 
 
-	public static boolean is(Throwable e)
-	{
-		return (e instanceof CancelledException);
-	}
+    public CancelledException(String message) {
+        super(message);
+    }
+
+
+    public CancelledException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+
+    public static boolean isNot(Throwable e) {
+        return !is(e);
+    }
+
+
+    public static boolean is(Throwable e) {
+        return (e instanceof CancelledException);
+    }
 }

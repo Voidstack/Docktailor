@@ -2,7 +2,6 @@
 package com.enosi.docktailor.common.util;
 
 
-public interface Clearable
-{
-	public void clear();
+public interface Clearable {
+    public void clear();
 }

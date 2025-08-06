@@ -1,9 +1,9 @@
 // Copyright © 2021-2025 Andy Goryachev <andy@goryachev.com>
-package org.esioc.docktailor.fx.internal;
+package com.enosi.docktailor.docktailor.fx.internal;
 
+import com.enosi.docktailor.common.util.SB;
 import javafx.scene.Node;
 import lombok.Getter;
-import org.esioc.docktailor.common.util.SB;
 
 
 /**
@@ -24,14 +24,6 @@ public class CssHack<T> {
         this.css = css;
         this.value = value;
         this.doubleValue = doubleValue;
-    }
-
-    public String getCSS() {
-        return css;
-    }
-
-    public double doubleValue() {
-        return doubleValue;
     }
 
     public static String generateName(String prefix, String suffix) {
@@ -60,6 +52,14 @@ public class CssHack<T> {
             String name = h.getName();
             owner.getStyleClass().remove(name);
         }
+    }
+
+    public String getCSS() {
+        return css;
+    }
+
+    public double doubleValue() {
+        return doubleValue;
     }
 
     public void attachTo(Node owner, Object key) {

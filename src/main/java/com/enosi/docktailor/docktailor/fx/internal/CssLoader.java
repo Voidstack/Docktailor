@@ -1,8 +1,14 @@
-
 package com.enosi.docktailor.docktailor.fx.internal;
 
+import com.enosi.docktailor.common.log.Log;
+import com.enosi.docktailor.common.util.Base64;
+import com.enosi.docktailor.common.util.CKit;
 import com.enosi.docktailor.common.util.CSet;
+import com.enosi.docktailor.common.util.SB;
+import com.enosi.docktailor.docktailor.fx.FX;
+import com.enosi.docktailor.docktailor.fx.FxFlags;
 import com.enosi.docktailor.docktailor.fx.FxStyleSheet;
+import com.enosi.docktailor.docktailor.fx.settings.WindowMonitor;
 import javafx.application.Platform;
 
 import java.util.function.Supplier;
@@ -20,7 +26,6 @@ public class CssLoader {
      * dumps the stylesheet to stdout
      */
     public static final boolean DUMP = Boolean.getBoolean(FxFlags.CSS_DUMP);
-
     private static final Log log = Log.get("CssLoader");
 
     private static RefreshThread refreshThread;

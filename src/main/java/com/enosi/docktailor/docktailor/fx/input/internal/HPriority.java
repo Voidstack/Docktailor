@@ -1,29 +1,26 @@
 // Copyright © 2024-2025 Andy Goryachev <andy@goryachev.com>
-package org.esioc.docktailor.fx.input.internal;
+package com.enosi.docktailor.docktailor.fx.input.internal;
 
 
 /**
  * Handler Priority.
  */
-public enum HPriority
-{
-	USER_EH(0x9000),
-	USER_KB(0x8000),
-	SKIN_EH(0x7001),
-	SKIN_KB(0x6001);
-	
-	
-	public final int priority;
-	
-	
-	private HPriority(int priority)
-	{
-		this.priority = priority;
-	}
+public enum HPriority {
+    USER_EH(0x9000),
+    USER_KB(0x8000),
+    SKIN_EH(0x7001),
+    SKIN_KB(0x6001);
 
 
-	public boolean isSkin()
-	{
-		return (priority & 0x1) == 1;
-	}
+    public final int priority;
+
+
+    private HPriority(int priority) {
+        this.priority = priority;
+    }
+
+
+    public boolean isSkin() {
+        return (priority & 0x1) == 1;
+    }
 }

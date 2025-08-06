@@ -5,11 +5,9 @@ package com.enosi.docktailor.docktailor.fx;
  * Closing Window Operation.
  */
 @FunctionalInterface
-public interface ClosingWindowOperation
-{
-	/**
-	 * Valid inputs: DISCARD_ALL, SAVE_ALL, UNDEFINED.
-	 * Valid outputs: CANCEL, CONTINUE, DISCARD_ALL, SAVE_ALL
-	 */
-	public ShutdownChoice confirmClosing(boolean exiting, boolean multiple, ShutdownChoice choice); 
+public interface ClosingWindowOperation {
+    /**
+     * Valid inputs: DISCARD_ALL, SAVE_ALL, UNDEFINED. Valid outputs: CANCEL, CONTINUE, DISCARD_ALL, SAVE_ALL
+     */
+    public ShutdownChoice confirmClosing(boolean exiting, boolean multiple, ShutdownChoice choice);
 }

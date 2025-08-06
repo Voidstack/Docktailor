@@ -1,4 +1,3 @@
-
 package com.enosi.docktailor.docktailor.fx;
 
 import com.enosi.docktailor.common.util.SystemTask;

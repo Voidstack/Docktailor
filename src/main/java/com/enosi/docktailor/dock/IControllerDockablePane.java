@@ -16,6 +16,7 @@ public interface IControllerDockablePane {
 
     /**
      * Get root node of the fxml.
+     *
      * @return : String
      */
     Node getView();

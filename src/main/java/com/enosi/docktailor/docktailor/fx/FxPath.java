@@ -1,5 +1,5 @@
 // Copyright © 2019-2025 Andy Goryachev <andy@goryachev.com>
-package org.esioc.docktailor.fx;
+package com.enosi.docktailor.docktailor.fx;
 
 import javafx.scene.shape.*;
 

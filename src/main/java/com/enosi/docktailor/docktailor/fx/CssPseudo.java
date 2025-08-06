@@ -7,14 +7,14 @@ import lombok.Getter;
  */
 @Getter
 public class CssPseudo {
-	private final String name;
+    private final String name;
 
-	public CssPseudo(String name) {
-		this.name = name;
-	}
+    public CssPseudo(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public String toString() {
-		return getName();
-	}
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

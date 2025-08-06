@@ -5,12 +5,12 @@ import com.enosi.docktailor.common.util.ASettingsStore;
 import com.enosi.docktailor.common.util.GlobalSettings;
 import com.enosi.docktailor.dock.DemoDockSchema;
 import com.enosi.docktailor.docktailor.fx.settings.FxSettingsSchema;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-
+import com.enosi.docktailor.docktailor.fx.settings.WindowMonitor;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -23,10 +23,8 @@ public class FxFramework {
     private static FxSettingsSchema schema;
 
     /**
-     * Opens application windows stored in the global settings.
-     * If no settings are stored, invokes the generator with a null name to
-     * open the main window.<p>
-     * The generator must return a default window when supplied with a null name.
+     * Opens application windows stored in the global settings. If no settings are stored, invokes the generator with a
+     * null name to open the main window.<p> The generator must return a default window when supplied with a null name.
      * To ensure the right settings are loaded, the newly created window must remain hidden.
      */
     public static int openLayout(FxSettingsSchema s) throws Exception {
@@ -45,7 +43,7 @@ public class FxFramework {
         ASettingsStore store = GlobalSettings.getASettingsStore();
         DemoDockSchema demoDockSchema = new DemoDockSchema(store);
 
-        if(schema != null) {
+        if (schema != null) {
             FxFramework.closeCurrentLayout();
         }
 
@@ -77,7 +75,7 @@ public class FxFramework {
         schema.storeLayout();
     }
 
-    public static void storeLayout(String fileName){
+    public static void storeLayout(String fileName) {
         schema.storeLayout(fileName);
     }
 

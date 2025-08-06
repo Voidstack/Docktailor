@@ -1,44 +1,38 @@
+package com.enosi.docktailor.docktailor.fx;
 
-package org.esioc.docktailor.fx;
-import java.util.Collection;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
+import java.util.Collection;
 
 /**
  * Icon Base Region.
  */
 public class IconBase
-	extends Region
-{
-	public IconBase(double size)
-	{
-		this(size, size);
-	}
-	
-	
-	public IconBase(double width, double height)
-	{
-		setMinSize(width, height);
-		setPrefSize(width, height);
-		setMaxSize(width, height);
-	}
+        extends Region {
+    public IconBase(double size) {
+        this(size, size);
+    }
 
-	
-	public void add(Node n)
-	{
-		getChildren().add(n);
-	}
-	
-	
-	public void addAll(Node ... ns)
-	{
-		getChildren().addAll(ns);
-	}
-	
-	
-	public void addAll(Collection<Node> ns)
-	{
-		getChildren().addAll(ns);
-	}
+
+    public IconBase(double width, double height) {
+        setMinSize(width, height);
+        setPrefSize(width, height);
+        setMaxSize(width, height);
+    }
+
+
+    public void add(Node n) {
+        getChildren().add(n);
+    }
+
+
+    public void addAll(Node... ns) {
+        getChildren().addAll(ns);
+    }
+
+
+    public void addAll(Collection<Node> ns) {
+        getChildren().addAll(ns);
+    }
 }

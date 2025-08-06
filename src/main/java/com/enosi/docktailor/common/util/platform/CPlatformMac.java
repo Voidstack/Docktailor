@@ -2,13 +2,11 @@
 package com.enosi.docktailor.common.util.platform;
 
 public class CPlatformMac
-	extends CPlatformUnix
-{
-	// Norwegian "place of interest" or apple command sign
-	public static final String APPLE_COMMAND_SIGN = "\u2318";
-	
-	
-	public CPlatformMac()
-	{
-	}
+        extends CPlatformUnix {
+    // Norwegian "place of interest" or apple command sign
+    public static final String APPLE_COMMAND_SIGN = "\u2318";
+
+
+    public CPlatformMac() {
+    }
 }

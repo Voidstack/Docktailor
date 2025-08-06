@@ -7,12 +7,15 @@ import com.enosi.docktailor.docktailor.fx.*;
 import com.enosi.docktailor.docktailor.fx.settings.LocalSettings;
 import com.enosi.docktailor.docktailor.fxdock.FxDockWindow;
 import com.enosi.docktailor.example.MainApp;
+import com.enosi.docktailor.utils.R;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.file.Files;
@@ -26,15 +29,15 @@ import java.util.Random;
 @Slf4j
 public class DemoWindow extends FxDockWindow {
 
+    private static final GlobalBooleanProperty showCloseDialogProperty = new GlobalBooleanProperty("show.close.dialog", true);
     public final FxAction windowCheckAction = new FxAction();
     public final Label statusField = new Label();
-    private static final GlobalBooleanProperty showCloseDialogProperty = new GlobalBooleanProperty("show.close.dialog", true);
     //private static int seq;
 
     public DemoWindow() {
         super("DemoWindow");
 
-        String cssFile = Objects.requireNonNull(MainApp.class.getResource("/css/main.css")).toExternalForm();
+        String cssFile = R.loadStringFromFile("/css/main.css");
         getScene().getStylesheets().add(cssFile);
 
         getIcons().add(MainApp.IMAGE);
@@ -55,6 +58,42 @@ public class DemoWindow extends FxDockWindow {
         LocalSettings.get(this).add("CHECKBOX_MENU", windowCheckAction);
 
         // initClosingWindowOperation();
+    }
+
+    protected static void c(SB sb) {
+        int min = 100;
+        int v = min + new Random().nextInt(255 - min);
+        sb.append(Hex.toHexByte(v));
+    }
+
+    private static void loadDefaultAction() {
+        log.info("Docktailor : Load default interface configuration");
+        actionLoadSettings(GlobalSettings.getDEFAULT_FILE());
+    }
+
+    protected static void actionLoadSettings(String fileName) {
+        log.info("Docktailor : Load default interface configuration : " + fileName);
+        FxFramework.openDockSystemConf(fileName);
+
+        //AppConfigManager.getInstance().saveProperty(AppConfigManager.LAST_UI_CONFIG_SAVED, fileName);
+    }
+
+    /**
+     * Use GlobalSettings.FILE...
+     *
+     * @param fileName :
+     */
+    protected static void actionSaveSettings(String fileName) {
+        log.info("Docktailor : Save current interface configuration in " + fileName);
+        FxFramework.storeLayout(fileName);
+
+        //AppConfigManager.getInstance().saveProperty(AppConfigManager.LAST_UI_CONFIG_SAVED, fileName);
+    }
+
+    protected static Object addButton(Dialog<?> d, String text, ButtonBar.ButtonData type) {
+        ButtonType b = new ButtonType(text, type);
+        d.getDialogPane().getButtonTypes().add(b);
+        return b;
     }
 
     /**
@@ -122,7 +161,6 @@ public class DemoWindow extends FxDockWindow {
         });
     }
 
-
     protected FxMenuBar createMenu() {
         FxMenuBar fxMenuBar = new FxMenuBar();
 
@@ -172,7 +210,7 @@ public class DemoWindow extends FxDockWindow {
         btnSave.setOnAction(event -> actionSaveSettings(fileName));
         hbox.getChildren().add(btnSave);
 
-        if(Files.exists(Path.of(fileName))){
+        if (Files.exists(Path.of(fileName))) {
             Button btnLoad = new Button("Charger");
             btnLoad.setOnAction(event -> actionLoadSettings(fileName));
             hbox.getChildren().add(btnLoad);
@@ -181,7 +219,6 @@ public class DemoWindow extends FxDockWindow {
         return menuCustomSave1;
     }
 
-
     protected Node createStatusBar() {
         BorderPane p = new BorderPane();
         p.setLeft(statusField);
@@ -189,43 +226,8 @@ public class DemoWindow extends FxDockWindow {
         return p;
     }
 
-    protected static void c(SB sb) {
-        int min = 100;
-        int v = min + new Random().nextInt(255 - min);
-        sb.append(Hex.toHexByte(v));
-    }
-
-    private static void loadDefaultAction() {
-        log.info("Docktailor : Load default interface configuration");
-        actionLoadSettings(GlobalSettings.getDEFAULT_FILE());
-    }
-
-    protected static void actionLoadSettings(String fileName) {
-        log.info("Docktailor : Load default interface configuration : " + fileName);
-        FxFramework.openDockSystemConf(fileName);
-
-        //AppConfigManager.getInstance().saveProperty(AppConfigManager.LAST_UI_CONFIG_SAVED, fileName);
-    }
-
-    /**
-     * Use GlobalSettings.FILE...
-     * @param fileName :
-     */
-    protected static void actionSaveSettings(String fileName) {
-        log.info("Docktailor : Save current interface configuration in " + fileName);
-        FxFramework.storeLayout(fileName);
-
-        //AppConfigManager.getInstance().saveProperty(AppConfigManager.LAST_UI_CONFIG_SAVED, fileName);
-    }
-
     public void save() {
         // indicates saving the changes
         //D.print("save");
-    }
-
-    protected static Object addButton(Dialog<?> d, String text, ButtonBar.ButtonData type) {
-        ButtonType b = new ButtonType(text, type);
-        d.getDialogPane().getButtonTypes().add(b);
-        return b;
     }
 }

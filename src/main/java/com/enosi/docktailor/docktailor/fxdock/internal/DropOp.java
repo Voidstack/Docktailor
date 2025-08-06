@@ -1,4 +1,3 @@
-
 package com.enosi.docktailor.docktailor.fxdock.internal;
 
 import com.enosi.docktailor.common.util.CList;
@@ -14,99 +13,83 @@ import javafx.scene.paint.Color;
 /**
  * Drop Operation - contains highlights and the code to handle the drop.
  */
-public abstract class DropOp
-{
-	protected abstract void executePrivate();
+public abstract class DropOp {
+    private final Pane target;
+    private final Object where;
+    private CList<Node> highlights;
+    public DropOp(Pane target, Object where) {
+        this.target = target;
+        this.where = where;
+    }
 
-	private final Pane target;
-	private final Object where;
-	private CList<Node> highlights;
-	
-	public DropOp(Pane target, Object where)
-	{
-		this.target = target;
-		this.where = where;
-	}
-	
-	
-	public void execute()
-	{
-		executePrivate();
-	}
+    protected abstract void executePrivate();
+
+    public void execute() {
+        executePrivate();
+    }
 
 
-	public boolean isSame(DropOp op)
-	{
-		if(op != null)
-		{
-			return 
-				(target == op.target) &&
-				(where.equals(op.where));
-		}
-		return false;
-	}
-	
-	
-	public void addRect(Node ref, double x, double y, double w, double h)
-	{
-		BoundingBox screenr = new BoundingBox(x, y, w, h);
-		Bounds b = ref.localToScreen(screenr);
-		b = target.screenToLocal(b);
-		
-		Region r = new Region();
-		r.relocate(b.getMinX(), b.getMinY());
-		r.resize(b.getWidth(), b.getHeight());
-		r.setBackground(FX.background(Color.color(0, 0, 0, 0.3)));
-		
-		add(r);
-	}
-
-	public void addOutline(Node ref, double x, double y, double w, double h)
-	{
-		BoundingBox screenr = new BoundingBox(x, y, w, h);
-		Bounds b = ref.localToScreen(screenr);
-		b = target.screenToLocal(b);
-		
-		Region r = new Region();
-		r.relocate(b.getMinX(), b.getMinY());
-		r.resize(b.getWidth(), b.getHeight());
-		r.setBackground(FX.background(Color.color(0, 0, 0, 0.1)));
-		
-		add(r);
-	}
-	
-	
-	protected void add(Node n)
-	{
-		if(highlights == null)
-		{
-			highlights = new CList<>();
-		}
-		highlights.add(n);
-	}
+    public boolean isSame(DropOp op) {
+        if (op != null) {
+            return
+                    (target == op.target) &&
+                            (where.equals(op.where));
+        }
+        return false;
+    }
 
 
-	public void installHighlights()
-	{
-		if(highlights != null)
-		{
-			target.getChildren().addAll(highlights);
-		}
-	}
+    public void addRect(Node ref, double x, double y, double w, double h) {
+        BoundingBox screenr = new BoundingBox(x, y, w, h);
+        Bounds b = ref.localToScreen(screenr);
+        b = target.screenToLocal(b);
+
+        Region r = new Region();
+        r.relocate(b.getMinX(), b.getMinY());
+        r.resize(b.getWidth(), b.getHeight());
+        r.setBackground(FX.background(Color.color(0, 0, 0, 0.3)));
+
+        add(r);
+    }
+
+    public void addOutline(Node ref, double x, double y, double w, double h) {
+        BoundingBox screenr = new BoundingBox(x, y, w, h);
+        Bounds b = ref.localToScreen(screenr);
+        b = target.screenToLocal(b);
+
+        Region r = new Region();
+        r.relocate(b.getMinX(), b.getMinY());
+        r.resize(b.getWidth(), b.getHeight());
+        r.setBackground(FX.background(Color.color(0, 0, 0, 0.1)));
+
+        add(r);
+    }
 
 
-	public void removeHighlights()
-	{
-		if(highlights != null)
-		{
-			target.getChildren().removeAll(highlights);
-		}
-	}
-	
-	
-	@Override
-	public String toString()
-	{
-		return "op:" + where;
-	}
+    protected void add(Node n) {
+        if (highlights == null) {
+            highlights = new CList<>();
+        }
+        highlights.add(n);
+    }
+
+
+    public void installHighlights() {
+        if (highlights != null) {
+            target.getChildren().addAll(highlights);
+        }
+    }
+
+
+    public void removeHighlights() {
+        if (highlights != null) {
+            target.getChildren().removeAll(highlights);
+        }
+    }
+
+
+    @Override
+    public String toString() {
+        return "op:" + where;
+    }
 }

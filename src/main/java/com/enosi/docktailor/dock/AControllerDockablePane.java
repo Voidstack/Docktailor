@@ -5,6 +5,7 @@ import com.enosi.docktailor.docktailor.fxdock.FxSimpleDockPane;
 
 /**
  * abstract qui permet de créer une classe Dockable.
+ *
  * @param <T>
  */
 public abstract class AControllerDockablePane implements IControllerDockablePane {

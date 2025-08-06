@@ -3,15 +3,13 @@ package org.esioc.docktailor.fx;
 
 
 /**
- * FxDialog response enum covers most common cases,
- * similar to {@link javafx.scene.control.ButtonBar.ButtonData}.
+ * FxDialog response enum covers most common cases, similar to {@link javafx.scene.control.ButtonBar.ButtonData}.
  */
-public enum FxDialogResponse
-{
-	CANCEL,
-	CANCEL_ALL,
-	DISCARD,
-	DISCARD_ALL,
-	SAVE,
-	SAVE_ALL,
+public enum FxDialogResponse {
+    CANCEL,
+    CANCEL_ALL,
+    DISCARD,
+    DISCARD_ALL,
+    SAVE,
+    SAVE_ALL,
 }

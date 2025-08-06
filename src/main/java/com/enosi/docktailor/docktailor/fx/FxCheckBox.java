@@ -1,5 +1,5 @@
-
 package org.esioc.docktailor.fx;
+
 import javafx.scene.control.CheckBox;
 
 
@@ -7,28 +7,23 @@ import javafx.scene.control.CheckBox;
  * CCheckBox.
  */
 public class FxCheckBox
-	extends CheckBox
-{
-	public FxCheckBox(String text, boolean selected)
-	{
-		super(text);
-		setSelected(selected);
-	}
-	
-	
-	public FxCheckBox(boolean selected)
-	{
-		setSelected(selected);
-	}
+        extends CheckBox {
+    public FxCheckBox(String text, boolean selected) {
+        super(text);
+        setSelected(selected);
+    }
 
-	
-	public FxCheckBox(String text)
-	{
-		super(text);
-	}
-	
-	
-	public FxCheckBox()
-	{
-	}
+
+    public FxCheckBox(boolean selected) {
+        setSelected(selected);
+    }
+
+
+    public FxCheckBox(String text) {
+        super(text);
+    }
+
+
+    public FxCheckBox() {
+    }
 }

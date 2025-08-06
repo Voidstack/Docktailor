@@ -1,16 +1,15 @@
-
 package com.enosi.docktailor.docktailor.fx.settings;
 
 import com.enosi.docktailor.common.log.Log;
 import com.enosi.docktailor.common.util.ASettingsStore;
 import com.enosi.docktailor.common.util.SB;
 import com.enosi.docktailor.common.util.SStream;
+import com.enosi.docktailor.docktailor.fx.CPane;
 import com.enosi.docktailor.docktailor.fx.FX;
 import com.enosi.docktailor.docktailor.fx.FxDialog;
+import com.enosi.docktailor.docktailor.fx.FxFramework;
 import com.enosi.docktailor.docktailor.fx.util.FxTools;
 import javafx.application.Platform;
-import java.util.List;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -18,30 +17,9 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Control;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
@@ -49,42 +27,39 @@ import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.util.List;
+
 /**
  * Stores and restores the UI state.
  */
 // TODO consider making it generic <ActualWindow>
 public abstract class FxSettingsSchema {
-    public abstract Stage createDefaultWindow();
-
-    protected abstract Stage createWindow(String name);
-
-    protected void loadWindowContent(WindowMonitor m, Stage w) {
-        // :) content
-    }
-
     protected static final String FX_PREFIX = "FX.";
-
     private static final String SFX_WINDOWS = "WINDOWS";
     private static final String SFX_COLUMNS = ".COLS";
     private static final String SFX_DIVIDERS = ".DIVS";
     private static final String SFX_EXPANDED = ".EXP";
     private static final String SFX_SELECTION = ".SEL";
     private static final String SFX_SETTINGS = ".SETTINGS";
-
     private static final String SORT_ASCENDING = "A";
     private static final String SORT_DESCENDING = "D";
     private static final String SORT_NONE = "N";
-
     private static final String WINDOW_FULLSCREEN = "F";
     private static final String WINDOW_MAXIMIZED = "X";
     private static final String WINDOW_ICONIFIED = "I";
     private static final String WINDOW_NORMAL = "N";
-
     private static final Log log = Log.get("FxSettingsSchema");
     private final ASettingsStore store;
-
     public FxSettingsSchema(ASettingsStore store) {
         this.store = store;
+    }
+
+    public abstract Stage createDefaultWindow();
+
+    protected abstract Stage createWindow(String name);
+
+    protected void loadWindowContent(WindowMonitor m, Stage w) {
+        // :) content
     }
 
     public void storeWindow(Window w) {
@@ -653,8 +628,8 @@ public abstract class FxSettingsSchema {
 
 
     /**
-     * Opens all previously opened windows using the specified generator.
-     * Open a default window when no windows has been opened from the settings.
+     * Opens all previously opened windows using the specified generator. Open a default window when no windows has been
+     * opened from the settings.
      */
     public int openLayout() {
         // ensure WinMonitor is initialized

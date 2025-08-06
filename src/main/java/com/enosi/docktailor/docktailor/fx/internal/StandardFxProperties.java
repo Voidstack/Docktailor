@@ -1,4 +1,3 @@
-
 package com.enosi.docktailor.docktailor.fx.internal;
 
 import com.enosi.docktailor.docktailor.fx.CssPseudo;

@@ -1,5 +1,5 @@
+package com.enosi.docktailor.docktailor.fxdock.internal;
 
-package org.esioc.docktailor.fxdock.internal;
 import javafx.scene.layout.Pane;
 
 
@@ -7,6 +7,5 @@ import javafx.scene.layout.Pane;
  * DeletedPane - it's simpler to move first and cleanup later.
  */
 public class DeletedPane
-	extends Pane
-{
+        extends Pane {
 }

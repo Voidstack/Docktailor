@@ -2,9 +2,7 @@
 package com.enosi.docktailor.common.util.platform;
 
 public class CPlatformLinux
-	extends CPlatformUnix
-{
-	public CPlatformLinux()
-	{
-	}
+        extends CPlatformUnix {
+    public CPlatformLinux() {
+    }
 }
