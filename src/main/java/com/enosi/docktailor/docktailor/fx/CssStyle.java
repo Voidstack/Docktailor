@@ -14,9 +14,7 @@ import lombok.Getter;
  *     Pane pane = new Pane();
  *     EXAMPLE.set(pane);
  * }
- * <pre>
- *
- * @see org.esioc.docktailor.fx.FxStyleSheet
+ * <pre>p
  */
 @Getter
 public class CssStyle {

@@ -238,7 +238,7 @@ public class CssTools {
 
             sb.a(s);
         } else if (x instanceof CssPseudo s) {
-            sb.a(s.getName());
+            sb.a(s.name());
         } else {
             throw new Error("?" + x);
         }

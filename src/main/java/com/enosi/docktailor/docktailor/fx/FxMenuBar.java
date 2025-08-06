@@ -3,10 +3,7 @@ package com.enosi.docktailor.docktailor.fx;
 import com.enosi.docktailor.common.util.CSorter;
 import javafx.beans.property.Property;
 import javafx.scene.Node;
-import javafx.scene.control.CustomMenuItem;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 
 import java.util.List;
 
@@ -38,13 +35,11 @@ public class FxMenuBar
         return m;
     }
 
-
     public FxCheckMenuItem checkItem(String text, FxAction a) {
         FxCheckMenuItem m = new FxCheckMenuItem(text, a);
         add(m);
         return m;
     }
-
 
 //	public FxCheckMenuItem checkItem(String text, GlobalBooleanProperty p)
 //	{
@@ -53,18 +48,15 @@ public class FxMenuBar
 //		return m;
 //	}
 
-
     public FxCheckMenuItem checkItem(String text, Property<Boolean> p) {
         FxCheckMenuItem m = new FxCheckMenuItem(text, p);
         add(m);
         return m;
     }
 
-
     public void addFill() {
         // TODO
     }
-
 
     public void add(Node n) {
         Menu m = new Menu();

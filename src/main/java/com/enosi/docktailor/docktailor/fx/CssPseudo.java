@@ -1,20 +1,12 @@
 package com.enosi.docktailor.docktailor.fx;
 
-import lombok.Getter;
-
 /**
  * Css Pseudo class.
  */
-@Getter
-public class CssPseudo {
-    private final String name;
-
-    public CssPseudo(String name) {
-        this.name = name;
-    }
+public record CssPseudo(String name) {
 
     @Override
     public String toString() {
-        return getName();
+        return name();
     }
 }
