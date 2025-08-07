@@ -7,7 +7,7 @@ import javafx.scene.Node;
 /**
  * C'est le controller qui doit hériter de cette interface.
  */
-public interface IControllerDockablePane {
+public interface IControllerDockPane {
     Side getDefaultSide();
 
     String getTabName();

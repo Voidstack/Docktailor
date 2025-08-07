@@ -6,7 +6,7 @@ import com.enosi.docktailor.docktailor.fxdock.FxSimpleDockPane;
 /**
  * abstract qui permet de créer une classe Dockable.
  */
-public abstract class AControllerDockablePane implements IControllerDockablePane {
+public abstract class AControllerDockPane implements IControllerDockPane {
     @Override
     public FxDockPane createDockPane() {
         FxDockPane fxDockPane = new FxSimpleDockPane(this.getTabName());

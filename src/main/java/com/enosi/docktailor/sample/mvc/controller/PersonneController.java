@@ -1,11 +1,11 @@
 package com.enosi.docktailor.sample.mvc.controller;
 
-import com.enosi.docktailor.dock.AControllerDockablePane;
+import com.enosi.docktailor.dock.AControllerDockPane;
 import com.enosi.docktailor.utils.R;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
 
-public class PersonneController extends AControllerDockablePane {
+public class PersonneController extends AControllerDockPane {
     @Override
     public Side getDefaultSide() {
         return Side.LEFT;

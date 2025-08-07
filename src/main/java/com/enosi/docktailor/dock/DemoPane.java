@@ -62,23 +62,6 @@ public class DemoPane
         FX.setPopupMenu(titleField, this::createTitleFieldPopupMenu);
     }
 
-    private static void a(Pane p, int gap, double... specs) {
-        HPane hp = new HPane(2);
-        int ix = 0;
-        for (double w : specs) {
-            Color c = Color.gray(0.5 + 0.5 * ix / (specs.length - 1));
-            String text = DemoTools.spec(w);
-            TextField t = new TextField(text);
-            t.setEditable(false);
-            t.setPrefColumnCount(3);
-            t.setBackground(FX.background(c));
-            t.setPadding(Insets.EMPTY);
-            hp.add(t, w);
-            ix++;
-        }
-        p.getChildren().add(hp);
-    }
-
     protected FxPopupMenu createTitleFieldPopupMenu() {
         FxPopupMenu m = new FxPopupMenu();
         m.item("Pop up in Window", popToWindowAction);

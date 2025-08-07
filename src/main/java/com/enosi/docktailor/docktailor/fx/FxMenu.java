@@ -1,6 +1,6 @@
 package com.enosi.docktailor.docktailor.fx;
 
-import com.enosi.docktailor.dock.IControllerDockablePane;
+import com.enosi.docktailor.dock.IControllerDockPane;
 import javafx.beans.property.Property;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -49,12 +49,12 @@ public class FxMenu
     }
 
     /**
-     * @param iControllerDockablePane : IDockablePane<?>
+     * @param iControllerDockPane : IDockablePane<?>
      * @param r:                      OnClick
      * @return : FxMenuItem
      */
-    public FxMenuItem item(IControllerDockablePane iControllerDockablePane, Runnable r) {
-        FxMenuItem m = new FxMenuItem(iControllerDockablePane.getTabName(), r);
+    public FxMenuItem item(IControllerDockPane iControllerDockPane, Runnable r) {
+        FxMenuItem m = new FxMenuItem(iControllerDockPane.getTabName(), r);
         m.getStyleClass().add("item-gap");
 
 //		SVGRegion svgRegion = new SVGRegion(iDockablePane.getTabIcon(), 12);

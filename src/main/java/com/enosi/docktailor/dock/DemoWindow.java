@@ -167,7 +167,7 @@ public class DemoWindow extends FxDockWindow {
 
         // Ajout des différentes vue de tacp
         Platform.runLater(() -> {
-            ServiceDockableTab.getInstance().initFXMenuBar(fxMenuBar, this);
+            ServiceDocktailor.getInstance().initFXMenuBar(fxMenuBar, this);
             fxMenuBar.separator();
 
             fxMenuBar.item("Personne", new FxAction(() -> {

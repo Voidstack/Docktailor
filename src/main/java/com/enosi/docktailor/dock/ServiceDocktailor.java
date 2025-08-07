@@ -6,6 +6,9 @@ import com.enosi.docktailor.docktailor.fxdock.FxDockWindow;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 
 import javax.inject.Singleton;
 import java.lang.reflect.InvocationTargetException;
@@ -23,51 +26,52 @@ import java.util.stream.Collectors;
 @Getter
 @Singleton
 @Slf4j
-public class ServiceDockableTab {
+public class ServiceDocktailor {
+    private static ServiceDocktailor instance;
 
-    // private final Map<Side, TabPaneDraggable> tabPanes = new HashMap<>();
-
-    private static ServiceDockableTab instance;
-
-    private final Set<Class<? extends IControllerDockablePane>> draggableTabs;
+    private final Set<Class<? extends IControllerDockPane>> draggableTabs;
 
     // Util pour les IDockableCondition, certaine fenêtre doivent exister que sous certaines conditions.
-    private final Set<Class<? extends IControllerDockablePane>> filteredDraggableTabs = new HashSet<>();
+    private final Set<Class<? extends IControllerDockPane>> filteredDraggableTabs = new HashSet<>();
 
-    private ServiceDockableTab() {
-        Package myPackage = ServiceDockableTab.class.getPackage();
-        Reflections reflections = new Reflections(myPackage.getName());
+    private ServiceDocktailor() {
+        Reflections reflections = new Reflections(new ConfigurationBuilder()
+                .setUrls(ClasspathHelper.forJavaClassPath())
+                .setScanners(Scanners.SubTypes) // false = pas inclure Object.class
+        );
 
         // Récupère les IDockable.class sans les abstract (uniquement les implémentations concrètes)
-        draggableTabs = reflections.getSubTypesOf(IControllerDockablePane.class).stream().filter(c -> !Modifier.isAbstract(c.getModifiers())).collect(Collectors.toSet());
+        draggableTabs = reflections.getSubTypesOf(IControllerDockPane.class)
+                .stream()
+                .filter(c -> !Modifier.isAbstract(c.getModifiers()))
+                .collect(Collectors.toSet());
 
         filteredDraggableTabs.addAll(draggableTabs);
+
         draggableTabs.forEach(clazz -> {
-            if (IDockableCondition.class.isAssignableFrom(clazz)) {
+            if (IControllerDockCondition.class.isAssignableFrom(clazz)) {
                 try {
-                    if (!((IDockableCondition) clazz.getDeclaredConstructor().newInstance()).isExistDansLeContext()) {
+                    if (!((IControllerDockCondition) clazz.getDeclaredConstructor().newInstance()).isExistDansLeContext()) {
                         filteredDraggableTabs.remove(clazz);
                     }
                 } catch (Exception e) {
-                    log.error("Impossible de ségréger sur la condition d'existance de la fenêtre : " + clazz.getName(), e);
+                    log.error("Impossible de ségréger sur la condition d'existance de la fenêtre : {}", clazz.getName(), e);
                     throw new RuntimeException(e);
                 }
             }
         });
-
-        // draggableTabs = reflections.getSubTypesOf(IDockablePane.class);
     }
 
-    public static ServiceDockableTab getInstance() {
+    public static ServiceDocktailor getInstance() {
         if (instance == null) {
-            instance = new ServiceDockableTab();
+            instance = new ServiceDocktailor();
         }
         return instance;
     }
 
-    public List<IControllerDockablePane> getNewInstances() {
-        List<IControllerDockablePane> values = new ArrayList<>();
-        for (Class<? extends IControllerDockablePane> draggableTab : getDraggableTabs()) {
+    public List<IControllerDockPane> getNewInstances() {
+        List<IControllerDockPane> values = new ArrayList<>();
+        for (Class<? extends IControllerDockPane> draggableTab : getDraggableTabs()) {
             try {
                 values.add(draggableTab.getDeclaredConstructor().newInstance());
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
@@ -87,9 +91,9 @@ public class ServiceDockableTab {
         FxMenu fxMenu = fxMenuBar.menu("Affichages");
 
         // Je récupère la liste de tout le DraggablePane Possible.
-        for (Class<? extends IControllerDockablePane> draggableTab : ServiceDockableTab.getInstance().getFilteredDraggableTabs()) {
+        for (Class<? extends IControllerDockPane> draggableTab : ServiceDocktailor.getInstance().getFilteredDraggableTabs()) {
             try {
-                IControllerDockablePane instanceDraggable = draggableTab.getDeclaredConstructor().newInstance();
+                IControllerDockPane instanceDraggable = draggableTab.getDeclaredConstructor().newInstance();
 //                String checkItemName = instanceDraggable.getTabName();
 
                 fxMenu.item(instanceDraggable, () -> fxDockWindow.addDockPane(instanceDraggable.createDockPane()));

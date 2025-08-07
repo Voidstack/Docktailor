@@ -16,17 +16,14 @@ public class DemoDockSchema extends FxDockSchema {
     }
 
     /**
-     * creates custom pane using the type id
+     * Creates a new dock pane based on the given id.
+     * @param id the id of the dock pane
+     * @return the dock pane for the given id
+     * @throws IllegalArgumentException if the id does not match any known dockable pane
      */
     @Override
-    public FxDockPane createPane(String id) {
-        // Check si il s'agit d'une fenetre de base de l'application.
-        if (id.equals(BROWSER)) {
-            return new DemoBrowser();
-        }
-
-        // Check si il s'agit d'une fenetre Dockable.
-        for (IControllerDockablePane newInstance : ServiceDockableTab.getInstance().getNewInstances()) {
+    public FxDockPane createPane(String id) throws IllegalArgumentException {
+        for (IControllerDockPane newInstance : ServiceDocktailor.getInstance().getNewInstances()) {
             if (id.equals(newInstance.getTabName())) {
                 return newInstance.createDockPane();
             }
