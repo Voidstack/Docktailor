@@ -23,6 +23,7 @@ import javafx.util.StringConverter;
 public class LocalSettings {
     private static final Object PROP_BINDINGS = new Object();
     private final CMap<String, Entry> entries = new CMap<>();
+
     public LocalSettings() {
     }
 
@@ -187,7 +188,6 @@ public class LocalSettings {
         });
         return this;
     }
-
 
     public LocalSettings add(String subKey, FxInt p) {
         entries.put(subKey, new Entry() {
