@@ -2,28 +2,19 @@ package com.enosi.docktailor.docktailor.fx;
 
 import com.enosi.docktailor.common.util.SystemTask;
 import com.enosi.docktailor.docktailor.fx.internal.CssTools;
-import com.enosi.docktailor.docktailor.fx.internal.FxStyleHandler;
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.TransformationList;
-import javafx.css.Styleable;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Region;
@@ -35,17 +26,51 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * Making JavaFX "easier".
+ * A comprehensive utility class that simplifies JavaFX development by providing a wide range of
+ * helper methods, constants, and convenience functions for common UI tasks.
+ * <p>
+ * This class serves as a centralized location for frequently used JavaFX operations, including:
+ * - UI component creation and configuration
+ * - Layout and styling utilities
+ * - Event handling helpers
+ * - Common transformations and calculations
+ * - Thread-safe UI updates
+ * <p>
+ * Key features include:
+ * - Simplified creation and configuration of common JavaFX controls
+ * - Helper methods for working with styles, layouts, and properties
+ * - Utilities for common UI patterns (dialogs, tooltips, etc.)
+ * - Mathematical and geometric calculations for UI elements
+ * - Convenience methods for working with colors, fonts, and other UI properties
+ * <p>
+ * The class is designed to be used statically and follows a fluent API pattern where possible
+ * to enable method chaining and more readable code.
+ * <p>
+ * Example usage:
+ * <pre>
+ * {@code
+ * // Create a styled label with tooltip
+ * Label label = FX.label("Username:", CssStyle.TEXT_BOLD, Pos.CENTER_LEFT);
+ *
+ * // Run code on the JavaFX Application Thread
+ * FX.runLater(() -> updateUI());
+ *
+ * // Get window containing a node
+ * FxWindow window = FX.getWindow(someNode);
+ * }
+ * </pre>
+ *
+ * @see FxWindow
+ * @see FxDialog
+ * @see FxMenu
+ * @see FxMenuItem
  */
 public final class FX {
     public static final double TWO_PI = Math.PI + Math.PI;
@@ -188,29 +213,6 @@ public final class FX {
 
         return n;
     }
-
-
-    /**
-     * adds a style to a Styleable
-     */
-    @Deprecated // use CssStyle.set()
-    public static void style(Styleable n, CssStyle style) {
-        if (style != null) {
-            style.set(n);
-        }
-    }
-
-
-    /**
-     * adds or removes the specified style, depending on the condition
-     */
-    @Deprecated // use CssStyle.set()
-    public static void style(Styleable n, boolean condition, CssStyle style) {
-        if (style != null) {
-            style.set(n, condition);
-        }
-    }
-
 
     /**
      * apply styles to a Node
@@ -380,7 +382,6 @@ public final class FX {
             n.getProperties().put(k, v);
         }
     }
-
 
     public static Object getProperty(Node n, Object k) {
         return n.getProperties().get(k);
@@ -659,22 +660,6 @@ public final class FX {
         return null;
     }
 
-    public static double clip(double val, double min, double max) {
-        if (val < min) {
-            return min;
-        } else return Math.min(val, max);
-    }
-
-    public static void setDisable(boolean on, Object... nodes) {
-        for (Object x : nodes) {
-            if (x instanceof Node n) {
-                n.setDisable(on);
-            } else if (x instanceof FxAction a) {
-                a.setDisabled(on);
-            }
-        }
-    }
-
     public static <T> ObservableList<T> observableArrayList() {
         return FXCollections.observableArrayList();
     }
@@ -725,15 +710,6 @@ public final class FX {
             throw new Error("must be called from an FX application thread");
         }
     }
-
-
-    /**
-     * Prevents the node from being resized when the SplitPane is resized.
-     */
-    public static void preventSplitPaneResizing(Node nd) {
-        SplitPane.setResizableWithParent(nd, Boolean.FALSE);
-    }
-
 
     /**
      * avoid ambiguous signature warning when using addListener
@@ -807,19 +783,6 @@ public final class FX {
         }
     }
 
-
-    /**
-     * copies text to clipboard.  does nothing if text is null
-     */
-    public static void copy(String text) {
-        if (text != null) {
-            ClipboardContent cc = new ClipboardContent();
-            cc.putString(text);
-            Clipboard.getSystemClipboard().setContent(cc);
-        }
-    }
-
-
     public static Insets insets(double top, double right, double bottom, double left) {
         return new Insets(top, right, bottom, left);
     }
@@ -832,126 +795,6 @@ public final class FX {
 
     public static Insets insets(double gap) {
         return new Insets(gap);
-    }
-
-
-    /**
-     * returns an instance of TransformationList wrapped around the source ObservableList
-     */
-    public static <S, T> ObservableList<T> transform(ObservableList<S> source, Function<S, T> converter) {
-        return new TransformationList<>(source) {
-            @Override
-            public int getSourceIndex(int index) {
-                return index;
-            }
-
-
-            @Override
-            public int getViewIndex(int index) {
-                return index;
-            }
-
-
-            @Override
-            public T get(int index) {
-                S src = getSource().get(index);
-                return converter.apply(src);
-            }
-
-
-            @Override
-            public int size() {
-                return getSource().size();
-            }
-
-
-            @Override
-            protected void sourceChanged(Change<? extends S> c) {
-                fireChange(new Change<>(this) {
-                    @Override
-                    public List<T> getRemoved() {
-                        ArrayList<T> rv = new ArrayList<>(c.getRemovedSize());
-                        for (S item : c.getRemoved()) {
-                            rv.add(converter.apply(item));
-                        }
-                        return rv;
-                    }
-
-                    @Override
-                    public boolean wasAdded() {
-                        return c.wasAdded();
-                    }
-
-                    @Override
-                    public boolean wasRemoved() {
-                        return c.wasRemoved();
-                    }
-
-
-                    @Override
-                    public boolean wasReplaced() {
-                        return c.wasReplaced();
-                    }
-
-                    @Override
-                    public boolean wasUpdated() {
-                        return c.wasUpdated();
-                    }
-
-                    @Override
-                    public boolean wasPermutated() {
-                        return c.wasPermutated();
-                    }
-
-                    @Override
-                    public int getPermutation(int ix) {
-                        return c.getPermutation(ix);
-                    }
-
-                    @Override
-                    protected int[] getPermutation() {
-                        return new int[0];
-                    }
-
-
-                    @Override
-                    public int getFrom() {
-                        return c.getFrom();
-                    }
-
-
-                    @Override
-                    public int getTo() {
-                        return c.getTo();
-                    }
-
-
-                    @Override
-                    public boolean next() {
-                        return c.next();
-                    }
-
-
-                    @Override
-                    public void reset() {
-                        c.reset();
-                    }
-                });
-            }
-        };
-    }
-
-    /**
-     * adds a new style
-     */
-    public static void setStyle(Node n, String property, Object value) {
-        if (n != null) {
-            String s = n.getStyle();
-            FxStyleHandler m = new FxStyleHandler(s);
-            m.put(property, value);
-            String s2 = m.toStyleString();
-            n.setStyle(s2);
-        }
     }
 
     /**
@@ -1040,16 +883,5 @@ public final class FX {
                 w.setY(y);
             }
         }
-    }
-
-    /**
-     * creates an image with the given color and dimensions
-     */
-    public static Image image(Color color, int width, int height) {
-        Canvas c = new Canvas(width, height);
-        GraphicsContext g = c.getGraphicsContext2D();
-        g.setFill(color);
-        g.fillRect(0, 0, width, height);
-        return c.snapshot(null, null);
     }
 }

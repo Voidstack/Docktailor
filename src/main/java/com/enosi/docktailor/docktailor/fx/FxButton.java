@@ -6,8 +6,7 @@ import javafx.scene.control.Button;
 /**
  * Convenient Fx Button.
  */
-public class FxButton
-        extends Button {
+public class FxButton extends Button {
     /**
      * style for a button that performs some kind of affirmative action, such as OK, Continue, Yes and so on
      */

@@ -19,16 +19,6 @@ public class FxMenuItem
         }
     }
 
-    public FxMenuItem(Node icon, FxAction a) {
-        setGraphic(icon);
-
-        if (a == null) {
-            setDisable(true);
-        } else {
-            a.attach(this);
-        }
-    }
-
     public FxMenuItem(String text, FxAction a) {
         super(text);
 
@@ -47,12 +37,5 @@ public class FxMenuItem
     public FxMenuItem(String text) {
         super(text);
         setDisable(true);
-    }
-
-    public FxMenuItem(Node icon) {
-        setGraphic(icon);
-    }
-
-    public FxMenuItem() {
     }
 }

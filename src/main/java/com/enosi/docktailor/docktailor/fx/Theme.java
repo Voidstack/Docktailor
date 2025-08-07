@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-
 /**
  * Color Theme.
  */

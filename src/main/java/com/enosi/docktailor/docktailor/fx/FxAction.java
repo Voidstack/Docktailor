@@ -15,8 +15,7 @@ import java.util.function.Consumer;
  * FxAction(this::actionBack);
  */
 @Slf4j(topic = "FxAction")
-public class FxAction
-        implements EventHandler<ActionEvent> {
+public class FxAction implements EventHandler<ActionEvent> {
     public static final FxAction DISABLED = new FxAction(null, false);
     private final SimpleBooleanProperty selectedProperty = new SimpleBooleanProperty();
     private final SimpleBooleanProperty disabledProperty = new SimpleBooleanProperty();
