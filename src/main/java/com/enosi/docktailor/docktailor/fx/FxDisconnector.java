@@ -23,8 +23,7 @@ import java.util.function.Consumer;
 /**
  * Fx Disconnector.
  */
-public class FxDisconnector
-        implements IDisconnectable {
+public class FxDisconnector implements IDisconnectable {
     private static final Object KEY = new Object();
     private final CList<IDisconnectable> items = new CList<>();
 

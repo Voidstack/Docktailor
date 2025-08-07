@@ -10,7 +10,6 @@ import java.lang.reflect.Modifier;
 public final class Func {
     private Object name;
 
-
     public Func() {
         name = new Throwable().getStackTrace()[1];
     }
