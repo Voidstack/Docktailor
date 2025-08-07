@@ -1,15 +1,12 @@
 // Copyright © 2010-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util;
 
-import java.nio.charset.Charset;
 import java.util.*;
-import java.util.function.Function;
 
 /**
  * An extended version of StringBuilder
  */
-public class SB
-        implements Appendable, CharSequence {
+public class SB implements Appendable, CharSequence {
     protected StringBuilder sb;
 
     public SB(int capacity) {
@@ -28,42 +25,10 @@ public class SB
         sb = new StringBuilder(cs);
     }
 
-    // SB methods
-
-
     public SB nl() {
         sb.append("\n");
         return this;
     }
-
-
-    public SB nl(int count) {
-        for (int i = 0; i < count; i++) {
-            sb.append("\n");
-        }
-        return this;
-    }
-
-
-    public SB comma() {
-        sb.append(',');
-        return this;
-    }
-
-
-    public SB tab() {
-        sb.append("\t");
-        return this;
-    }
-
-
-    public SB tab(int count) {
-        for (int i = 0; i < count; i++) {
-            sb.append("\t");
-        }
-        return this;
-    }
-
 
     /**
      * append an object, separating it with the specified delimiter if the buffer is not empty
@@ -76,7 +41,6 @@ public class SB
         return a(x);
     }
 
-
     public SB a(Object x) {
         if (x != null) {
             sb.append(x);
@@ -84,80 +48,35 @@ public class SB
         return this;
     }
 
-
     public SB a(char c) {
         sb.append(c);
         return this;
     }
-
-
-    public SB line(Object x) {
-        a(x);
-        nl();
-        return this;
-    }
-
 
     public SB sp() {
         sb.append(" ");
         return this;
     }
 
-
     public SB sp(int count) {
-        for (int i = 0; i < count; i++) {
-            sb.append(" ");
-        }
+        sb.append(" ".repeat(Math.max(0, count)));
         return this;
     }
-
 
     public SB append(char c, int count) {
-        for (int i = 0; i < count; i++) {
-            sb.append(c);
-        }
+        sb.append(String.valueOf(c).repeat(Math.max(0, count)));
         return this;
     }
-
-
-    public void safeHtml(Object x) {
-        if (x != null) {
-            String s = x.toString();
-            s = s.replace("<", "&lt;");
-            s = s.replace("&", "&amp;");
-            sb.append(s);
-        }
-    }
-
-
-    /**
-     * appends json-escaped value
-     */
-    public SB safeJson(Object x) {
-        if (x == null) {
-            sb.append("null");
-        } else {
-            String s = JsonDump.toJsonString(x);
-            sb.append(s);
-        }
-        return this;
-    }
-
-
-    // StringBuilder methods
-
 
     public SB append(Object x) {
         sb.append(x);
         return this;
     }
 
-
     public SB append(String s) {
         sb.append(s);
         return this;
     }
-
 
     @Override
     public Appendable append(CharSequence cs) {
@@ -165,31 +84,26 @@ public class SB
         return this;
     }
 
-
     @Override
     public SB append(CharSequence cs, int start, int end) {
         sb.append(cs, start, end);
         return this;
     }
 
-
     public SB append(char str[]) {
         sb.append(str);
         return this;
     }
-
 
     public SB append(char str[], int offset, int len) {
         sb.append(str, offset, len);
         return this;
     }
 
-
     public SB append(boolean x) {
         sb.append(x);
         return this;
     }
-
 
     @Override
     public SB append(char x) {
@@ -197,218 +111,47 @@ public class SB
         return this;
     }
 
-
     public SB append(int x) {
         sb.append(x);
         return this;
     }
-
 
     public SB append(long x) {
         sb.append(x);
         return this;
     }
 
-
     public SB append(float x) {
         sb.append(x);
         return this;
     }
-
 
     public SB append(double d) {
         sb.append(d);
         return this;
     }
 
-
-    public SB appendCodePoint(int codePoint) {
+    public void appendCodePoint(int codePoint) {
         sb.appendCodePoint(codePoint);
-        return this;
     }
 
-
-    public SB delete(int start, int end) {
-        sb.delete(start, end);
-        return this;
-    }
-
-
-    public SB deleteCharAt(int index) {
-        sb.deleteCharAt(index);
-        return this;
-    }
-
-
-    public SB replace(int start, int end, String str) {
+    public void replace(int start, int end, String str) {
         sb.replace(start, end, str);
-        return this;
     }
-
-
-    public SB insert(int index, char str[], int offset, int len) {
-        sb.insert(index, str, offset, len);
-        return this;
-    }
-
-
-    public SB insert(int offset, Object x) {
-        sb.insert(offset, x);
-        return this;
-    }
-
-
-    public SB insert(int offset, String str) {
-        sb.insert(offset, str);
-        return this;
-    }
-
-
-    public SB insert(int offset, char str[]) {
-        sb.insert(offset, str);
-        return this;
-    }
-
-
-    public SB insert(int dstOffset, CharSequence cs) {
-        sb.insert(dstOffset, cs);
-        return this;
-    }
-
-
-    public SB insert(int dstOffset, CharSequence cs, int start, int end) {
-        sb.insert(dstOffset, cs, start, end);
-        return this;
-    }
-
-
-    public SB insert(int offset, boolean x) {
-        sb.insert(offset, x);
-        return this;
-    }
-
-
-    public SB insert(int offset, char c) {
-        sb.insert(offset, c);
-        return this;
-    }
-
-
-    public SB insert(int offset, char c, int count) {
-        if (count > 0) {
-            char[] cs = new char[count];
-            Arrays.fill(cs, c);
-
-            sb.insert(offset, cs);
-        }
-        return this;
-    }
-
-
-    public SB insert(int offset, int x) {
-        return insert(offset, String.valueOf(x));
-    }
-
-
-    public SB insert(int offset, long x) {
-        return insert(offset, String.valueOf(x));
-    }
-
-
-    public SB insert(int offset, float f) {
-        return insert(offset, String.valueOf(f));
-    }
-
-
-    public SB insert(int offset, double d) {
-        return insert(offset, String.valueOf(d));
-    }
-
-
-    public int indexOf(String s) {
-        return indexOf(s, 0);
-    }
-
-
-    public int indexOf(String s, int fromIndex) {
-        return sb.indexOf(s, fromIndex);
-    }
-
-
-    public int indexOf(char c) {
-        return indexOf(c, 0);
-    }
-
-
-    public int indexOf(char ch, int fromIndex) {
-        int sz = sb.length();
-        for (int i = fromIndex; i < sz; i++) {
-            char c = sb.charAt(i);
-            if (c == ch) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-
-    public int lastIndexOf(String s) {
-        return sb.lastIndexOf(s);
-    }
-
-
-    public int lastIndexOf(String s, int fromIndex) {
-        return sb.lastIndexOf(s, fromIndex);
-    }
-
-
-    public int lastIndexOf(char c) {
-        return lastIndexOf(c, sb.length());
-    }
-
-
-    public int lastIndexOf(char ch, int fromIndex) {
-        if (fromIndex < 0) {
-            return -1;
-        }
-
-        int sz = sb.length();
-        if (fromIndex > sz) {
-            fromIndex = sz;
-        }
-
-        for (int i = fromIndex - 1; i >= 0; --i) {
-            char c = sb.charAt(i);
-            if (c == ch) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-
-    public SB reverse() {
-        sb.reverse();
-        return this;
-    }
-
 
     @Override
     public String toString() {
         return sb.toString();
     }
 
-
     @Override
     public int length() {
         return getLength();
     }
 
-
     public int getLength() {
         return sb.length();
     }
-
 
     public void setLength(int length) {
         sb.setLength(length);
@@ -425,76 +168,20 @@ public class SB
         return sb.charAt(ix);
     }
 
-
-    public SB replace(String s) {
-        sb.replace(0, sb.length(), s);
-        return this;
-    }
-
-
-    public String substring(int start, int end) {
-        return sb.substring(start, end);
-    }
-
-
-    public String substring(int start) {
-        return sb.substring(start);
-    }
-
-
     @Override
     public boolean isEmpty() {
-        return sb.length() == 0;
+        return sb.isEmpty();
     }
-
 
     public boolean isNotEmpty() {
-        return sb.length() > 0;
+        return !sb.isEmpty();
     }
-
-
-    public boolean isBlank() {
-        int len = sb.length();
-        for (int i = 0; i < len; i++) {
-            if (!Character.isWhitespace(sb.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-    public void setCharAt(int index, char c) {
-        sb.replace(index, index + 1, String.valueOf(c));
-    }
-
-
-    public void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin) {
-        sb.getChars(srcBegin, srcEnd, dst, dstBegin);
-    }
-
-
-    public char[] getChars() {
-        int sz = sb.length();
-        char[] rv = new char[sz];
-        sb.getChars(0, sz, rv, 0);
-        return rv;
-    }
-
-
-    public char[] getCharsAndClear() {
-        char[] rv = getChars();
-        sb.setLength(0);
-        return rv;
-    }
-
 
     public String getAndClear() {
         String s = sb.toString();
         sb.setLength(0);
         return s;
     }
-
 
     public int indexOfIgnoreCase(String pattern, int fromIndex) {
         int len = sb.length();
@@ -548,22 +235,6 @@ public class SB
         }
     }
 
-
-    public void replace(char old, String newText) {
-        int start = 0;
-        for (; ; ) {
-            int ix = indexOf(old, start);
-            if (ix < 0) {
-                return;
-            }
-
-            sb.replace(ix, ix + 1, newText);
-
-            start = ix + newText.length();
-        }
-    }
-
-
     public void replace(char old, char newChar) {
         for (int i = sb.length() - 1; i >= 0; i--) {
             char c = sb.charAt(i);
@@ -572,58 +243,6 @@ public class SB
             }
         }
     }
-
-
-    public void toLowerCase() {
-        int sz = sb.length();
-        for (int i = 0; i < sz; i++) {
-            char c = sb.charAt(i);
-            char n = Character.toLowerCase(c);
-            if (n != c) {
-                sb.setCharAt(i, n);
-            }
-        }
-    }
-
-
-    public void toUpperCase() {
-        int sz = sb.length();
-        for (int i = 0; i < sz; i++) {
-            char c = sb.charAt(i);
-            char n = Character.toUpperCase(c);
-            if (n != c) {
-                sb.setCharAt(i, n);
-            }
-        }
-    }
-
-
-    public boolean conditionalNewline() {
-        if (sb.length() > 0) {
-            sb.append('\n');
-            return true;
-        }
-        return false;
-    }
-
-
-    public void padLeading(char c, int max, Object v) {
-        String s = (v == null ? "" : v.toString());
-        for (int i = s.length(); i < max; i++) {
-            sb.append(c);
-        }
-        sb.append(s);
-    }
-
-
-    public void padTrailing(char c, int max, Object v) {
-        String s = (v == null ? "" : v.toString());
-        sb.append(s);
-        for (int i = s.length(); i < max; i++) {
-            sb.append(c);
-        }
-    }
-
 
     /**
      * append all items separated by the separator (all nulls are treated as empty strings)
@@ -641,20 +260,10 @@ public class SB
         }
     }
 
-
     @Override
     public CharSequence subSequence(int start, int end) {
         return sb.subSequence(start, end);
     }
-
-
-    public SB repeat(char c, int count) {
-        for (int i = 0; i < count; i++) {
-            sb.append(c);
-        }
-        return this;
-    }
-
 
     public SB list(Collection<?> items, char delimiter) {
         if (items != null) {
@@ -689,7 +298,6 @@ public class SB
         return this;
     }
 
-
     public SB list(Map<?, ?> items, char delimiter) {
         if (items != null) {
             boolean sep = false;
@@ -706,122 +314,6 @@ public class SB
                 sb.append('=');
                 sb.append(v);
             }
-        }
-        return this;
-    }
-
-
-    /**
-     * appends formatted string, see String.format()
-     */
-    public SB format(String fmt, Object... args) {
-        Formatter f = new Formatter(sb);
-        try {
-            f.format(fmt, args);
-        } finally {
-            CKit.close(f);
-        }
-        return this;
-    }
-
-
-    public byte[] getBytes(Charset cs) {
-        return toString().getBytes(cs);
-    }
-
-
-    /**
-     * Appends "name=value" to the buffer, with proper JSON escaping the key and the value.
-     */
-    public SB json(Object key, Object value) {
-        jsonKey(key);
-        sb.append('=');
-        jsonValue(value);
-        return this;
-    }
-
-
-    /**
-     * Appends the key (with proper JSON escapes) to the buffer.
-     */
-    public SB jsonKey(Object key) {
-        String s = key.toString();
-        sb.append('\"');
-        safeJson(s);
-        sb.append('\"');
-        return this;
-    }
-
-
-    /**
-     * Appends the value (with proper JSON escapes) to the buffer.
-     */
-    public SB jsonValue(Object value) {
-        if (value == null) {
-            sb.append("null");
-        } else {
-            if (value instanceof Number n) {
-                if ((value instanceof Float) || (value instanceof Double)) {
-                    double v = n.doubleValue();
-                    if (Math.rint(v) == v) {
-                        long d = n.longValue();
-                        sb.append(String.valueOf(d));
-                        return this;
-                    }
-                }
-            }
-
-            String s = value.toString();
-            safeJson(s);
-        }
-        return this;
-    }
-
-
-    // FIX one for each type: array, list, iterable
-    public <T> SB jsonArray(Object array, Function<T, String> toString) {
-        if (array == null) {
-            sb.append("null");
-        } else if (array instanceof Object[] a) {
-            sb.append("[");
-            for (int i = 0; i < a.length; i++) {
-                if (i > 0) {
-                    sb.append(',');
-                }
-                safeJson(a[i]);
-            }
-            sb.append("]");
-        } else if (array instanceof List c) {
-            sb.append("[");
-            int sz = c.size();
-            for (int i = 0; i < sz; i++) {
-                if (i > 0) {
-                    sb.append(',');
-                }
-                T v = (T) c.get(i);
-                String s = toString.apply(v);
-                safeJson(s);
-            }
-            sb.append("]");
-        } else if (array instanceof Iterable iterable) {
-            sb.append("[");
-            Iterator<T> it = iterable.iterator();
-            boolean sep = false;
-            while (it.hasNext()) {
-                if (sep) {
-                    sb.append(',');
-                } else {
-                    sep = true;
-                }
-
-                T v = it.next();
-                String s = toString.apply(v);
-                safeJson(s);
-            }
-            sb.append("]");
-        } else {
-            // not an array!
-            safeJson(array);
         }
         return this;
     }

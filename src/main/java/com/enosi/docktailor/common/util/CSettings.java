@@ -1,13 +1,17 @@
 // Copyright © 2005-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.File;
 import java.util.Hashtable;
-
 
 /**
  * utility class helps storing/restoring various binary values
  */
+@Setter
+@Getter
 public class CSettings {
     public static final Provider NONE = new Provider() {
         @Override
@@ -49,14 +53,6 @@ public class CSettings {
         return new CSettings(CFileSettings.loadQuiet(f));
     }
 
-    public Provider getProvider() {
-        return provider;
-    }
-
-    public void setProvider(Provider p) {
-        this.provider = p;
-    }
-
     public String getProperty(String key) {
         return provider.getProperty(key);
     }
@@ -76,13 +72,19 @@ public class CSettings {
         setProperty(key, value == null ? null : value.toString());
     }
 
-
     public void setBoolean(String key, boolean val) {
         set(key, val);
     }
 
-
     public void setBool(String key, boolean val) {
+/* <<<<<<<<<<<<<<  ✨ Windsurf Command ⭐ >>>>>>>>>>>>>>>> */
+    /**
+     * Sets a boolean property with the given key to the given value.
+     *
+     * @param key  the key for the property
+     * @param val  the value of the property
+     */
+/* <<<<<<<<<<  eb1c96be-846c-4890-8539-0b9fed6ccfaa  >>>>>>>>>>> */
         set(key, val);
     }
 
@@ -210,37 +212,5 @@ public class CSettings {
         public CList<String> getPropertyNames();
 
         public void save() throws Exception;
-    }
-
-    /**
-     * in-memory settings based on hashtable
-     */
-    public static class CMAP extends CSettings {
-        public CMAP() {
-            super(new Provider() {
-                protected final Hashtable<String, Object> settings = new Hashtable();
-
-                @Override
-                public String getProperty(String key) {
-                    return Parsers.parseString(settings.get(key));
-                }
-
-                @Override
-                public void setProperty(String key, String value) {
-                    settings.put(key, value);
-                }
-
-                @Override
-                public CList<String> getPropertyNames() {
-                    return new CList(settings.keySet());
-                }
-
-                @Override
-                public void save() throws Exception {
-                }
-            });
-        }
-
-        ;
     }
 }

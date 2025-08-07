@@ -11,9 +11,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j(topic = "ParallelExecutor")
 public class ParallelExecutor implements ThreadFactory {
-    private String name;
-    private AtomicInteger number = new AtomicInteger();
-    private ThreadPoolExecutor exec;
+    private final String name;
+    private final AtomicInteger number = new AtomicInteger();
+    private final ThreadPoolExecutor exec;
     private boolean closed;
 
 

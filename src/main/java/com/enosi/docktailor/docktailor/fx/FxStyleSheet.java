@@ -28,7 +28,6 @@ public class FxStyleSheet
         return new Selector(sel);
     }
 
-
     /**
      * adds multiple selectors or style sheets
      */
@@ -72,10 +71,6 @@ public class FxStyleSheet
             }
         }
     }
-
-
-    //
-
 
     public static class Selector
             extends StandardFxProperties {

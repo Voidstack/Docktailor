@@ -8,8 +8,7 @@ import java.util.HashSet;
 /**
  * HashSet with additional methods
  */
-public class CSet<T>
-        extends HashSet<T> {
+public class CSet<T> extends HashSet<T> {
     private static final int DEFAULT_SIZE = 64;
 
     public CSet(int size) {

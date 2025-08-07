@@ -3,13 +3,11 @@ package com.enosi.docktailor.common.util;
 
 import java.util.Set;
 
-
 /**
  * A map-type class that maps keys to a list of values. This class is not thread-safe.
  */
 public class CMultiMap<K, V> {
     private final CMap<K, CList<V>> map;
-
 
     public CMultiMap() {
         this(32);
@@ -27,7 +25,6 @@ public class CMultiMap<K, V> {
     public int size() {
         return map.size();
     }
-
 
     /**
      * Returns the total number of items

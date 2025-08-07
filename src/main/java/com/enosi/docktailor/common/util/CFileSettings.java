@@ -4,7 +4,6 @@ package com.enosi.docktailor.common.util;
 import java.io.*;
 import java.util.Properties;
 
-
 public class CFileSettings
         implements CSettings.Provider {
     private File file;

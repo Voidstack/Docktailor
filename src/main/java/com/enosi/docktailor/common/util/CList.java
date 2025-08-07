@@ -5,17 +5,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-
 public class CList<T>
         extends ArrayList<T> {
     public CList(int initialCapacity) {
         super(initialCapacity);
     }
 
-
     public CList() {
     }
-
 
     public CList(Collection<? extends T> c) {
         super(c == null ? 0 : c.size());
@@ -95,8 +92,7 @@ public class CList<T>
     public boolean equals(Object x) {
         if (x == this) {
             return true;
-        } else if (x instanceof CList) {
-            CList o = (CList) x;
+        } else if (x instanceof CList o) {
             // adding check for size makes it slightly faster than the superclass implementation
             // in case of different lists
             if (size() == o.size()) {

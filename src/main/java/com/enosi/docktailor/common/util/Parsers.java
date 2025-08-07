@@ -4,6 +4,7 @@ package com.enosi.docktailor.common.util;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.util.Objects;
 
 /**
  * Convenience methods that attempt to extract requested value, returning null if the said value can not be extracted.
@@ -19,6 +20,7 @@ public class Parsers {
                 s = s.trim();
                 return Double.parseDouble(s);
             } catch (Exception e) {
+                log.error(e.getMessage());
             }
         }
         return null;
@@ -27,11 +29,7 @@ public class Parsers {
 
     public static double parseDouble(Object x, double defaultValue) {
         Double d = parseDouble(x);
-        if (d == null) {
-            return defaultValue;
-        } else {
-            return d;
-        }
+        return Objects.requireNonNullElse(d, defaultValue);
     }
 
 
@@ -44,6 +42,7 @@ public class Parsers {
                 s = s.trim();
                 return Integer.parseInt(s);
             } catch (Exception e) {
+                log.error(e.getMessage());
             }
         }
         return null;
@@ -59,6 +58,7 @@ public class Parsers {
                 s = s.trim();
                 return Integer.parseInt(s);
             } catch (Exception e) {
+                log.error(e.getMessage());
             }
         }
         return defaultValue;
