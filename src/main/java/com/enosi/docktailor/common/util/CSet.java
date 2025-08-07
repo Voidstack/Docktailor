@@ -12,7 +12,6 @@ public class CSet<T>
         extends HashSet<T> {
     private static final int DEFAULT_SIZE = 64;
 
-
     public CSet(int size) {
         super(size);
     }

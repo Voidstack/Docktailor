@@ -149,7 +149,6 @@ import java.nio.CharBuffer;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-
 public class Base64 {
     /** No options specified. Value is zero. */
     public final static int NO_OPTIONS = 0;

@@ -12,7 +12,6 @@ public class FH {
         return c.hashCode();
     }
 
-
     public static int hash(int h, Object val) {
         if (val == null) {
             return h;
@@ -68,8 +67,7 @@ public class FH {
 
 
     public static int hash(int h, double val) {
-        long v = Double.doubleToLongBits(val);
-        return 31 * h + (int) (v ^ (v >>> 32));
+        return 31 * h + Double.hashCode(val);
     }
 
 

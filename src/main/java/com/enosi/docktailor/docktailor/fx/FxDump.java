@@ -15,11 +15,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Window;
 import lombok.Setter;
-
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Diagnostic tool to dump FX style information with a key press.
  */
+@Slf4j(topic = "FxDump")
 public class FxDump {
     private final KeyCode trigger;
     /**
@@ -251,6 +252,7 @@ public class FxDump {
 
             n = n.getParent();
         }
-        D.print(sb);
+
+        log.info(sb.toString());
     }
 }

@@ -11,8 +11,6 @@ public abstract class CComparator<T>
         implements Comparator<T> {
     private Collator collator;
 
-    //
-
     public CComparator() {
     }
 

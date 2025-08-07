@@ -11,16 +11,13 @@ import java.util.function.Consumer;
 public class WeakList<T> {
     private CList<WeakReference<T>> list;
 
-
     public WeakList() {
         this(8);
     }
 
-
     public WeakList(int size) {
         list = new CList<>(size);
     }
-
 
     public void gc() {
         int sz = list.size();
@@ -32,7 +29,6 @@ public class WeakList<T> {
             }
         }
     }
-
 
     public CList<T> asList() {
         int sz = list.size();
@@ -49,7 +45,6 @@ public class WeakList<T> {
         return rv;
     }
 
-
     public void forEach(Consumer<T> client) {
         int sz = list.size();
         for (int i = sz - 1; i >= 0; i--) {
@@ -62,7 +57,6 @@ public class WeakList<T> {
             }
         }
     }
-
 
     public T get(int ix) {
         return list.get(ix).get();

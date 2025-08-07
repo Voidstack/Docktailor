@@ -17,7 +17,6 @@ public class Dump {
     private static final String HEX = "0123456789ABCDEF";
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MMdd-HH:mm:ss.SSS");
 
-
     public static String list(Object x) {
         if (x == null) {
             return "<null>";
