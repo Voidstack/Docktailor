@@ -6,6 +6,7 @@ import com.enosi.docktailor.common.util.SStream;
 import com.enosi.docktailor.docktailor.fx.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
@@ -164,7 +165,7 @@ public class LocalSettings {
         return this;
     }
 
-    public LocalSettings add(String subKey, FxDouble p) {
+    public LocalSettings add(String subKey, SimpleDoubleProperty p) {
         entries.put(subKey, new Entry() {
             @Override
             public void saveValue(String prefix, ASettingsStore store) {

@@ -1,9 +1,9 @@
 package com.enosi.docktailor.docktailor.fxdock.internal;
 
 import com.enosi.docktailor.common.util.CMap;
+import com.enosi.docktailor.docktailor.fx.FxSize;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
-import org.esioc.docktailor.fx.FxSize;
 
 /**
  * BeforeDrop.
