@@ -1,4 +1,4 @@
-package com.enosi.docktailor.dock;
+package com.enosi.docktailor.docktailor.dock;
 
 /**
  * Définis une condition qui à tester pour savoir si la fenêtre dois exister. Par example pour une fenetre qui doit

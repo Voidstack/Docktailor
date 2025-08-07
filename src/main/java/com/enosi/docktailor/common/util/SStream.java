@@ -5,8 +5,7 @@ import java.util.Iterator;
 /**
  * String Stream.
  */
-public class SStream
-        implements Iterable<String> {
+public class SStream implements Iterable<String> {
     private final CList<String> list;
     private int pos;
 

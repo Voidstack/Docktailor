@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
-@Slf4j
+@Slf4j(topic = "Resources")
 public class R {
     /**
      * Load an image.
@@ -34,9 +34,14 @@ public class R {
         }
     }
 
+    /**
+     * Load a parent from an FXML file.
+     * @param relativePath fxml/myFile.fxml
+     * @return The parent node
+     */
     public static Parent loadParentFromFxml(String relativePath) {
         try {
-            URL fxmlUrl = R.class.getResource(relativePath);
+            URL fxmlUrl = R.class.getResource("/" + relativePath);
             if (fxmlUrl == null) {
                 log.error("Failed to load string file: {} - Resource not found", relativePath);
                 return null;
@@ -50,7 +55,7 @@ public class R {
 
     /**
      * Load a string from a file.
-     * @param relativePath The path to the file
+     * @param relativePath css/main.css
      * @return The string
      */
     public static String loadStringFromFile(String relativePath) {

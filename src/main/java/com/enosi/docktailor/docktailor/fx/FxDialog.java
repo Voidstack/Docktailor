@@ -17,8 +17,7 @@ import javafx.stage.Window;
  * <p>
  * This class is of a more traditional design which uses a modal FxWindow.
  */
-public class FxDialog<T>
-        extends FxWindow {
+public class FxDialog<T> extends FxWindow {
     public static final CssStyle PANE = new CssStyle();
     private final BorderPane pane;
     private T result;

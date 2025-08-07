@@ -1,7 +1,6 @@
-package com.enosi.docktailor.dock;
+package com.enosi.docktailor.docktailor.dock;
 
 import com.enosi.docktailor.common.util.CKit;
-import com.enosi.docktailor.common.util.CSystem;
 import com.enosi.docktailor.docktailor.fx.*;
 import com.enosi.docktailor.docktailor.fx.settings.LocalSettings;
 import com.enosi.docktailor.docktailor.fxdock.FxDockPane;
@@ -30,10 +29,9 @@ public class DemoBrowser extends FxDockPane {
     public final FxAction reloadAction = new FxAction(this::reload);
     public final Label statusField;
 
-
     public DemoBrowser() {
         super(DemoDockSchema.BROWSER);
-        setTitle("Browser / " + CSystem.getJavaVersion());
+        setTitle("Browser");
 
         addressField = new TextField();
         addressField.setOnAction((ev) ->

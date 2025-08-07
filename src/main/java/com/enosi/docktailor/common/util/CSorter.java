@@ -16,19 +16,9 @@ public class CSorter {
     /**
      * universal sort by toString() value
      */
-    public static void sort(Object[] a) {
-        if (a != null) {
-            Arrays.sort(a, comparator(false));
-        }
-    }
-
-
-    /**
-     * universal sort by toString() value
-     */
     public static void sort(List<?> a) {
         if (a != null) {
-            Collections.sort(a, comparator(false));
+            a.sort(comparator(false));
         }
     }
 
@@ -53,12 +43,7 @@ public class CSorter {
      */
     public static <T> void sort(List<T> a, Function<T, String> conv) {
         if (a != null) {
-            Collections.sort(a, new Comparator<T>() {
-                @Override
-                public int compare(T a, T b) {
-                    return compareItems(a, b, conv);
-                }
-            });
+            a.sort((a1, b) -> compareItems(a1, b, conv));
         }
     }
 
@@ -82,7 +67,6 @@ public class CSorter {
         }
     }
 
-
     /**
      * universal text collation by toString() value
      */
@@ -92,13 +76,12 @@ public class CSorter {
         }
     }
 
-
     /**
      * universal text collation by toString() value
      */
     public static void collate(List<?> a) {
         if (a != null) {
-            Collections.sort(a, collator());
+            a.sort(collator());
         }
     }
 
@@ -120,13 +103,12 @@ public class CSorter {
         }
     }
 
-
     /**
      * universal text collation using supplied string converter
      */
     public static <T> void collate(List<T> a, Function<T, String> conv) {
         if (a != null) {
-            Collections.sort(a, new Comparator<T>() {
+            a.sort(new Comparator<T>() {
                 private final Collator collator = Collator.getInstance();
 
 
@@ -138,63 +120,15 @@ public class CSorter {
         }
     }
 
-
-    public static int compare(int a, int b) {
-        if (a < b) {
-            return -1;
-        } else if (a > b) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-
-    public static int compare(long a, long b) {
-        if (a < b) {
-            return -1;
-        } else if (a > b) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-
-    public static int compare(float a, float b) {
-        if (a < b) {
-            return -1;
-        } else if (a > b) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-
-    public static int compare(double a, double b) {
-        if (a < b) {
-            return -1;
-        } else if (a > b) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-
     public static Comparator<Object> comparator() {
         return comparator(false);
     }
 
 
     public static Comparator<Object> comparator(final boolean reverse) {
-        return new Comparator<Object>() {
-            @Override
-            public int compare(Object a, Object b) {
-                int rv = smartCompare(a, b);
-                return reverse ? -rv : rv;
-            }
+        return (a, b) -> {
+            int rv = smartCompare(a, b);
+            return reverse ? -rv : rv;
         };
     }
 

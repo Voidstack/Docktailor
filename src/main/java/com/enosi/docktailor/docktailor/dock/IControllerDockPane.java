@@ -1,4 +1,4 @@
-package com.enosi.docktailor.dock;
+package com.enosi.docktailor.docktailor.dock;
 
 import com.enosi.docktailor.docktailor.fxdock.FxDockPane;
 import javafx.geometry.Side;

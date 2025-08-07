@@ -2,7 +2,6 @@
 package com.enosi.docktailor.docktailor.fx.settings;
 
 import com.enosi.docktailor.common.util.CList;
-import com.enosi.docktailor.common.util.CSet;
 import com.enosi.docktailor.docktailor.fx.ClosingWindowOperation;
 import com.enosi.docktailor.docktailor.fx.FX;
 import com.enosi.docktailor.docktailor.fx.FxFramework;
@@ -23,8 +22,10 @@ import javafx.stage.WindowEvent;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 
 /**
@@ -199,7 +200,7 @@ public class WindowMonitor {
         String name = FX.getName(win);
         if (name != null) {
             // collect existing ids
-            CSet<String> ids = new CSet<>();
+            Set<String> ids = new HashSet<>();
             for (Window w : Window.getWindows()) {
                 if (w != win) {
                     WindowMonitor m = get(w);

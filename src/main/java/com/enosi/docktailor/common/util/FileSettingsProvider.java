@@ -18,7 +18,6 @@ public class FileSettingsProvider extends SettingsProviderBase {
         setFile(f);
     }
 
-
     @Override
     protected void saveSettings() {
         try {

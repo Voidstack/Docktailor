@@ -1,7 +1,5 @@
 package com.enosi.docktailor.docktailor.fx;
 
-import com.enosi.docktailor.common.util.SystemTask;
-import com.enosi.docktailor.docktailor.fx.internal.CssTools;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,11 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -230,16 +225,6 @@ public final class FX {
     public static void later(Runnable r) {
         Platform.runLater(r);
     }
-
-
-    /**
-     * invokes Platform.runLater() after the specified delay
-     */
-    public static void later(int delay, Runnable r) {
-        SystemTask.schedule(delay, () ->
-                Platform.runLater(r));
-    }
-
 
     /**
      * alias for Platform.isFxApplicationThread()

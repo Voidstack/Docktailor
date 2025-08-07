@@ -1,4 +1,4 @@
-package com.enosi.docktailor.dock;
+package com.enosi.docktailor.docktailor.dock;
 
 import com.enosi.docktailor.docktailor.fx.FxMenu;
 import com.enosi.docktailor.docktailor.fx.FxMenuBar;
@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
 @Singleton
 @Slf4j
 public class ServiceDocktailor {
+    public static boolean IS_DEBUG = false;
+
     private static ServiceDocktailor instance;
 
     private final Set<Class<? extends IControllerDockPane>> draggableTabs;

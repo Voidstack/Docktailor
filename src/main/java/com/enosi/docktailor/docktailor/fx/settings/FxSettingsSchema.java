@@ -155,11 +155,7 @@ public abstract class FxSettingsSchema {
             String state = ss.nextString(WINDOW_NORMAL);
 
             if ((width > 0) && (height > 0)) {
-                if
-                (
-                        FX.isValidCoordinates(x, y) &&
-                                (!(w instanceof FxDialog))
-                ) {
+                if(FX.isValidCoordinates(x, y) &&  (!(w instanceof FxDialog))) {
                     // iconified windows have (x,y) of -32000 for some reason
                     // their coordinates are essentially lost (unless there is a way to get them in FX)
                     w.setX(x);
@@ -188,7 +184,6 @@ public abstract class FxSettingsSchema {
                             Platform.runLater(() -> s.setIconified(true));
                             break;
                     }
-
 
                     if (w instanceof FxDialog d) {
                         Window parent = d.getOwner();

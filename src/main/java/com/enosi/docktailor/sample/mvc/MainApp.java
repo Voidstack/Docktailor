@@ -1,6 +1,7 @@
 package com.enosi.docktailor.sample.mvc;
 
 import com.enosi.docktailor.common.util.GlobalSettings;
+import com.enosi.docktailor.docktailor.dock.ServiceDocktailor;
 import com.enosi.docktailor.docktailor.fx.FxFramework;
 import com.enosi.docktailor.utils.R;
 import javafx.application.Application;
@@ -20,11 +21,13 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         ARGS.addAll(Arrays.stream(args).toList());
+        ServiceDocktailor.IS_DEBUG = ARGS.contains("-debug");
+
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         log.info("Start");
         FxFramework.openDockSystemConf(GlobalSettings.getDEFAULT_FILE());
     }

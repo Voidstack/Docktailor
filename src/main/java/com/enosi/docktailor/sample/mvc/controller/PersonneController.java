@@ -1,6 +1,6 @@
 package com.enosi.docktailor.sample.mvc.controller;
 
-import com.enosi.docktailor.dock.AControllerDockPane;
+import com.enosi.docktailor.docktailor.dock.AControllerDockPane;
 import com.enosi.docktailor.utils.R;
 import javafx.geometry.Side;
 import javafx.scene.Parent;

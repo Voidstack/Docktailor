@@ -1,6 +1,6 @@
 package com.enosi.docktailor.docktailor.fx;
 
-import com.enosi.docktailor.dock.IControllerDockPane;
+import com.enosi.docktailor.docktailor.dock.IControllerDockPane;
 import javafx.beans.property.Property;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;

@@ -3,7 +3,7 @@ package com.enosi.docktailor.docktailor.fx;
 
 import com.enosi.docktailor.common.util.ASettingsStore;
 import com.enosi.docktailor.common.util.GlobalSettings;
-import com.enosi.docktailor.dock.DemoDockSchema;
+import com.enosi.docktailor.docktailor.dock.DemoDockSchema;
 import com.enosi.docktailor.docktailor.fx.settings.FxSettingsSchema;
 import com.enosi.docktailor.docktailor.fx.settings.WindowMonitor;
 import javafx.scene.Node;
