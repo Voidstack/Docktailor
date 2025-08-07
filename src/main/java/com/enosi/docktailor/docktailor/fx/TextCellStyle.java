@@ -6,22 +6,27 @@ import com.enosi.docktailor.common.util.FH;
 import com.enosi.docktailor.common.util.SB;
 import com.enosi.docktailor.docktailor.fx.internal.StandardFxProperties;
 import javafx.scene.paint.Color;
+import lombok.Getter;
 
 /**
  * (Monospaced) text cell style.
  */
-public class TextCellStyle
-        implements Cloneable {
+public class TextCellStyle implements Cloneable {
     public static final TextCellStyle NONE = new TextCellStyle();
 
+    @Getter
     private Color textColor;
+    @Getter
     private Color backgroundColor;
+    @Getter
     private boolean bold;
+    @Getter
     private boolean italic;
+    @Getter
     private boolean strikeThrough;
+    @Getter
     private boolean underscore;
     private String style;
-
 
     public TextCellStyle(Color fg, Color bg, boolean bold, boolean italic, boolean strikeThrough, boolean underscore) {
         this.textColor = fg;
@@ -32,26 +37,21 @@ public class TextCellStyle
         this.underscore = underscore;
     }
 
-
     public TextCellStyle(Color fg) {
         this.textColor = fg;
     }
 
-
     public TextCellStyle() {
     }
-
 
     public TextCellStyle copy() {
         return (TextCellStyle) clone();
     }
 
-
     @Override
     public Object clone() {
         return new TextCellStyle(textColor, backgroundColor, bold, italic, strikeThrough, underscore);
     }
-
 
     public boolean isEmpty() {
         return
@@ -78,8 +78,7 @@ public class TextCellStyle
     public boolean equals(Object x) {
         if (x == this) {
             return true;
-        } else if (x instanceof TextCellStyle) {
-            TextCellStyle c = (TextCellStyle) x;
+        } else if (x instanceof TextCellStyle c) {
             return
                     (bold == c.bold) &&
                             (italic == c.italic) &&
@@ -115,19 +114,9 @@ public class TextCellStyle
     }
 
 
-    public Color getBackgroundColor() {
-        return backgroundColor;
-    }
-
-
     public void setBackgroundColor(Color c) {
         backgroundColor = c;
         style = null;
-    }
-
-
-    public Color getTextColor() {
-        return textColor;
     }
 
 
@@ -137,19 +126,9 @@ public class TextCellStyle
     }
 
 
-    public boolean isBold() {
-        return bold;
-    }
-
-
     public void setBold(boolean on) {
         bold = on;
         style = null;
-    }
-
-
-    public boolean isItalic() {
-        return italic;
     }
 
 
@@ -159,19 +138,9 @@ public class TextCellStyle
     }
 
 
-    public boolean isStrikeThrough() {
-        return strikeThrough;
-    }
-
-
     public void setStrikeThrough(boolean on) {
         strikeThrough = on;
         style = null;
-    }
-
-
-    public boolean isUnderscore() {
-        return underscore;
     }
 
 

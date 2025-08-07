@@ -24,22 +24,18 @@ public class HPane extends Pane {
     private static final Object KEY_CONSTRAINT = new Object();
     private int gap;
 
-
     public HPane(int hgap) {
         this.gap = hgap;
     }
 
-
     public HPane() {
     }
-
 
     public HPane(Node... nodes) {
         for (Node n : nodes) {
             add(n);
         }
     }
-
 
     public HPane(int gap, Node... nodes) {
         this.gap = gap;
@@ -48,7 +44,6 @@ public class HPane extends Pane {
             add(n);
         }
     }
-
 
     public void space() {
         space(10);
@@ -61,7 +56,6 @@ public class HPane extends Pane {
         add(p);
     }
 
-
     /**
      * adds a node with preferred width constraint
      */
@@ -70,13 +64,11 @@ public class HPane extends Pane {
         getChildren().add(n);
     }
 
-
     public void addAll(Node... nodes) {
         for (Node n : nodes) {
             add(n);
         }
     }
-
 
     /**
      * adds a node at the specified position
@@ -86,7 +78,6 @@ public class HPane extends Pane {
         getChildren().add(ix, n);
     }
 
-
     /**
      * adds a node with the specified width constraint
      */
@@ -95,7 +86,6 @@ public class HPane extends Pane {
         getChildren().add(n);
         FX.setProperty(n, KEY_CONSTRAINT, Double.valueOf(constraint));
     }
-
 
     /**
      * adds an empty region with the FILL constraint
@@ -107,7 +97,6 @@ public class HPane extends Pane {
         FX.setProperty(n, KEY_CONSTRAINT, FILL);
     }
 
-
     /**
      * adds a node with the FILL constraint
      */
@@ -117,7 +106,6 @@ public class HPane extends Pane {
         FX.setProperty(n, KEY_CONSTRAINT, FILL);
     }
 
-
     /**
      * adds a node with the FILL constraint at the specified position
      */
@@ -126,7 +114,6 @@ public class HPane extends Pane {
         getChildren().add(ix, n);
         FX.setProperty(n, KEY_CONSTRAINT, FILL);
     }
-
 
     protected void massage(Node n) {
         // once in an HPane, surrender your limitations!

@@ -13,7 +13,6 @@ public class FxButtonPane
     public static final CssStyle PANE = new CssStyle();
     private static final int MIN_WIDTH = 70;
 
-
     public FxButtonPane() {
         super(5);
         PANE.set(this);

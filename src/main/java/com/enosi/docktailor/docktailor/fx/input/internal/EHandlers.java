@@ -16,10 +16,6 @@ public class EHandlers {
     // key binding handlers are not stored (a null is used to signify the key binding handler)
     private final CList<Object> list = new CList<>();
 
-
-    //
-
-
     public EHandlers() {
     }
 

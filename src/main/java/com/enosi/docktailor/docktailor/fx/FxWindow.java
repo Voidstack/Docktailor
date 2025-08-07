@@ -16,7 +16,6 @@ public class FxWindow
     private final BorderPane contentPane;
     private InputMap inputMap;
 
-
     public FxWindow(String name) {
         this.contentPane = new BorderPane();
         FX.setName(this, name);

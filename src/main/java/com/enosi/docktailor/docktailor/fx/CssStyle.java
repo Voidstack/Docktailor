@@ -21,7 +21,6 @@ public class CssStyle {
     private static int seq;
     private final String name;
 
-
     public CssStyle() {
         name = generateName(new Throwable().getStackTrace()[1]);
     }
