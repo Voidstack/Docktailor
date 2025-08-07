@@ -7,7 +7,6 @@ import com.enosi.docktailor.docktailor.fx.ClosingWindowOperation;
 import com.enosi.docktailor.docktailor.fx.FX;
 import com.enosi.docktailor.docktailor.fx.FxFramework;
 import com.enosi.docktailor.docktailor.fx.ShutdownChoice;
-import com.enosi.docktailor.docktailor.fx.internal.CssLoader;
 import com.enosi.docktailor.docktailor.fx.util.FxTools;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -165,7 +164,7 @@ public class WindowMonitor {
                         if (!isIgnore(w)) {
                             log.debug(String.format("added: %s", w));
                             FxFramework.restore(w);
-                            applyStyleSheet(w);
+                            // applyStyleSheet(w);
                         }
                     }
                 } else if (ch.wasRemoved()) {
@@ -287,7 +286,7 @@ public class WindowMonitor {
 
     private static void applyStyleSheet(Window w) {
         try {
-            String style = CssLoader.getCurrentStyleSheet();
+            String style = "";
             FX.applyStyleSheet(w, null, style);
         } catch (Throwable e) {
             log.error("", e);

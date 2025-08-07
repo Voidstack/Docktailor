@@ -5,8 +5,6 @@ import com.enosi.docktailor.common.io.CWriter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -14,10 +12,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
 
 @Slf4j(topic = "CKit")
 public final class CKit {
@@ -31,7 +27,6 @@ public final class CKit {
     private static final long MS_IN_A_MINUTE = 60000L;
     private static final long MS_IN_AN_HOUR = 3600000L;
     private static final long MS_IN_A_DAY = 86400000L;
-    private static Boolean eclipseDetected;
 
     public static void close(Closeable x) {
         try {
@@ -41,7 +36,6 @@ public final class CKit {
         } catch (Throwable ignore) {
         }
     }
-
 
     public static boolean equals(Object a, Object b) {
         if (a == b) {
@@ -91,7 +85,6 @@ public final class CKit {
             }
         }
     }
-
 
     public static boolean notEquals(Object a, Object b) {
         return !equals(a, b);
@@ -144,75 +137,10 @@ public final class CKit {
         return true;
     }
 
-
-    public static void sleep(long ms) {
-        if (ms > 0) {
-            try {
-                Thread.sleep(ms);
-            } catch (InterruptedException ignore) {
-            }
-        }
-    }
-
-
-    /**
-     * sleeps, if necessary, to insure minimum delay from start
-     */
-    public static void comfortSleep(long start, long minDelay) {
-        long t = start + minDelay - System.currentTimeMillis();
-        sleep(t);
-    }
-
-
-    public static int indexOf(Object[] a, Object d) {
-        if (a != null) {
-            int ix = 0;
-            for (Object item : a) {
-                if (equals(item, d)) {
-                    return ix;
-                }
-
-                ++ix;
-            }
-        }
-
-        return -1;
-    }
-
-
-    public static String readString(Class cs, String resource) throws Exception {
-        return readString(cs.getResourceAsStream(resource));
-    }
-
-
-    public static String readString(InputStream is) throws Exception {
-        Reader in = new InputStreamReader(is, CHARSET_UTF8);
-        try {
-            SB sb = new SB(16384);
-            int c;
-            while ((c = in.read()) != -1) {
-                if (sb.isEmpty()) {
-                    if (c == BOM) {
-                        continue;
-                    }
-                }
-                sb.append((char) c);
-            }
-            return sb.toString();
-        } finally {
-            close(in);
-        }
-    }
-
-
     public static String readString(File f, Charset cs) throws Exception {
         return readString(new FileInputStream(f), cs);
     }
 
-
-    public static String readString(File f, int max, Charset cs) throws Exception {
-        return readString(new FileInputStream(f), max, cs);
-    }
 
 
     public static String readString(File f) throws Exception {
@@ -279,54 +207,9 @@ public final class CKit {
         }
     }
 
-
-    /**
-     * returns path to root or null if the root is not a parent of the specified file
-     */
-    public static String pathToRoot(File root, File file) {
-        try {
-            root = root.getCanonicalFile();
-        } catch (Exception e) {
-        }
-
-        try {
-            file = file.getCanonicalFile();
-        } catch (Exception e) {
-        }
-
-        SB sb = pathToRoot(null, root, file, 0);
-        return sb == null ? null : sb.toString();
-    }
-
-
-    private static SB pathToRoot(SB sb, File root, File file, int level) {
-        if (file == null) {
-            return null;
-        } else if (root.equals(file)) {
-            if (level == 0) {
-                return null;
-            } else {
-                return new SB();
-            }
-        } else {
-            File p = file.getParentFile();
-
-            sb = pathToRoot(sb, root, p, level + 1);
-            if (sb == null) {
-                return null;
-            } else if (level > 0) {
-                sb.append(file.getName());
-                sb.append("/");
-            }
-            return sb;
-        }
-    }
-
-
     public static void write(File f, String text) throws Exception {
         write(f, text, CHARSET_UTF8);
     }
-
 
     public static void write(File f, String text, Charset encoding) throws Exception {
         FileTools.ensureParentFolder(f);
@@ -350,31 +233,6 @@ public final class CKit {
             close(out);
         }
     }
-
-
-    @SuppressWarnings("resource") // actually no resource leak, the compiler does not understand our close()
-    public static byte[] readBytes(File f, int maxSize) throws Exception {
-        int len = (int) Math.min(maxSize, f.length());
-        byte[] buf = new byte[len];
-
-        FileInputStream in = new FileInputStream(f);
-        try {
-            int read = 0;
-
-            while (read < len) {
-                int rv = in.read(buf, read, len - read);
-                if (rv < 0) {
-                    throw new IOException("eof");
-                } else {
-                    read += rv;
-                }
-            }
-        } finally {
-            close(in);
-        }
-        return buf;
-    }
-
 
     /**
      * Splits a string.  Works slightly different than String.split(): 1. does not use regex pattern and therefore
@@ -759,43 +617,6 @@ public final class CKit {
         return (int) Math.floor(x);
     }
 
-
-    /**
-     * collect public static fields from a class, of specified type
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> CList<T> collectPublicStaticFields(Class<?> c, Class<T> type) {
-        CList<T> rv = new CList<>();
-        for (Field f : c.getFields()) {
-            int m = f.getModifiers();
-            if (Modifier.isPublic(m) && Modifier.isStatic(m)) {
-                try {
-                    Object v = f.get(null);
-                    if (v != null) {
-                        if (type.isAssignableFrom(v.getClass())) {
-                            rv.add((T) v);
-                        }
-                    }
-                } catch (Exception e) {
-                    log.error(e.getMessage());
-                }
-            }
-        }
-        return rv;
-    }
-
-
-    /**
-     * returns true if running from Eclipse
-     */
-    public static boolean isEclipse() {
-        if (eclipseDetected == null) {
-            eclipseDetected = new File(".project").exists() && new File(".classpath").exists();
-        }
-        return eclipseDetected;
-    }
-
-
     /**
      * utility method converts a String Collection to a String[]. returns null if input is null
      */
@@ -803,25 +624,6 @@ public final class CKit {
         if (coll == null) {
             return null;
         }
-        return coll.toArray(new String[coll.size()]);
-    }
-
-
-    public static <S, T> List<T> transform(List<S> src, List<T> target, Function<S, T> converter) {
-        if (src == null) {
-            return null;
-        }
-
-        int sz = src.size();
-        if (target == null) {
-            target = new CList<>(sz);
-        }
-
-        for (int i = 0; i < sz; i++) {
-            S s = src.get(i);
-            T t = converter.apply(s);
-            target.add(t);
-        }
-        return target;
+        return coll.toArray(new String[0]);
     }
 }

@@ -1,8 +1,12 @@
 package com.enosi.docktailor.utils;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 
 @Slf4j
@@ -27,6 +31,20 @@ public class R {
         } catch (Exception e) {
             log.error("Unexpected error while loading image: {}", relativePath, e);
             throw e;
+        }
+    }
+
+    public static Parent loadParentFromFxml(String relativePath) {
+        try {
+            URL fxmlUrl = R.class.getResource(relativePath);
+            if (fxmlUrl == null) {
+                log.error("Failed to load string file: {} - Resource not found", relativePath);
+                return null;
+            }
+            return FXMLLoader.load(fxmlUrl);
+        } catch (IOException e) {
+            log.error("Failed to load string file: {} - IOException", relativePath, e);
+            return null;
         }
     }
 

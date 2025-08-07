@@ -46,13 +46,6 @@ public class CPane extends Pane {
     }    private final StyleableProperty<Number> vgap = SPF.createStyleableNumberProperty(this, "vgap", "-fx-vgap", s -> s.vgap);
 
     /**
-     * convenience method creates a right-aligned Label
-     */
-    public final static Label rlabel(String text) {
-        return FX.label(text, Pos.BASELINE_RIGHT);
-    }
-
-    /**
      * sets standard padding and gaps
      */
     public final void setDefaultStyle() {

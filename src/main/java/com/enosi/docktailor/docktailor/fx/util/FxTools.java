@@ -13,21 +13,6 @@ import java.util.List;
  * FxTools.
  */
 public class FxTools {
-    /**
-     * finds the maximum value in the list of Integers
-     */
-    public static int getMaximumValue(List<Integer> items) {
-        int rv = Integer.MIN_VALUE;
-
-        for (int v : items) {
-            if (rv < v) {
-                rv = v;
-            }
-        }
-        return rv;
-    }
-
-
     public static String describe(Window w) {
         if (w == null) {
             return "<null>";

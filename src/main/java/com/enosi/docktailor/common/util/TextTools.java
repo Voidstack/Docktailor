@@ -424,14 +424,6 @@ public class TextTools {
         return ((c >= min) && (c <= max));
     }
 
-    public static boolean isCJK(char c) {
-        if (within(c, 0x2e80, 0x33ff)) return true;
-        if (within(c, 0x4e00, 0x9fff)) return true;
-        if (within(c, 0xf900, 0xfaff)) return true;
-        if (within(c, 0xff60, 0xffef)) return true;
-        return false;
-    }
-
     public static boolean isNumber(char c) {
         return false;
     }
@@ -573,16 +565,6 @@ public class TextTools {
         return false;
     }
 
-    public static boolean isEmailOrUrl(String s) {
-        if (isEmail(s)) {
-            return true;
-        } else if (isUrl(s)) {
-            return true;
-        }
-
-        return false;
-    }
-
     public static boolean isWordDelimiter(int c) {
         switch (c) {
             case '–': // ox2013 en-dash
@@ -600,204 +582,12 @@ public class TextTools {
         return false;
     }
 
-    public static int lastIndexOfSeparator(String s, int pos, SeparatorFunction f) {
-        int len = s.length();
-        if (pos < 0) {
-            throw new IllegalArgumentException("pos<0");
-        } else if (pos >= len) {
-            throw new IllegalArgumentException("pos>len");
-        }
-
-        for (int i = pos - 1; i >= 0; i--) {
-            char c = s.charAt(i);
-            if (f.isSeparator(c)) {
-                return i + 1;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int lastIndexOfWhitespace(String s, int pos) {
-        if (s != null) {
-            int len = s.length();
-            if (pos < 0) {
-                throw new IllegalArgumentException("pos<0");
-            } else if (pos >= len) {
-                pos = len;
-            }
-
-            for (int i = pos - 1; i >= 0; i--) {
-                char c = s.charAt(i);
-                if (CKit.isBlank(c)) {
-                    return i + 1;
-                }
-            }
-        }
-
-        return -1;
-    }
-
-    public static int lastIndexOfWhitespace(String s) {
-        return lastIndexOfWhitespace(s, Integer.MAX_VALUE);
-    }
-
-    public static int indexOfSeparator(String s, int pos, SeparatorFunction f) {
-        int len = s.length();
-        if (pos < 0) {
-            throw new IllegalArgumentException("pos<0");
-        } else if (pos >= len) {
-            throw new IllegalArgumentException("pos>len");
-        }
-
-        for (int i = pos; i < len; i++) {
-            char c = s.charAt(i);
-            if (f.isSeparator(c)) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
     public static boolean isBlankOrPunctuation(int c) {
         if (CKit.isBlank(c)) {
             return true;
         }
 
         return TextTools.isWordDelimiter(c);
-    }
-
-    /**
-     * split text into tokens using whitespace as separator
-     */
-    public static CList<String> splitWhitespace(String text) {
-        CList<String> list = new CList<>();
-        if (text != null) {
-            int start = 0;
-            int len = text.length();
-            boolean white = true;
-
-            for (int i = 0; i < len; i++) {
-                char c = text.charAt(i);
-                if (CKit.isBlank(c)) {
-                    if (!white) {
-                        if (i > start) {
-                            add(list, text.substring(start, i));
-                        }
-                        white = true;
-                    }
-                } else {
-                    if (white) {
-                        start = i;
-                        white = false;
-                    }
-                }
-            }
-
-            if (!white) {
-                if (start < len) {
-                    add(list, text.substring(start, len));
-                }
-            }
-        }
-
-        return list;
-    }
-
-    /**
-     * split to words using whitespace and word-delimiting punctuation
-     */
-    public static CList<String> splitWords(String text) {
-        CList<String> list = new CList<>();
-        if (text != null) {
-            int start = 0;
-            int len = text.length();
-            boolean white = true;
-
-            for (int i = 0; i < len; i++) {
-                char c = text.charAt(i);
-                if (isBlankOrPunctuation(c)) {
-                    if (!white) {
-                        if (i > start) {
-                            add(list, text.substring(start, i));
-                        }
-                        white = true;
-                    }
-                } else if (isCJK(c)) {
-                    if (white) {
-                        white = false;
-                    } else {
-                        if (i > start) {
-                            add(list, text.substring(start, i));
-                        }
-                    }
-                    start = i;
-                } else {
-                    if (white) {
-                        start = i;
-                        white = false;
-                    }
-                }
-            }
-
-            if (!white) {
-                if (start < len) {
-                    add(list, text.substring(start, len));
-                }
-            }
-        }
-
-        return list;
-    }
-
-    private static void add(CList<String> list, String s) {
-        // trim trimmable punctuation
-        s = trimPunctuation(s);
-        if (s.length() > 0) {
-            list.add(s);
-        }
-    }
-
-    public static String replace(String text, String pattern, String newPattern) {
-        if (text != null) {
-            SB sb = new SB(text);
-            sb.replace(pattern, newPattern);
-            return sb.toString();
-        }
-        return null;
-    }
-
-    public static String replace(String text, char pattern, char newPattern) {
-        if (text != null) {
-            SB sb = new SB(text);
-            sb.replace(pattern, newPattern);
-            return sb.toString();
-        }
-        return null;
-    }
-
-    public static String replaceIgnoreCase(String text, String pattern, String newPattern) {
-        SB sb = new SB(text);
-        int start = 0;
-        for (; ; ) {
-            // FIX suboptimal
-            int ix = sb.indexOfIgnoreCase(pattern, start);
-            if (ix < 0) {
-                return sb.toString();
-            } else {
-                sb.replace(ix, ix + pattern.length(), newPattern);
-                start = (ix + newPattern.length());
-            }
-        }
-    }
-
-    public static boolean containsIgnoreCase(String text, String pattern) {
-        return indexOfIgnoreCase(text, pattern, 0) >= 0;
-    }
-
-    public static int indexOfIgnoreCase(String text, String pattern) {
-        return indexOfIgnoreCase(text, pattern, 0);
     }
 
     public static boolean isSameIgnoreCase(char a, char b) {

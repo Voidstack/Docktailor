@@ -6,8 +6,9 @@ import com.enosi.docktailor.common.util.SB;
 import com.enosi.docktailor.docktailor.fx.*;
 import com.enosi.docktailor.docktailor.fx.settings.LocalSettings;
 import com.enosi.docktailor.docktailor.fxdock.FxDockWindow;
-import com.enosi.docktailor.example.MainApp;
+import com.enosi.docktailor.sample.mvc.MainApp;
 import com.enosi.docktailor.utils.R;
+import com.enosi.docktailor.sample.mvc.controller.PersonneController;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -169,6 +169,12 @@ public class DemoWindow extends FxDockWindow {
         Platform.runLater(() -> {
             ServiceDockableTab.getInstance().initFXMenuBar(fxMenuBar, this);
             fxMenuBar.separator();
+
+            fxMenuBar.item("Personne", new FxAction(() -> {
+                log.info("Docktailor : Personne");
+                PersonneController p = new PersonneController();
+                this.addDockPane(p.createDockPane());
+            }));
 
             // Custom config
             fxMenuBar.item(addCustomConfiguration("Configuration #1", GlobalSettings.getFILE_1()));

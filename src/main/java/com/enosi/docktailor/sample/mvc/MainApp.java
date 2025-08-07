@@ -1,4 +1,4 @@
-package com.enosi.docktailor.example;
+package com.enosi.docktailor.sample.mvc;
 
 import com.enosi.docktailor.common.util.GlobalSettings;
 import com.enosi.docktailor.docktailor.fx.FxFramework;

@@ -11,8 +11,7 @@ import java.util.List;
 /**
  * Convenient MenuBar.
  */
-public class FxMenuBar
-        extends MenuBar {
+public class FxMenuBar extends MenuBar {
     public FxMenuBar() {
     }
 
@@ -26,36 +25,6 @@ public class FxMenuBar
         FxMenu m = new FxMenu(text);
         getMenus().add(m);
         return m;
-    }
-
-
-    public FxMenu menu(String text, FxAction a) {
-        FxMenu m = new FxMenu(text, a);
-        getMenus().add(m);
-        return m;
-    }
-
-    public FxCheckMenuItem checkItem(String text, FxAction a) {
-        FxCheckMenuItem m = new FxCheckMenuItem(text, a);
-        add(m);
-        return m;
-    }
-
-//	public FxCheckMenuItem checkItem(String text, GlobalBooleanProperty p)
-//	{
-//		FxCheckMenuItem m = new FxCheckMenuItem(text, p);
-//		add(m);
-//		return m;
-//	}
-
-    public FxCheckMenuItem checkItem(String text, Property<Boolean> p) {
-        FxCheckMenuItem m = new FxCheckMenuItem(text, p);
-        add(m);
-        return m;
-    }
-
-    public void addFill() {
-        // TODO
     }
 
     public void add(Node n) {

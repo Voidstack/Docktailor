@@ -107,7 +107,6 @@ public class GlobalSettings {
         return provider().getStream(key);
     }
 
-
     @Deprecated // FIX move to ASettingsStore
     public static void setStream(String key, SStream s) {
         provider().setStream(key, s);

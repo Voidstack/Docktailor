@@ -1,6 +1,5 @@
 package com.enosi.docktailor.docktailor.fx;
 
-import com.enosi.docktailor.docktailor.fx.internal.CssLoader;
 import javafx.collections.ObservableList;
 import javafx.css.Styleable;
 import lombok.Getter;
@@ -26,13 +25,13 @@ public class CssStyle {
     }
 
     private static String generateName(StackTraceElement s) {
-        if (CssLoader.DUMP) {
-            return s.getClassName().replace('.', '_') + "_L" + s.getLineNumber();
-        } else {
+        //if (CssLoader.DUMP) {
+        return s.getClassName().replace('.', '_') + "_L" + s.getLineNumber();
+/*        } else {
             synchronized (CssStyle.class) {
                 return "S" + (seq++);
             }
-        }
+        }*/
     }
 
     @Override
