@@ -8,7 +8,6 @@ import com.enosi.docktailor.docktailor.fx.settings.LocalSettings;
 import com.enosi.docktailor.docktailor.fxdock.FxDockWindow;
 import com.enosi.docktailor.sample.mvc.MainApp;
 import com.enosi.docktailor.utils.R;
-import com.enosi.docktailor.sample.mvc.controller.PersonneController;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -73,8 +72,10 @@ public class DemoWindow extends FxDockWindow {
     }
 
     protected static void actionLoadSettings(String fileName) {
-        log.info("Docktailor : Load default interface configuration : " + fileName);
+        log.info("Docktailor : Load default interface configuration : {}", fileName);
         FxFramework.openDockSystemConf(fileName);
+        ServiceDocktailor.getInstance().setLastUIConfigUsed(fileName);
+        ServiceDocktailor.getInstance().getConfigDocktailor().save();
 
         //AppConfigManager.getInstance().saveProperty(AppConfigManager.LAST_UI_CONFIG_SAVED, fileName);
     }
@@ -87,7 +88,8 @@ public class DemoWindow extends FxDockWindow {
     protected static void actionSaveSettings(String fileName) {
         log.info("Docktailor : Save current interface configuration in " + fileName);
         FxFramework.storeLayout(fileName);
-
+        ServiceDocktailor.getInstance().setLastUIConfigUsed(fileName);
+        ServiceDocktailor.getInstance().getConfigDocktailor().save();
         //AppConfigManager.getInstance().saveProperty(AppConfigManager.LAST_UI_CONFIG_SAVED, fileName);
     }
 
@@ -170,12 +172,6 @@ public class DemoWindow extends FxDockWindow {
             ServiceDocktailor.getInstance().initFXMenuBar(fxMenuBar, this);
             fxMenuBar.separator();
 
-            fxMenuBar.item("Personne", new FxAction(() -> {
-                log.info("Docktailor : Personne");
-                PersonneController p = new PersonneController();
-                this.addDockPane(p.createDockPane());
-            }));
-
             // Custom config
             fxMenuBar.item(addCustomConfiguration("Configuration #1", GlobalSettings.getFILE_1()));
             fxMenuBar.item(addCustomConfiguration("Configuration #2", GlobalSettings.getFILE_2()));
@@ -203,6 +199,7 @@ public class DemoWindow extends FxDockWindow {
     private CustomMenuItem addCustomConfiguration(String strLabel, String fileName) {
         HBox hbox = new HBox();
         CustomMenuItem menuCustomSave1 = new CustomMenuItem(hbox);
+        menuCustomSave1.setHideOnClick(false);
 
         hbox.setSpacing(3);
         hbox.setPadding(Insets.EMPTY);

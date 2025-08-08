@@ -9,33 +9,35 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
-@Slf4j(topic = "Resources")
+@Slf4j(topic = "R")
 public class R {
     /**
      * Load an image.
+     *
      * @param relativePath The path to the image
      * @return The image
      */
     public static Image loadImage(String relativePath) {
-        log.debug("Attempting to load image from path: /{}", relativePath);
+        log.debug("R : Attempting to load image from path: /{}", relativePath);
         try {
             Image image = new Image(Objects.requireNonNull(
                     R.class.getResource("/" + relativePath),
-                    "Image resource not found: " + relativePath
+                    "R : Image resource not found: " + relativePath
             ).toExternalForm());
-            log.info("Successfully loaded image: {}", relativePath);
+            log.info("R : Successfully loaded image: {}", relativePath);
             return image;
         } catch (NullPointerException e) {
-            log.error("Failed to load image: {} - Resource not found", relativePath, e);
+            log.error("R : Failed to load image: {} - Resource not found", relativePath, e);
             throw e;
         } catch (Exception e) {
-            log.error("Unexpected error while loading image: {}", relativePath, e);
+            log.error("R : Unexpected error while loading image: {}", relativePath, e);
             throw e;
         }
     }
 
     /**
      * Load a parent from an FXML file.
+     *
      * @param relativePath fxml/myFile.fxml
      * @return The parent node
      */
@@ -43,35 +45,36 @@ public class R {
         try {
             URL fxmlUrl = R.class.getResource("/" + relativePath);
             if (fxmlUrl == null) {
-                log.error("Failed to load string file: {} - Resource not found", relativePath);
+                log.error("R : Failed to load string file: {} - Resource not found", relativePath);
                 return null;
             }
             return FXMLLoader.load(fxmlUrl);
         } catch (IOException e) {
-            log.error("Failed to load string file: {} - IOException", relativePath, e);
+            log.error("R : Failed to load string file: {} - IOException", relativePath, e);
             return null;
         }
     }
 
     /**
      * Load a string from a file.
+     *
      * @param relativePath css/main.css
      * @return The string
      */
     public static String loadStringFromFile(String relativePath) {
-        log.debug("Attempting to load string from file: {}", relativePath);
+        log.debug("R : Attempting to load string from file: {}", relativePath);
         try {
             String filePath = Objects.requireNonNull(
                     R.class.getResource(relativePath),
-                    "File resource not found: " + relativePath
+                    "R : File resource not found: " + relativePath
             ).toExternalForm();
-            log.info("Successfully loaded string file: {}", relativePath);
+            log.info("R : Successfully loaded string file: {}", relativePath);
             return filePath;
         } catch (NullPointerException e) {
-            log.error("Failed to load string file: {} - Resource not found", relativePath, e);
+            log.error("R : Failed to load string file: {} - Resource not found", relativePath, e);
             throw e;
         } catch (Exception e) {
-            log.error("Unexpected error while loading string file: {}", relativePath, e);
+            log.error("R : Unexpected error while loading string file: {}", relativePath, e);
             throw e;
         }
     }

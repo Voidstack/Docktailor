@@ -4,6 +4,7 @@ package com.enosi.docktailor.docktailor.fx;
 import com.enosi.docktailor.common.util.ASettingsStore;
 import com.enosi.docktailor.common.util.GlobalSettings;
 import com.enosi.docktailor.docktailor.dock.DemoDockSchema;
+import com.enosi.docktailor.docktailor.dock.ServiceDocktailor;
 import com.enosi.docktailor.docktailor.fx.settings.FxSettingsSchema;
 import com.enosi.docktailor.docktailor.fx.settings.WindowMonitor;
 import javafx.scene.Node;
@@ -11,6 +12,8 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.File;
 
 
 /**
@@ -38,7 +41,8 @@ public class FxFramework {
     }
 
     public static void openDockSystemConf(String fileName) {
-        log.info("Docktailor : Ouverture de la configuration, {}", fileName);
+        // ServiceDocktailor.getInstance().setLastUIConfigUsed(fileName);
+        log.info("Docktailor : Ouverture de la configuration d'interface, {}", ServiceDocktailor.getInstance().getLastUIConfigUsed());
         GlobalSettings.setFileProvider(fileName);
         ASettingsStore store = GlobalSettings.getASettingsStore();
         DemoDockSchema demoDockSchema = new DemoDockSchema(store);

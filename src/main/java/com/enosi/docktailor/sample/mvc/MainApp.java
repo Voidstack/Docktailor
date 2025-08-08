@@ -22,13 +22,14 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         ARGS.addAll(Arrays.stream(args).toList());
         ServiceDocktailor.IS_DEBUG = ARGS.contains("-debug");
+        ServiceDocktailor.getInstance().setup(MainApp.class);
 
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
-        log.info("Start");
-        FxFramework.openDockSystemConf(GlobalSettings.getDEFAULT_FILE());
+        log.info("MainApp : Application start");
+        FxFramework.openDockSystemConf(ServiceDocktailor.getInstance().getLastUIConfigUsed());
     }
 }
