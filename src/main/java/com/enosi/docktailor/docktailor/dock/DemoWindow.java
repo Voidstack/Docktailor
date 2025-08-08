@@ -8,6 +8,7 @@ import com.enosi.docktailor.docktailor.fx.settings.LocalSettings;
 import com.enosi.docktailor.docktailor.fxdock.FxDockWindow;
 import com.enosi.docktailor.sample.mvc.MainApp;
 import com.enosi.docktailor.utils.R;
+import com.enosi.docktailor.sample.mvc.controller.PersonneController;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -86,10 +87,11 @@ public class DemoWindow extends FxDockWindow {
      * @param fileName :
      */
     protected static void actionSaveSettings(String fileName) {
-        log.info("Docktailor : Save current interface configuration in " + fileName);
+        log.info("Docktailor : Save current interface configuration in {}", fileName);
         FxFramework.storeLayout(fileName);
         ServiceDocktailor.getInstance().setLastUIConfigUsed(fileName);
         ServiceDocktailor.getInstance().getConfigDocktailor().save();
+
         //AppConfigManager.getInstance().saveProperty(AppConfigManager.LAST_UI_CONFIG_SAVED, fileName);
     }
 
@@ -171,6 +173,12 @@ public class DemoWindow extends FxDockWindow {
         Platform.runLater(() -> {
             ServiceDocktailor.getInstance().initFXMenuBar(fxMenuBar, this);
             fxMenuBar.separator();
+
+            fxMenuBar.item("Personne", new FxAction(() -> {
+                log.info("Docktailor : Personne");
+                PersonneController p = new PersonneController();
+                this.addDockPane(p.createDockPane());
+            }));
 
             // Custom config
             fxMenuBar.item(addCustomConfiguration("Configuration #1", GlobalSettings.getFILE_1()));

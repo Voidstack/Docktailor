@@ -237,22 +237,6 @@ public class LocalSettings {
         return add(subKey, a.selectedProperty());
     }
 
-
-    public <T> LocalSettings add(String subKey, HasSettings x) {
-        entries.put(subKey, new Entry() {
-            @Override
-            public void saveValue(String prefix, ASettingsStore store) {
-                x.storeSettings(prefix + "." + subKey);
-            }
-
-            @Override
-            public void loadValue(String prefix, ASettingsStore store) {
-                x.restoreSettings(prefix + "." + subKey);
-            }
-        });
-        return this;
-    }
-
     public void loadValues(String prefix, ASettingsStore store) {
         for (String k : entries.keySet()) {
             Entry en = entries.get(k);

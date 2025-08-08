@@ -9,8 +9,7 @@ import javafx.scene.control.SeparatorMenuItem;
 /**
  * FX Menu.
  */
-public class FxMenu
-        extends Menu {
+public class FxMenu extends Menu {
     public FxMenu(String text) {
         super(text);
     }
