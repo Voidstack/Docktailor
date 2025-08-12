@@ -1,6 +1,5 @@
 package com.enosi.docktailor.docktailor.fxdock.internal;
 
-import com.enosi.docktailor.common.util.CList;
 import com.enosi.docktailor.docktailor.fx.FX;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
@@ -9,6 +8,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Drop Operation - contains highlights and the code to handle the drop.
@@ -16,7 +18,7 @@ import javafx.scene.paint.Color;
 public abstract class DropOp {
     private final Pane target;
     private final Object where;
-    private CList<Node> highlights;
+    private List<Node> highlights;
     public DropOp(Pane target, Object where) {
         this.target = target;
         this.where = where;
@@ -68,7 +70,7 @@ public abstract class DropOp {
 
     protected void add(Node n) {
         if (highlights == null) {
-            highlights = new CList<>();
+            highlights = new ArrayList<>();
         }
         highlights.add(n);
     }

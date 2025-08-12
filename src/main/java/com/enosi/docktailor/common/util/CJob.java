@@ -5,7 +5,10 @@ import com.enosi.docktailor.common.util.platform.ApplicationSupport;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j(topic = "CJob")
@@ -18,7 +21,7 @@ public abstract class CJob implements Runnable {
     @Getter
     private String name;
     private volatile Object result;
-    private CList<CJob> children;
+    private List<CJob> children;
     @Getter
     private volatile boolean cancelled;
     public CJob(String name) {
@@ -119,7 +122,7 @@ public abstract class CJob implements Runnable {
 
     protected synchronized void addChild(CJob ch) {
         if (children == null) {
-            children = new CList<>();
+            children = new ArrayList<>();
         }
 
         children.add(ch);
@@ -208,20 +211,20 @@ public abstract class CJob implements Runnable {
     public void waitForChildren() {
         // wait for children AFTER the main task
         // because the latter might have spawned more children
-        CList<CJob> cs = getChildrenPrivate();
+        List<CJob> cs = getChildrenPrivate();
         waitForAll(cs);
     }
 
-    public CList<CJob> getChildren() {
-        CList<CJob> cs = getChildrenPrivate();
-        return cs == null ? new CList<>() : cs;
+    public List<CJob> getChildren() {
+        List<CJob> cs = getChildrenPrivate();
+        return cs == null ? new ArrayList<>() : cs;
     }
 
-    protected synchronized CList<CJob> getChildrenPrivate() {
+    protected synchronized List<CJob> getChildrenPrivate() {
         if (children == null) {
-            return null;
+            return Collections.emptyList();
         } else {
-            return new CList<>(children);
+            return new ArrayList<>(children);
         }
     }
 

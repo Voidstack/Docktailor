@@ -2,6 +2,8 @@
 package com.enosi.docktailor.common.util;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Hex {
@@ -220,7 +222,7 @@ public class Hex {
         int len = bytes.length;
         boolean bigfile = (bytes.length > 65535);
         int lines = CKit.binCount(len, 16);
-        CList<String> rv = new CList(lines);
+        List<String> rv = new ArrayList<>(lines);
 
         int col = 0;
         int addr = 0;

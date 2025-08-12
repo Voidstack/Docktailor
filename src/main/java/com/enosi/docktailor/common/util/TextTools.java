@@ -1,7 +1,6 @@
 // Copyright © 2005-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util;
 
-import java.lang.reflect.Array;
 import java.util.Collection;
 
 
@@ -814,117 +813,6 @@ public class TextTools {
         });
         return sb.toString();
     }
-
-    /**
-     * creates a single String[], using Object.toString(), skipping nulls, and recursively unpacking Collection's and
-     * arrays
-     */
-    public static String[] array(Object... items) {
-        CList<String> rv = new CList(128);
-        array(rv, items);
-        return CKit.toArray(rv);
-    }
-
-    private static void array(CList<String> list, Object x) {
-        CKit.checkCancelled();
-
-        if (x == null) {
-            return;
-        }
-
-        if (x.getClass().isArray()) {
-            int sz = Array.getLength(x);
-            for (int i = 0; i < sz; i++) {
-                array(list, Array.get(x, i));
-            }
-        } else if (x instanceof Collection) {
-            for (Object item : (Collection) x) {
-                array(list, item);
-            }
-        } else {
-            list.add(x.toString());
-        }
-    }
-
-    public static int indexOf(CharSequence text, CharSequence pattern) {
-        return indexOf(text, pattern, 0);
-    }
-
-    public static int indexOf(CharSequence text, CharSequence pattern, int start) {
-        int len = pattern.length();
-        if (start >= text.length()) {
-            return (len == 0 ? text.length() : -1);
-        } else if (start < 0) {
-            start = 0;
-        }
-
-        if (len == 0) {
-            return start;
-        }
-
-        int mx = text.length() - len;
-        char ch0 = pattern.charAt(0);
-
-        for (int i = start; i <= mx; i++) {
-            if (text.charAt(i) != ch0) {
-                while ((++i <= mx) && (text.charAt(i) != ch0)) {
-                }
-            }
-
-            if (i <= mx) {
-                int j = i + 1;
-                int end = j + len - 1;
-                for (int k = 1; (j < end) && (text.charAt(j) == pattern.charAt(k)); j++, k++) {
-                }
-
-                if (j == end) {
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
-
-    public static boolean isWhiteSpaceOrCtrl(char c) {
-        if (c <= ' ') {
-            return true;
-        }
-        return isWhitespace(c);
-    }
-
-    /**
-     * trims, replaces any repeating control or whitespace characters with a single space
-     */
-    public static String toSingleLine(String text) {
-        if (text == null) {
-            return null;
-        }
-
-        int len = text.length();
-        SB sb = new SB(len);
-
-        boolean white = true;
-        for (int i = 0; i < len; i++) {
-            char c = text.charAt(i);
-            if (isWhiteSpaceOrCtrl(c)) {
-                if (!white) {
-                    white = true;
-                }
-                continue;
-            } else {
-                if (white) {
-                    if (sb.length() > 0) {
-                        sb.append(' ');
-                    }
-                }
-                white = false;
-                sb.append(c);
-            }
-        }
-
-        return sb.toString();
-    }
-
 
     public interface SeparatorFunction {
         public boolean isSeparator(char c);

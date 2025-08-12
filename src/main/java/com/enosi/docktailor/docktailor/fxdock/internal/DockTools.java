@@ -1,6 +1,5 @@
 package com.enosi.docktailor.docktailor.fxdock.internal;
 
-import com.enosi.docktailor.common.util.CList;
 import com.enosi.docktailor.docktailor.fx.FX;
 import com.enosi.docktailor.docktailor.fx.FxFramework;
 import com.enosi.docktailor.docktailor.fx.settings.WindowMonitor;
@@ -17,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -116,12 +116,12 @@ public class DockTools {
 
 
     public static FxDockWindow findWindow(double screenx, double screeny) {
-        CList<FxDockWindow> list = null;
+        List<FxDockWindow> list = null;
         for (Window w : Window.getWindows()) {
             if (w instanceof FxDockWindow dw) {
                 if (!dw.isIconified() && contains(dw, screenx, screeny)) {
                     if (list == null) {
-                        list = new CList<>();
+                        list = new ArrayList<>();
                     }
                     list.add(dw);
                 }
@@ -143,7 +143,7 @@ public class DockTools {
     public static List<FxDockWindow> getWindows() {
         List<Window> ws = WindowMonitor.getWindowStack();
         int sz = ws.size();
-        CList<FxDockWindow> rv = new CList<>(sz);
+        List<FxDockWindow> rv = new ArrayList<>(sz);
         for (int i = sz - 1; i >= 0; i--) {
             Window w = ws.get(i);
             if (w instanceof FxDockWindow dw) {
@@ -159,8 +159,8 @@ public class DockTools {
             Scene sc = n.getScene();
             if (sc != null) {
                 Window w = sc.getWindow();
-                if (w instanceof FxDockWindow) {
-                    return (FxDockWindow) w;
+                if (w instanceof FxDockWindow fxDockWindow) {
+                    return fxDockWindow;
                 }
             }
         }
@@ -192,27 +192,24 @@ public class DockTools {
 
     public static boolean contains(Window w, double screenx, double screeny) {
         double x = w.getX();
-        if (screenx < x) {
-            return false;
-        } else if (screenx > (x + w.getWidth())) {
+        if (screenx < x || screenx > (x + w.getWidth())) {
             return false;
         }
 
         double y = w.getY();
         if (screeny < y) {
             return false;
-        } else return !(screeny > (y + w.getHeight()));
+        } else return screeny <= (y + w.getHeight());
     }
 
 
     public static List<Pane> collectDividers(FxDockSplitPane sp) {
-        CList<Pane> rv = new CList<>();
+        List<Pane> rv = new ArrayList<>();
         for (Node n : sp.lookupAll(".split-pane-divider")) {
-            if (n instanceof Pane p) {
-                if (p.getParent() == sp) {
+            if (n instanceof Pane p && p.getParent() == sp) {
                     rv.add(p);
                 }
-            }
+
         }
         return rv;
     }

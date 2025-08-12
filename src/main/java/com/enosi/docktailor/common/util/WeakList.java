@@ -1,22 +1,21 @@
-// Copyright © 2012-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util;
 
 import java.lang.ref.WeakReference;
-import java.util.Objects;
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Unsynchronized List of WeakListeners.
  */
 public class WeakList<T> {
-    private CList<WeakReference<T>> list;
+    private final List<WeakReference<T>> list;
 
     public WeakList() {
         this(8);
     }
 
     public WeakList(int size) {
-        list = new CList<>(size);
+        list = new ArrayList<>(size);
     }
 
     public void gc() {
@@ -26,34 +25,6 @@ public class WeakList<T> {
             T item = ref.get();
             if (item == null) {
                 list.remove(i);
-            }
-        }
-    }
-
-    public CList<T> asList() {
-        int sz = list.size();
-        CList<T> rv = new CList<>(sz);
-        for (int i = sz - 1; i >= 0; i--) {
-            WeakReference<T> ref = list.get(i);
-            T item = ref.get();
-            if (item == null) {
-                list.remove(i);
-            } else {
-                rv.add(item);
-            }
-        }
-        return rv;
-    }
-
-    public void forEach(Consumer<T> client) {
-        int sz = list.size();
-        for (int i = sz - 1; i >= 0; i--) {
-            WeakReference<T> ref = list.get(i);
-            T item = ref.get();
-            if (item == null) {
-                list.remove(i);
-            } else {
-                client.accept(item);
             }
         }
     }
@@ -78,30 +49,12 @@ public class WeakList<T> {
     }
 
 
-    public int indexOf(T item) {
-        Objects.nonNull(item);
-        int sz = list.size();
-        for (int i = 0; i < sz; i++) {
-            WeakReference<T> ref = list.get(i);
-            T v = ref.get();
-            if (v != null) {
-                if (item.equals(v)) {
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
-
-
     public void remove(T item) {
         int sz = list.size();
         for (int i = sz - 1; i >= 0; i--) {
             WeakReference<T> ref = list.get(i);
             T x = ref.get();
-            if (x == null) {
-                list.remove(i);
-            } else if (item == x) {
+            if (x == null || item == x) {
                 list.remove(i);
             }
         }

@@ -17,6 +17,9 @@ import javafx.stage.Window;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Diagnostic tool to dump FX style information with a key press.
  */
@@ -94,7 +97,7 @@ public class FxDump {
     }
 
 
-    protected void sort(CList<CssMetaData<? extends Styleable, ?>> list) {
+    protected void sort(List<CssMetaData<? extends Styleable, ?>> list) {
         if (sorter == null) {
             sorter = new CComparator<>() {
                 @Override
@@ -233,7 +236,7 @@ public class FxDump {
                 sb.nl();
             }
 
-            CList<CssMetaData<? extends Styleable, ?>> md = new CList<>(n.getCssMetaData());
+            List<CssMetaData<? extends Styleable, ?>> md = new ArrayList<>(n.getCssMetaData());
             sort(md);
 
             for (CssMetaData d : md) {

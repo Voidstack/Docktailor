@@ -1,6 +1,5 @@
 package com.enosi.docktailor.docktailor.fxdock.internal;
 
-import com.enosi.docktailor.common.util.CList;
 import com.enosi.docktailor.docktailor.fxdock.FxDockPane;
 import com.enosi.docktailor.docktailor.fxdock.FxDockStyles;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -10,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -125,7 +125,7 @@ public class FxDockTabPane
 
 
     public List<Node> getPanes() {
-        CList<Node> rv = new CList<>(getTabCount());
+        List<Node> rv = new ArrayList<>(getTabCount());
         for (Tab t : getTabs()) {
             rv.add(t.getContent());
         }

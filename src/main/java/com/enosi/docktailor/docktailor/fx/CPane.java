@@ -1,7 +1,6 @@
 package com.enosi.docktailor.docktailor.fx;
 
 import com.enosi.docktailor.common.util.CKit;
-import com.enosi.docktailor.common.util.CList;
 import javafx.beans.value.ObservableValue;
 import javafx.css.CssMetaData;
 import javafx.css.Styleable;
@@ -9,14 +8,13 @@ import javafx.css.StyleableProperty;
 import javafx.css.StyleablePropertyFactory;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,9 +34,9 @@ public class CPane extends Pane {
     public static final CC RIGHT = new CC(true);
     public static final CC CENTER = new CC(true);
     private static final StyleablePropertyFactory<CPane> SPF = new StyleablePropertyFactory<>(Pane.getClassCssMetaData());
-    protected CList<Entry> entries = new CList<>();
-    protected CList<AC> cols = new CList<>();
-    protected CList<AC> rows = new CList<>();
+    protected List<Entry> entries = new ArrayList<>();
+    protected List<AC> cols = new ArrayList<>();
+    protected List<AC> rows = new ArrayList<>();
 
     public CPane() {
     }
@@ -533,7 +531,7 @@ public class CPane extends Pane {
         /**
          * row/column specifications
          */
-        public final CList<AC> specs;
+        public final List<AC> specs;
         public Entry left;
         public Entry center;
         public Entry right;
@@ -545,7 +543,7 @@ public class CPane extends Pane {
         public double[] pos;
         public Axis otherAxis;
 
-        public Axis(CList<AC> specs, double gap) {
+        public Axis(List<AC> specs, double gap) {
             this.specs = specs;
             this.gap = snap(gap);
             size = new double[specs.size()];

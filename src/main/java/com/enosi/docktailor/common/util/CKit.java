@@ -9,9 +9,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j(topic = "CKit")
@@ -187,21 +185,6 @@ public final class CKit {
         }
     }
 
-
-    private static String[] readLines(String text) throws Exception {
-        BufferedReader rd = new BufferedReader(new StringReader(text));
-        try {
-            CList<String> lines = new CList<>();
-            String s;
-            while ((s = rd.readLine()) != null) {
-                lines.add(s);
-            }
-            return toArray(lines);
-        } finally {
-            close(rd);
-        }
-    }
-
     public static void write(File f, String text) throws Exception {
         write(f, text, CHARSET_UTF8);
     }
@@ -235,7 +218,7 @@ public final class CKit {
      * returns a non-null value.
      */
     public static String[] split(String s, String delim) {
-        CList<String> list = new CList<>();
+        List<String> list = new ArrayList<>();
 
         if (s != null) {
             int start = 0;
@@ -251,7 +234,7 @@ public final class CKit {
             }
         }
 
-        return list.toArray(new String[list.size()]);
+        return list.toArray(new String[0]);
     }
 
 
@@ -265,7 +248,7 @@ public final class CKit {
 
 
     public static String[] split(CharSequence s, char delim, boolean includeDelimiter) {
-        CList<String> a = new CList<>();
+        List<String> a = new ArrayList<>();
 
         if (s != null) {
             int start = 0;

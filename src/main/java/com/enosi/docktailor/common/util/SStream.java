@@ -1,34 +1,33 @@
 package com.enosi.docktailor.common.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * String Stream.
  */
 public class SStream implements Iterable<String> {
-    private final CList<String> list;
+    private final List<String> list = new ArrayList<>();
     private int pos;
 
-
     public SStream() {
-        list = new CList<String>();
-    }
 
+    }
 
     public SStream(String[] ss) {
-        list = new CList<String>(ss);
+        if(ss != null)
+            list.addAll(Arrays.asList(ss));
     }
-
 
     public int size() {
         return list.size();
     }
 
-
     public String getValue(int ix) {
         return list.get(ix);
     }
-
 
     public void add(Object x) {
         list.add(x == null ? null : x.toString());

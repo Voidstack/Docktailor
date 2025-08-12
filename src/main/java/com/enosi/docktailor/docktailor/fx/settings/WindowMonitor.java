@@ -1,7 +1,6 @@
 // Copyright © 2024-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.docktailor.fx.settings;
 
-import com.enosi.docktailor.common.util.CList;
 import com.enosi.docktailor.docktailor.fx.ClosingWindowOperation;
 import com.enosi.docktailor.docktailor.fx.FX;
 import com.enosi.docktailor.docktailor.fx.FxFramework;
@@ -22,10 +21,7 @@ import javafx.stage.WindowEvent;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -40,7 +36,7 @@ public class WindowMonitor {
     /**
      * in reverse order: top window is last
      */
-    private static final CList<Window> stack = new CList<>();
+    private static final List<Window> stack = new ArrayList<>();
     private final static ReadOnlyObjectWrapper<Node> lastFocusOwner = new ReadOnlyObjectWrapper<>();
     private static boolean exiting;
     private static ShutdownChoice shutdownChoice;
@@ -298,7 +294,7 @@ public class WindowMonitor {
      * returns the list of windows in the reverse order - the top window is last.
      */
     public static List<Window> getWindowStack() {
-        return new CList<>(stack);
+        return new ArrayList<>(stack);
     }
 
     /**
