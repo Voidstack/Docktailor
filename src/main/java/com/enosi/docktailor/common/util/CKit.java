@@ -190,23 +190,18 @@ public final class CKit {
     }
 
     public static void write(File f, String text, Charset encoding) throws Exception {
-        FileTools.ensureParentFolder(f);
+        if (f != null) {
+            File folder = f.getParentFile();
+            if (folder != null) {
+                folder.mkdirs();
+            }
+        }
+
         FileOutputStream out = new FileOutputStream(f);
         try {
             if (text != null) {
                 out.write(text.getBytes(encoding));
             }
-        } finally {
-            close(out);
-        }
-    }
-
-
-    public static void write(byte[] buffer, File f) throws Exception {
-        FileTools.ensureParentFolder(f);
-        FileOutputStream out = new FileOutputStream(f);
-        try {
-            out.write(buffer);
         } finally {
             close(out);
         }
