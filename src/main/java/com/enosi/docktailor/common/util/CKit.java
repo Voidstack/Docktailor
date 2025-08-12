@@ -1,7 +1,6 @@
 // Copyright © 1996-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util;
 
-import com.enosi.docktailor.common.io.CWriter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
@@ -23,10 +22,6 @@ public final class CKit {
     private static final AtomicInteger id = new AtomicInteger();
     private static final double LOW_MEMORY_CHECK_THRESHOLD = 0.9;
     private static final double LOW_MEMORY_FAIL_AFTER_GC_THRESHOLD = 0.87;
-    private static final long MS_IN_A_SECOND = 1000L;
-    private static final long MS_IN_A_MINUTE = 60000L;
-    private static final long MS_IN_AN_HOUR = 3600000L;
-    private static final long MS_IN_A_DAY = 86400000L;
 
     public static void close(Closeable x) {
         try {
@@ -499,62 +494,6 @@ public final class CKit {
         MathContext mc = new MathContext(significantDigits, RoundingMode.HALF_DOWN);
         BigDecimal d = new BigDecimal(100.0 * value, mc);
         return d.toPlainString() + "%";
-    }
-
-
-    public static void append(File f, String s) throws Exception {
-        FileTools.ensureParentFolder(f);
-        CWriter wr = new CWriter(new FileOutputStream(f, true), CHARSET_UTF8);
-        try {
-            if (s != null) {
-                wr.write(s);
-            }
-        } finally {
-            close(wr);
-        }
-    }
-
-
-    public static String formatTimePeriod(long t) {
-        boolean force = false;
-        SB sb = new SB();
-
-        int d = (int) (t / MS_IN_A_DAY);
-        if (d != 0) {
-            sb.append(d);
-            sb.append(':');
-            t %= MS_IN_A_DAY;
-            force = true;
-        }
-
-        int h = (int) (t / MS_IN_AN_HOUR);
-        if (force || (h != 0)) {
-            append(sb, h, 2);
-            sb.append(':');
-            t %= MS_IN_AN_HOUR;
-            force = true;
-        }
-
-        int m = (int) (t / MS_IN_A_MINUTE);
-        if (force || (m != 0)) {
-            append(sb, m, 2);
-            sb.append(':');
-            t %= MS_IN_A_MINUTE;
-            force = true;
-        }
-
-        int s = (int) (t / MS_IN_A_SECOND);
-        if (force) {
-            append(sb, s, 2);
-        } else {
-            sb.append(s);
-        }
-        sb.append('.');
-
-        int ms = (int) (t % MS_IN_A_SECOND);
-        append(sb, ms, 3);
-
-        return sb.toString();
     }
 
 

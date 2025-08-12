@@ -1,8 +1,6 @@
 package com.enosi.docktailor.docktailor.fx.settings;
 
 import com.enosi.docktailor.common.util.ASettingsStore;
-import com.enosi.docktailor.common.util.CMap;
-import com.enosi.docktailor.common.util.SStream;
 import com.enosi.docktailor.docktailor.fx.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
@@ -11,6 +9,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Node;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Local Settings: specific to a Node or a Window. Supports chaining of calls, i.e.:
@@ -23,7 +24,7 @@ import javafx.util.StringConverter;
 // FIX must be a part of FxSettings and use their storage provider!
 public class LocalSettings {
     private static final Object PROP_BINDINGS = new Object();
-    private final CMap<String, Entry> entries = new CMap<>();
+    private final Map<String, Entry> entries = new HashMap<>();
 
     public LocalSettings() {
     }

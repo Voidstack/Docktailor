@@ -1,6 +1,5 @@
 package com.enosi.docktailor.docktailor.fx;
 
-import com.enosi.docktailor.docktailor.fx.input.InputMap;
 import com.enosi.docktailor.docktailor.fx.settings.WindowMonitor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -14,7 +13,6 @@ import javafx.stage.Stage;
 public class FxWindow
         extends Stage {
     private final BorderPane contentPane;
-    private InputMap inputMap;
 
     public FxWindow(String name) {
         this.contentPane = new BorderPane();
@@ -105,13 +103,5 @@ public class FxWindow
     @Override
     public String toString() {
         return "FxWindow{" + FX.getName(this) + "." + hashCode() + "}";
-    }
-
-
-    public final InputMap getInputMap() {
-        if (inputMap == null) {
-            inputMap = new InputMap(this);
-        }
-        return inputMap;
     }
 }

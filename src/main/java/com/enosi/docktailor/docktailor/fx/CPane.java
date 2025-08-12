@@ -39,11 +39,17 @@ public class CPane extends Pane {
     protected CList<Entry> entries = new CList<>();
     protected CList<AC> cols = new CList<>();
     protected CList<AC> rows = new CList<>();
+
     public CPane() {
-    }    private final StyleableProperty<Number> hgap = SPF.createStyleableNumberProperty(this, "hgap", "-fx-hgap", s -> s.hgap);
+    }
+
+    private final StyleableProperty<Number> hgap = SPF.createStyleableNumberProperty(this, "hgap", "-fx-hgap", s -> s.hgap);
+
     public CPane(Node n) {
         setCenter(n);
-    }    private final StyleableProperty<Number> vgap = SPF.createStyleableNumberProperty(this, "vgap", "-fx-vgap", s -> s.vgap);
+    }
+
+    private final StyleableProperty<Number> vgap = SPF.createStyleableNumberProperty(this, "vgap", "-fx-vgap", s -> s.vgap);
 
     /**
      * sets standard padding and gaps
@@ -538,6 +544,7 @@ public class CPane extends Pane {
         public double[] size;
         public double[] pos;
         public Axis otherAxis;
+
         public Axis(CList<AC> specs, double gap) {
             this.specs = specs;
             this.gap = snap(gap);
@@ -1123,16 +1130,4 @@ public class CPane extends Pane {
             sizeComponents(hor, ver);
         }
     }
-
-
-    //
-
-
-
-
-
-    //
-
-
-
 }

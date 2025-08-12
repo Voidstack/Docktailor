@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class CList<T>
-        extends ArrayList<T> {
+public class CList<T> extends ArrayList<T> {
     public CList(int initialCapacity) {
         super(initialCapacity);
     }
@@ -45,15 +44,8 @@ public class CList<T>
         }
     }
 
-    public static CList parse(Object x) {
-        if (x instanceof CList) {
-            return (CList) x;
-        }
-        return null;
-    }
-
     public static <V> CList<V> of(V... a) {
-        return new CList(a);
+        return new CList<>(a);
     }
 
     public static <V> CList<V> copy(Collection<V> items) {

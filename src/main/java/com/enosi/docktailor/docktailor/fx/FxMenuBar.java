@@ -61,29 +61,11 @@ public class FxMenuBar extends MenuBar {
         return m;
     }
 
-
-    public FxMenuItem item(String name, HotKey k, FxAction a) {
-        FxMenuItem m = new FxMenuItem(name, a);
-        k.attach(m);
-        add(m);
-        return m;
-    }
-
-
     public FxMenuItem item(String name, Runnable r) {
         FxMenuItem m = new FxMenuItem(name, r);
         add(m);
         return m;
     }
-
-
-    public FxMenuItem item(String name, HotKey k, Runnable r) {
-        FxMenuItem m = new FxMenuItem(name, r);
-        k.attach(m);
-        add(m);
-        return m;
-    }
-
 
     public FxMenu item(FxMenu m) {
         lastMenu().add(m);

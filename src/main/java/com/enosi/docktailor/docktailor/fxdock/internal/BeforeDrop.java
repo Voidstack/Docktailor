@@ -1,9 +1,11 @@
 package com.enosi.docktailor.docktailor.fxdock.internal;
 
-import com.enosi.docktailor.common.util.CMap;
 import com.enosi.docktailor.docktailor.fx.FxSize;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * BeforeDrop.
@@ -11,7 +13,7 @@ import javafx.scene.layout.Region;
 public class BeforeDrop {
     public final Node client;
     public final Node clientParent;
-    private final CMap<Node, Object> data = new CMap<>();
+    private final Map<Node, Object> data = new HashMap<>();
 
     public BeforeDrop(Node client, Node target) {
         this.client = client;
