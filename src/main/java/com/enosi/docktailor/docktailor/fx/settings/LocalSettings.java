@@ -1,7 +1,8 @@
 package com.enosi.docktailor.docktailor.fx.settings;
 
 import com.enosi.docktailor.common.util.ASettingsStore;
-import com.enosi.docktailor.docktailor.fx.*;
+import com.enosi.docktailor.docktailor.fx.Converters;
+import com.enosi.docktailor.docktailor.fx.FxAction;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleDoubleProperty;

@@ -8,7 +8,6 @@ import com.enosi.docktailor.docktailor.fx.settings.LocalSettings;
 import com.enosi.docktailor.docktailor.fxdock.FxDockWindow;
 import com.enosi.docktailor.sample.mvc.MainApp;
 import com.enosi.docktailor.utils.R;
-import com.enosi.docktailor.sample.mvc.controller.PersonneController;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

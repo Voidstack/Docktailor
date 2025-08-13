@@ -1,6 +1,5 @@
 package com.enosi.docktailor.sample.mvc;
 
-import com.enosi.docktailor.common.util.GlobalSettings;
 import com.enosi.docktailor.docktailor.dock.ServiceDocktailor;
 import com.enosi.docktailor.docktailor.fx.FxFramework;
 import com.enosi.docktailor.utils.R;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 public class MainApp extends Application {
-    public final static List<String> ARGS = new ArrayList<>();
+    public static final List<String> ARGS = new ArrayList<>();
     public static final Image IMAGE = R.loadImage("images/icons/logo.png");
     public static final String TITLE = "DockTailor example";
 

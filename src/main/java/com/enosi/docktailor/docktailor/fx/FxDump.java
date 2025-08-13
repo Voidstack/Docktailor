@@ -1,6 +1,9 @@
 package com.enosi.docktailor.docktailor.fx;
 
-import com.enosi.docktailor.common.util.*;
+import com.enosi.docktailor.common.util.CComparator;
+import com.enosi.docktailor.common.util.CKit;
+import com.enosi.docktailor.common.util.SB;
+import com.enosi.docktailor.common.util.TextTools;
 import javafx.css.CssMetaData;
 import javafx.css.PseudoClass;
 import javafx.css.Styleable;

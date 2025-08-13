@@ -3,6 +3,7 @@ package com.enosi.docktailor.docktailor.dock;
 import com.enosi.docktailor.docktailor.fx.FxMenu;
 import com.enosi.docktailor.docktailor.fx.FxMenuBar;
 import com.enosi.docktailor.docktailor.fxdock.FxDockWindow;
+import com.enosi.docktailor.utils.Lazy;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import com.enosi.docktailor.utils.Lazy;
 
 /**
  * Référence les différents IDraggableTab dans une liste via reflexion.

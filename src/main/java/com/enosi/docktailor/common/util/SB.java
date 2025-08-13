@@ -1,7 +1,8 @@
 // Copyright © 2010-2025 Andy Goryachev <andy@goryachev.com>
 package com.enosi.docktailor.common.util;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * An extended version of StringBuilder

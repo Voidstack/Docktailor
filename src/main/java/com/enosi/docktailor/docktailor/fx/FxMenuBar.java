@@ -3,7 +3,10 @@ package com.enosi.docktailor.docktailor.fx;
 import com.enosi.docktailor.common.util.CSorter;
 import javafx.beans.property.Property;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.CustomMenuItem;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 
 import java.util.List;
 

@@ -6,8 +6,6 @@ import com.enosi.docktailor.docktailor.fx.FX;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import java.util.List;
-
 
 /**
  * FxTools.

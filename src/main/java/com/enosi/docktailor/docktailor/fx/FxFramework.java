@@ -13,8 +13,6 @@ import javafx.stage.Window;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
-
 
 /**
  * FX Application Framework.
