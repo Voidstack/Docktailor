@@ -1,8 +1,8 @@
 package com.enosi.docktailor.sample.mvc;
 
-import com.enosi.docktailor.docktailor.dock.ServiceDocktailor;
-import com.enosi.docktailor.docktailor.fx.FxFramework;
-import com.enosi.docktailor.utils.R;
+import com.enosi.docktailor.fxdock.internal.ServiceDocktailor;
+import com.enosi.docktailor.fx.FxFramework;
+import com.enosi.docktailor.fx.R;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
