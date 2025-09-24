@@ -78,11 +78,30 @@
             <version>${junit.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.enosistudio</groupId>
+            <artifactId>r-for-maven</artifactId>
+            <version>1.0.2</version>
+        </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.enosistudio</groupId>
+                <artifactId>r-for-maven</artifactId>
+                <version>1.0.2</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
