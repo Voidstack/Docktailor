@@ -1,3 +1,17 @@
-.custom-menu-item * {
-    -fx-text-fill: -fx-text-base-color;
+*{
+   /* couleurs de base du thème */
+    -fx-base: #1F1F1F;        /* couleur principale (boutons, menus, etc.) */
+    -fx-accent: red;      /* accents (sélections, focus) */
+    -fx-focus-color: lightblue; /* focus */
+    -fx-faint-focus-color: transparent;
+        -fx-text-fill: white;     /* couleur du texte par défaut */
 }
+
+.menu-bar {
+    -fx-background-color: -fx-base;
+}
+
+.menu, .menu-item {
+    -fx-padding: 8 5 6 5; /* marge interne : top right bottom left */
+}
+

@@ -2,13 +2,9 @@ package com.enosistudio.docktailor.fxdock.internal;
 
 import com.enosistudio.docktailor.common.GlobalSettings;
 import com.enosistudio.docktailor.common.Hex;
-import com.enosistudio.docktailor.fx.FxAction;
-import com.enosistudio.docktailor.fx.FxFramework;
-import com.enosistudio.docktailor.fx.FxMenuBar;
-import com.enosistudio.docktailor.fx.LocalSettings;
+import com.enosistudio.docktailor.fx.*;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;
 import com.enosistudio.docktailor.sample.mvc.MainApp;
-import com.enosistudio.docktailor.fx.R;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,6 +15,8 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
+import net.yetihafen.javafx.customcaption.CaptionConfiguration;
+import net.yetihafen.javafx.customcaption.CustomCaption;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,7 +39,10 @@ public class DemoWindow extends FxDockWindow {
         getIcons().add(MainApp.IMAGE);
 
         // Creation de la barre supérieur.
-        setTop(createMenu());
+        FxMenuBar fxMenuBar = createMenu();
+        setTop(fxMenuBar);
+
+        Platform.runLater(() -> CustomCaption.useForStage(this, new CaptionConfiguration().setCaptionDragRegion(fxMenuBar)));
 
         setTitle(MainApp.TITLE);
 
