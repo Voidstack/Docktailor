@@ -1,17 +1,14 @@
-*{
-   /* couleurs de base du thème */
-    -fx-base: #1F1F1F;        /* couleur principale (boutons, menus, etc.) */
-    -fx-accent: red;      /* accents (sélections, focus) */
-    -fx-focus-color: lightblue; /* focus */
+@import url("component/menu.css");
+
+.root {
+    /* Background global */
+    -fx-base: #383838;       /* couleur de base des composants */
+    -fx-background: #282828;
+
+    -fx-inner-border: transparent;
+    -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
-        -fx-text-fill: white;     /* couleur du texte par défaut */
-}
 
-.menu-bar {
-    -fx-background-color: -fx-base;
-}
+    -fx-text-fill: white !important;  /* couleur du texte par défaut */
 
-.menu, .menu-item {
-    -fx-padding: 8 5 6 5; /* marge interne : top right bottom left */
 }
-

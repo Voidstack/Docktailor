@@ -223,8 +223,6 @@ public abstract class FxDockSchema extends FxSettingsSchema {
                     restoreContent(prefix, ch);
                 }
             }
-
-            restoreNode(n);
         }
     }
 

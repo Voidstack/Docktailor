@@ -134,7 +134,6 @@ public abstract class FxSettingsSchema {
             }
 
             Node n = w.getScene().getRoot();
-            restoreNode(n);
         }
     }
 
@@ -230,54 +229,6 @@ public abstract class FxSettingsSchema {
         }
     }
 
-
-    public void restoreNode(Node n) {
-        if (n == null) {
-            return;
-        } else if (FX.isSkipSettings(n)) {
-            return;
-        } else if (handleNullScene(n)) {
-            return;
-        }
-
-        String name = computeName(n);
-        if (name == null) {
-            return;
-        }
-
-        LocalSettings s = LocalSettings.getOrNull(n);
-        if (s != null) {
-            String k = name + SFX_SETTINGS;
-            s.loadValues(k, globalSettings);
-        }
-
-        if (n instanceof CheckBox cb) {
-            restoreCheckBox(cb, name);
-        } else if (n instanceof ComboBox cb) {
-            restoreComboBox(cb, name);
-        } else if (n instanceof ListView v) {
-            restoreListView(v, name);
-        } else if (n instanceof SplitPane sp) {
-            restoreSplitPane(sp, name);
-        } else if (n instanceof ScrollPane sp) {
-            restoreNode(sp.getContent());
-        } else if (n instanceof TitledPane tp) {
-            restoreTitledPane(tp, name);
-        } else if (n instanceof TableView t) {
-            restoreTableView(t, name);
-        } else if (n instanceof TabPane t) {
-            restoreTabPane(t, name);
-        } else {
-            List<Node> nodes = listNodes(n);
-            if (nodes != null) {
-                for (Node ch : nodes) {
-                    restoreNode(ch);
-                }
-            }
-        }
-    }
-
-
     private List<Node> listNodes(Node n) {
         if (n instanceof ToolBar p) {
             return p.getItems();
@@ -299,7 +250,6 @@ public abstract class FxSettingsSchema {
                         Window w = sc.getWindow();
                         if (w != null) {
                             node.sceneProperty().removeListener(this);
-                            restoreNode(node);
                         }
                     }
                 }
@@ -480,7 +430,6 @@ public abstract class FxSettingsSchema {
         }
 
         for (Node ch : sp.getItems()) {
-            restoreNode(ch);
         }
     }
 
@@ -575,9 +524,6 @@ public abstract class FxSettingsSchema {
         var sm = p.getSelectionModel();
         if (sm != null) {
             var item = sm.getSelectedItem();
-            if (item != null) {
-                restoreNode(item.getContent());
-            }
         }
     }
 
@@ -592,8 +538,6 @@ public abstract class FxSettingsSchema {
     protected void restoreTitledPane(TitledPane p, String name) {
         boolean expanded = globalSettings.getBoolean(FX_PREFIX + name + SFX_EXPANDED, true);
         p.setExpanded(expanded);
-
-        restoreNode(p.getContent());
     }
 
 

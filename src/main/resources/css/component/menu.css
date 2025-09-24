@@ -1,0 +1,8 @@
+/* MenuBar */
+.menu, .menu-item {
+    -fx-padding: 8 5 6 5; /* marge interne : top right bottom left */
+}
+
+.menu-bar{
+    -fx-background-color: -fx-base;
+}
