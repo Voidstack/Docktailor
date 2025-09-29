@@ -2,8 +2,10 @@ package com.enosistudio.docktailor.fx;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 /**
@@ -17,6 +19,9 @@ public class FxWindow extends Stage {
         FX.setName(this, name);
 
         Scene sc = new Scene(contentPane);
+
+        FxTooltipDebugCss.install(sc);
+
         setScene(sc);
     }
 

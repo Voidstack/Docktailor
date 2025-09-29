@@ -5,15 +5,16 @@ import com.enosistudio.docktailor.common.Hex;
 import com.enosistudio.docktailor.fx.*;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;
 import com.enosistudio.docktailor.sample.mvc.MainApp;
+import com.enosistudio.docktailor.sample.mvc.controller.PersonDockPane;
+import com.enosistudio.docktailor.sample.mvc.controller.Test;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CustomMenuItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import lombok.extern.slf4j.Slf4j;
 import net.yetihafen.javafx.customcaption.CaptionConfiguration;
 import net.yetihafen.javafx.customcaption.CustomCaption;
@@ -40,13 +41,22 @@ public class DemoWindow extends FxDockWindow {
 
         // Creation de la barre supérieur.
         FxMenuBar fxMenuBar = createMenu();
-        setTop(fxMenuBar);
 
-        Platform.runLater(() -> CustomCaption.useForStage(this, new CaptionConfiguration().setCaptionDragRegion(fxMenuBar)));
+        // largeur de la MenuBar = largeur de la fenêtre - 50
+        getScene().widthProperty().addListener((obs, oldVal, newVal) -> {
+            fxMenuBar.setMaxWidth(newVal.doubleValue() - 138);
+        });
+
+        setTop(fxMenuBar);
 
         setTitle(MainApp.TITLE);
 
         LocalSettings.get(this).add("CHECKBOX_MENU", windowCheckAction);
+
+        Platform.runLater(() -> CustomCaption.useForStage(this, new CaptionConfiguration()
+                .setCaptionDragRegion(fxMenuBar)
+                .setControlBackgroundColor(Color.rgb(60, 63, 65 ))
+        ));
     }
 
     protected static void c(StringBuilder sb) {
@@ -86,25 +96,39 @@ public class DemoWindow extends FxDockWindow {
     protected FxMenuBar createMenu() {
         FxMenuBar fxMenuBar = new FxMenuBar();
 
+        Menu menuApplication = new Menu("Application");
+        fxMenuBar.add(menuApplication);
+
         // Ajout des différentes vue de tacp
         Platform.runLater(() -> {
-            ServiceDocktailor.getInstance().initFXMenuBar(fxMenuBar, this);
-            fxMenuBar.separator();
+            // ServiceDocktailor.getInstance().initFXMenuBar(fxMenuBar, this);
+//            fxMenuBar.separator();
+
+            menuApplication.getItems().add(addCustomConfiguration("Configuration #1", GlobalSettings.getFILE_1()));
 
             // Custom config
-            fxMenuBar.item(addCustomConfiguration("Configuration #1", GlobalSettings.getFILE_1()));
-            fxMenuBar.item(addCustomConfiguration("Configuration #2", GlobalSettings.getFILE_2()));
-            fxMenuBar.item(addCustomConfiguration("Configuration #3", GlobalSettings.getFILE_3()));
+            menuApplication.getItems().add(addCustomConfiguration("Configuration #1", GlobalSettings.getFILE_1()));
+            menuApplication.getItems().add(addCustomConfiguration("Configuration #2", GlobalSettings.getFILE_2()));
+            menuApplication.getItems().add(addCustomConfiguration("Configuration #3", GlobalSettings.getFILE_3()));
 
-            fxMenuBar.separator();
-            fxMenuBar.item("Charger la configuration par défaut", new FxAction(DemoWindow::loadDefaultAction));
+            MenuItem menuItemDefaultConf = new MenuItem("Charger la configuration par défaut");
+            menuItemDefaultConf.setOnAction(e -> DemoWindow.loadDefaultAction());
+            menuApplication.getItems().add(menuItemDefaultConf);
+
+
+            MenuItem menuLeaveApp = new MenuItem("Quitter l'application");
+            menuLeaveApp.setOnAction(e -> FxFramework.exit());
+            menuApplication.getItems().add(menuLeaveApp);
         });
 
-        // file
-        fxMenuBar.menu("Application");
-        // m.item("Save Settings", saveSettingsAction);
-        // m.separator();
-        fxMenuBar.item("Quitter l'application", FxFramework::exit);
+
+        Menu menuWindows = new Menu("Windows");
+        ServiceDocktailor.getInstance().add(PersonDockPane.class);
+        ServiceDocktailor.getInstance().add(Test.class);
+        menuWindows.getItems().addAll(ServiceDocktailor.getInstance().createMenuItems(this));
+        fxMenuBar.add(menuWindows);
+
+
         return fxMenuBar;
     }
 
@@ -124,7 +148,8 @@ public class DemoWindow extends FxDockWindow {
         hbox.setPadding(Insets.EMPTY);
         hbox.setAlignment(Pos.CENTER);
         Label label = new Label(strLabel);
-        Separator separator = new Separator();
+
+        Region separator = new Region();
         HBox.setHgrow(separator, Priority.ALWAYS);
 
         hbox.getChildren().addAll(label, separator);

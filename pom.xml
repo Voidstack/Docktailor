@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.enosi</groupId>
-    <artifactId>Docktailor</artifactId>
+    <groupId>com.enosistudio</groupId>
+    <artifactId>docktailor</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Docktailor</name>
 
@@ -22,13 +22,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>2.0.13</version> <!-- Dernière version -->
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.10.2</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/javax.inject/javax.inject -->
@@ -107,7 +100,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.enosi.docktailor/com.enosi.docktailor.TestApplication</mainClass>
+                            <mainClass>com.enosistudio.docktailor/com.enosistudio.docktailor.TestApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

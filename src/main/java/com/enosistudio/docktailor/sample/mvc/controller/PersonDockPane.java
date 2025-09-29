@@ -1,11 +1,13 @@
 package com.enosistudio.docktailor.sample.mvc.controller;
 
-import com.enosistudio.docktailor.fxdock.internal.AControllerDockPane;
+import com.enosistudio.docktailor.fxdock.internal.ADockPane;
 import com.enosistudio.docktailor.fx.R;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 
-public class PersonneController extends AControllerDockPane {
+public class PersonDockPane extends ADockPane {
     @Override
     public Side getDefaultSide() {
         return Side.LEFT;
@@ -17,12 +19,12 @@ public class PersonneController extends AControllerDockPane {
     }
 
     @Override
-    public String getTabIcon() {
-        return "*";
+    public Node getTabIcon() {
+        return null;
     }
 
     @Override
-    public Parent getView() {
+    public Parent loadView() {
         return R.loadParentFromFxml("fxml/personne.fxml");
     }
 

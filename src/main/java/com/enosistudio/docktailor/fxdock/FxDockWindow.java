@@ -1,5 +1,6 @@
 package com.enosistudio.docktailor.fxdock;
 
+import com.enosistudio.docktailor.fx.FxTooltipDebugCss;
 import com.enosistudio.docktailor.fx.FxWindow;
 import com.enosistudio.docktailor.fxdock.internal.FxDockEmptyPane;
 import com.enosistudio.docktailor.fxdock.internal.FxDockRootPane;
@@ -24,8 +25,11 @@ public class FxDockWindow extends FxWindow {
         root = new FxDockRootPane(this);
         frame = new BorderPane(root);
 
-        Scene s = new Scene(frame);
-        setScene(s);
+        Scene sc = new Scene(frame);
+
+        FxTooltipDebugCss.install(sc);
+
+        setScene(sc);
     }
 
     public void addDockPane(FxDockPane newDockPane) {

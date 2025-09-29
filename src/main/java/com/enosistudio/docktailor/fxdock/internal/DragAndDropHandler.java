@@ -1,6 +1,7 @@
 package com.enosistudio.docktailor.fxdock.internal;
 
 import com.enosistudio.docktailor.fx.FX;
+import com.enosistudio.docktailor.fx.FxTooltipDebugCss;
 import com.enosistudio.docktailor.fxdock.FxDockPane;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;
 import javafx.geometry.Point2D;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -19,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import javafx.util.Duration;
 
 import java.util.List;
 
@@ -131,7 +134,11 @@ public class DragAndDropHandler {
         Pane p = new Pane(new ImageView(im));
         Stage s = new Stage(StageStyle.TRANSPARENT);
         s.initOwner(owner);
-        s.setScene(new Scene(p, im.getWidth(), im.getHeight()));
+        Scene sc = new Scene(p, im.getWidth(), im.getHeight());
+        s.setScene(sc);
+
+        FxTooltipDebugCss.install(sc);
+
         s.setOpacity(DRAG_WINDOW_OPACITY);
         return s;
     }

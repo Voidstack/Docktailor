@@ -74,6 +74,6 @@ final class ConfigDocktailor {
         private String lastUIConfigUsed = "docktailor_default.conf";
 
         // List des différentes fenêtres de l'application trouvé par réflexion.
-        private Set<Class<? extends IControllerDockPane>> iControllerDockPane = new HashSet<>();
+        private Set<Class<? extends IDockPane>> iControllerDockPane = new HashSet<>();
     }
 }

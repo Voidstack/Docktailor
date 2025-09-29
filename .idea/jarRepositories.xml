@@ -2,9 +2,9 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
-      <option name="id" value="public" />
-      <option name="name" value="public" />
-      <option name="url" value="http://nexus.dev.lan:8081/nexus/content/repositories/public" />
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="jcenter" />
@@ -12,19 +12,9 @@
       <option name="url" value="http://nexus.dev.lan:8081/nexus/content/repositories/jcenter" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="central" />
-      <option name="name" value="Central Repository" />
-      <option name="url" value="https://repo.maven.apache.org/maven2" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="luciad" />
-      <option name="name" value="luciad" />
-      <option name="url" value="http://nexus.dev.lan:8081/nexus/content/repositories/luciad" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="central" />
-      <option name="name" value="central" />
-      <option name="url" value="http://nexus.dev.lan:8081/nexus/content/repositories/central" />
+      <option name="id" value="releases" />
+      <option name="name" value="releases" />
+      <option name="url" value="http://gitbattlelab.com:8081/nexus/content/repositories/releases" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="releases" />
@@ -37,11 +27,6 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="jboss.community" />
-      <option name="name" value="JBoss Community repository" />
-      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="google" />
       <option name="name" value="google" />
       <option name="url" value="http://nexus.dev.lan:8081/nexus/content/repositories/google" />
@@ -50,6 +35,56 @@
       <option name="id" value="snapshots" />
       <option name="name" value="snapshots" />
       <option name="url" value="http://nexus.dev.lan:8081/nexus/content/repositories/snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="miroir GAIO du Central" />
+      <option name="url" value="https://repo.maven.apache.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="public" />
+      <option name="name" value="public" />
+      <option name="url" value="http://nexus.dev.lan:8081/nexus/content/repositories/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="thirdparty" />
+      <option name="name" value="thirdparty" />
+      <option name="url" value="http://gitbattlelab.com:8081/nexus/content/repositories/thirdparty" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="luciad" />
+      <option name="name" value="miroir GAIO du Luciad" />
+      <option name="url" value="http://147.21.1.62:8081/nexus/content/repositories/luciad/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="luciad" />
+      <option name="name" value="luciad" />
+      <option name="url" value="http://nexus.dev.lan:8081/nexus/content/repositories/luciad" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="snapshots" />
+      <option name="name" value="snapshots" />
+      <option name="url" value="http://gitbattlelab.com:8081/nexus/content/repositories/snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="luciad" />
+      <option name="name" value="luciad" />
+      <option name="url" value="http://147.21.1.62:8081/nexus/content/repositories/luciad/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="central" />
+      <option name="url" value="http://nexus.dev.lan:8081/nexus/content/repositories/central" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="central" />
+      <option name="url" value="http://147.21.1.62:8081/nexus/content/repositories/central/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="thirdparty" />

@@ -20,6 +20,7 @@ public class FxDockTabPane extends TabPane {
     protected final ReadOnlyObjectWrapper<Node> parent = new ReadOnlyObjectWrapper<>();
 
     public FxDockTabPane() {
+        this.setTabClosingPolicy(TabClosingPolicy.ALL_TABS);
     }
 
     public FxDockTabPane(Node n) {

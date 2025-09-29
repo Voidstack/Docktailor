@@ -7,19 +7,18 @@ import javafx.scene.Node;
 /**
  * C'est le controller qui doit hériter de cette interface.
  */
-public interface IControllerDockPane {
+public interface IDockPane {
     Side getDefaultSide();
 
     String getTabName();
 
-    String getTabIcon();
+    Node getTabIcon();
 
     /**
      * Get root node of the fxml.
-     *
      * @return : String
      */
-    Node getView();
+    Node loadView();
 
     String getInformation();
 
