@@ -27,11 +27,11 @@ import java.util.Random;
  * Demo Window.
  */
 @Slf4j
-public class DemoWindow extends FxDockWindow {
+public class DemoDockWindow extends FxDockWindow {
     public final FxAction windowCheckAction = new FxAction();
     //private static int seq;
 
-    public DemoWindow() {
+    public DemoDockWindow() {
         super("DemoWindow");
 
         String cssFile = R.loadStringFromFile("/css/main.css");
@@ -112,7 +112,7 @@ public class DemoWindow extends FxDockWindow {
             menuApplication.getItems().add(addCustomConfiguration("Configuration #3", GlobalSettings.getFILE_3()));
 
             MenuItem menuItemDefaultConf = new MenuItem("Charger la configuration par défaut");
-            menuItemDefaultConf.setOnAction(e -> DemoWindow.loadDefaultAction());
+            menuItemDefaultConf.setOnAction(e -> DemoDockWindow.loadDefaultAction());
             menuApplication.getItems().add(menuItemDefaultConf);
 
 

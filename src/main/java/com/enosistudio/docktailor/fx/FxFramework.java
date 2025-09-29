@@ -2,6 +2,7 @@ package com.enosistudio.docktailor.fx;
 
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.GlobalSettings;
+import com.enosistudio.docktailor.fxdock.FxDockSchema;
 import com.enosistudio.docktailor.fxdock.internal.DemoDockSchema;
 import com.enosistudio.docktailor.fxdock.internal.ServiceDocktailor;
 import javafx.stage.Stage;
@@ -33,6 +34,23 @@ public class FxFramework {
         }
 
         schema = demoDockSchema;
+        schema.openLayout();
+    }
+
+    /**
+     * Ouvre une configuration d'interface.
+     * @param newSchema : GlobalSettings.getInstance().setFileProvider(fileName);
+     *         AGlobalSettings store = GlobalSettings.getInstance();
+     *         DemoDockSchema demoDockSchema = new DemoDockSchema(store);
+     */
+    public static void openDockSystemConf(FxDockSchema newSchema) {
+        log.info("Docktailor : Ouverture de la configuration d'interface, {}", ServiceDocktailor.getInstance().getLastUIConfigUsed());
+
+        if (schema != null) {
+            FxFramework.closeCurrentLayout();
+        }
+
+        schema = newSchema;
         schema.openLayout();
     }
 

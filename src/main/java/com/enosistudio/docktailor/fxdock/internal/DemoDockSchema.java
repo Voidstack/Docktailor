@@ -34,11 +34,11 @@ public class DemoDockSchema extends FxDockSchema {
 
     @Override
     public Stage createWindow(String name) {
-        return new DemoWindow();
+        return new DemoDockWindow();
     }
 
     @Override
     public Stage createDefaultWindow() {
-        return new DemoWindow();
+        return new DemoDockWindow();
     }
 }

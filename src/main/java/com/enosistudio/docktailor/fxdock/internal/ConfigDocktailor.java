@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Slf4j(topic = "ConfigDocktailor" )
-final class ConfigDocktailor {
+public final class ConfigDocktailor {
     @Getter
     private DataConfigDocktailor dataConfigDocktailor = new DataConfigDocktailor();
     private final File cacheFile;
