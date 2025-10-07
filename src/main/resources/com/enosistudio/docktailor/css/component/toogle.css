@@ -1,0 +1,50 @@
+
+.toggle-button {
+    -fx-background-color: derive(-fx-base, 30%);
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-padding: 5;
+    -fx-border-width: 0px;
+}
+
+.toggle-button:hover {
+    -fx-background-color: derive(-fx-base, 0%);
+}
+
+.toggle-button:selected {
+    -fx-background-color: derive(-fx-base, -20%);
+    -fx-color-label-visible: #ccc;
+    -fx-text-fill: #ccc;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 0, 5);
+}
+
+.toggle-button-colored {
+    -fx-background-color: lightcoral;
+    -fx-text-fill: white;
+}
+
+.toggle-button-colored:hover {
+    -fx-background-color: derive(lightcoral, -20%);
+}
+
+.toggle-button-colored:selected {
+    -fx-background-color: lightgreen;
+    -fx-text-fill: black;
+}
+
+.toggle-button-colored:selected:hover {
+    -fx-background-color: derive(lightgreen, -20%);
+}
+
+.toggle-button-colored:disabled {
+    -fx-background-color: #444;
+}
+
+.toggle-squared {
+    -fx-min-width: 25px;
+    -fx-max-width: 25px;
+    -fx-pref-width: 25px;
+    -fx-min-height: 25px;
+    -fx-max-height: 25px;
+    -fx-pref-height: 25px;
+}

@@ -1,23 +1,15 @@
+.button, .button:selected, .button:focused, .button:hover {
+    -fx-background-insets: 0 !important;
+}
 
-/* === BOUTONS === */
-.button {
-    -fx-background-color: -fx-grey;
-    -fx-background-radius: 4;
-    -fx-padding: 6 12 6 12;
-    -fx-border-width:0;
+.button, .button:selected, .button:focused{
+    -fx-background-color: derive(-fx-body-color, 12%);
 }
 
 .button:hover {
-    -fx-background-color: derive(-fx-grey, 20%);
+    -fx-background-color: derive(-fx-body-color, -12%);
 }
 
 .button:pressed {
-    -fx-background-color: derive(-fx-grey, -20%);
-}
-
-/* === BOUTONS DANS LES CAPTIONS === */
-/* WE ABSOLUTLY DONT WANT TO CHANGE THE BUTTON STYLE IN THE CAPTION */
-.caption .button{
-    -fx-border-width:0;
-    -fx-background-color: transparent;
+    -fx-background-color: derive(-fx-body-color, -20%);
 }

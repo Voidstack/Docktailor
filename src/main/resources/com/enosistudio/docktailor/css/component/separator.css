@@ -1,0 +1,5 @@
+.separator:horizontal .line{
+    -fx-border-color: -fx-lightmain !important;
+    -fx-border-width: 1 0 0 0 !important;
+    -fx-border-insets: 0 0 0 0 !important;
+}

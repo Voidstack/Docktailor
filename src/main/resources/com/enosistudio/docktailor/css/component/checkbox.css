@@ -1,0 +1,9 @@
+.check-box .box{
+    -fx-border-color: rgba(255, 255, 255, 0.5);
+    -fx-border-width: 1px !important;
+    -fx-border-radius: 4px !important;
+}
+
+.check-box:hover .mark{
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+}

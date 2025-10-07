@@ -1,6 +1,6 @@
 /* MenuBar */
 .context-menu {
-    -fx-background-color: -fx-base;
+    -fx-background-color: -fx-main;
     -fx-background-radius: 4;
 }
 
@@ -10,7 +10,7 @@
     -fx-border-insets: 0 0 0 0;
 }
 
-.menu-item {
+.menu-item, .menu-item:selected, .menu-item:focused {
     -fx-background-color: transparent;
 }
 
@@ -20,10 +20,6 @@
 
 .menu, .menu-item {
     -fx-padding: 6 5 6 5; /* marge interne : top right bottom left */
-}
-
-.menu-bar{
-    -fx-background-color: -fx-base;
 }
 
 /* === MENUS === */
@@ -38,9 +34,9 @@
 }
 
 .menu-bar .menu:hover {
-    -fx-background-color: #4C5052;
+    -fx-background-color: -fx-accent !important;
 }
 
-.menu {
-    -fx-text-fill:white;
+.custom-menu-item, custom-menu-item:hover, custom-menu-item:selected{
+    -fx-background-color: -fx-main !important;
 }

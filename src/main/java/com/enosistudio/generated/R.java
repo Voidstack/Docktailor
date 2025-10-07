@@ -1,7 +1,16 @@
 package com.enosistudio.generated;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.net.URL;
+
 import com.enosistudio.RFile;
 import com.enosistudio.RFolder;
+import org.jetbrains.annotations.Contract;
 
 /**
  * Generated resource constants class.
@@ -29,7 +38,7 @@ public final class R {
                     public static final RFolder _self = new css();
                     private css() { super("css", "com/enosistudio/docktailor/css"); }
                     public static final RFile mainCss = new RFile("com/enosistudio/docktailor/css/main.css");
-                    public static final RFile modernaCss = new RFile("com/enosistudio/docktailor/css/modena.css");
+                    public static final RFile modenaCss = new RFile("com/enosistudio/docktailor/css/modena.css");
                     
                     public static final class component extends RFolder {
                         public static final RFolder _self = new component();

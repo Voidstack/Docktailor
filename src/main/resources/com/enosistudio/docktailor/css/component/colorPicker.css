@@ -1,0 +1,11 @@
+.color-picker .color-picker-label .text{
+    -fx-fill: white;
+}
+
+.color-picker:hover .color-picker-label .text{
+    -fx-fill: white;
+}
+
+.color-picker:hover .arrow-button .arrow{
+    -fx-background-color: -fx-accent;
+}

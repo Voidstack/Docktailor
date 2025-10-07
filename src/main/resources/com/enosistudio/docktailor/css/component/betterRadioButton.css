@@ -1,0 +1,27 @@
+.radio-button.betterRadioButton .radio {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+    -fx-opacity: 0;
+    -fx-border-insets: 0;
+
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}
+
+.radio-button.betterRadioButton{
+    -fx-background-color: -fx-base;
+    -fx-padding: 0 10 0 0;
+    -fx-alignment: center;
+    -fx-min-height: 30px;
+}
+
+.radio-button.betterRadioButton:hover{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+}
+
+.radio-button.betterRadioButton:selected{
+    -fx-background-color: -fx-background;
+}

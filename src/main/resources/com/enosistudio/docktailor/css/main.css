@@ -1,90 +1,71 @@
+/*
+    Les composants jfx sont basé sur le fichier css modena.css
+    On instancie des variables du même nom que celle dans le fichier modena.css mais avec des valeurs différentes
+    Permet de ne pas "casser" les composants jfx et devoir réecrire 156 fois tout les bg/hover/clicked...
+
+    Le fichier modena.css est dans le projet pour pouvoir copy/paste mais ne dois pas être utiliser sauf à titre d'exemple.
+*/
+
+/* Import */
 @import url("modena.css");
 
+@import url("component/tableView.css");
+@import url("component/cartoTooltip.css");
 @import url("component/menu.css");
 @import url("component/tab.css");
-@import url("component/scroll-bar.css");
+@import url("component/checkbox.css");
+@import url("component/listView.css");
+@import url("component/treeView.css");
+@import url("component/toolbar.css");
+@import url("component/separator.css");
+@import url("component/colorPicker.css");
 @import url("component/button.css");
+@import url("component/betterRadioButton.css");
+@import url("component/split-pane.css");
+@import url("component/scroll-bar.css");
 
-/* IntelliJ IDEA Dark Theme pour JavaFX */
-/* Variables de couleurs globales */
 .root {
-    /* Couleurs principales IntelliJ */
-    -fx-base: #2B2B2B;
-    -fx-darkgrey: #2B2B2B;
+    -fx-darkmain: #1e1f22;
+    -fx-base: -fx-darkmain;
 
-    -fx-background: #3C3F41;
-    -fx-grey: #3C3F41;
+    -fx-main: #3c3f40;
+    -fx-background: -fx-main;
 
-    -fx-lightgrey: #4E5254;
+    -fx-lightmain: #4c4d50;
 
     -fx-control-inner-background: #3C3F41;
-    -fx-control-inner-background-alt: #353739;
+    -fx-control-inner-background: #353739;
 
-    /* Texte */
+    /* TEXT */
     -fx-text-fill: #FFFFFF;
     -fx-text-base-color: #FFFFFF;
-    -fx-text-inner-color: red;
+    -fx-font-size: 12px;
 
-    /* Accents */
-    -fx-accent: #3C6EA1;
+    /* ACCENT - DISABLE */
+    -fx-accent: #5288f3;
     -fx-selection-bar: #214283;
     -fx-selection-bar-non-focused: #0D293E;
+    -fx-accent-transparent: rgba(82, 136, 243, 0.5);
 
-    /* Bordures */
+    /* BORDURES */
     -fx-outer-border: #323232;
     -fx-inner-border: #515151;
     -fx-body-color: #3C3F41;
 
-    /* Focus - DÉSACTIVÉ */
+    /* FOCUS - DISABLE */
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 
-    /* Couleurs spéciales */
+    /* SPECIAL */
     -fx-dark-text-color: #BBBBBB;
     -fx-mid-text-color: #8C8C8C;
     -fx-light-text-color: #FFFFFF;
-
-    -fx-font-size: 13px;
+    -fx-debug: #bb0000;
 }
 
-/* === CHAMPS DE TEXTE === */
-.text-field {
-    -fx-background-color: #45494A;
-    -fx-background-radius: 4;
-    -fx-border-color: #646464;
-    -fx-border-radius: 4;
-    -fx-border-width: 1;
-    -fx-text-fill: white;
-    -fx-prompt-text-fill: #787878;
-    -fx-padding: 6;
-}
-
-.text-field:focused {
-    -fx-border-color: #4A88C7;
-    -fx-border-width: 1;
-    -fx-background-color: #4A4E4F;
-}
-
-.text-area {
-    -fx-background-color: #45494A;
-    -fx-control-inner-background: #45494A;
-    -fx-border-color: #646464;
-    -fx-border-radius: 4;
-    -fx-border-width: 1;
-    -fx-text-fill: white;
-}
-
-.text-area:focused {
-    -fx-border-color: #4A88C7;
-    -fx-border-width: 1;
-}
-
-.text-area .content {
-    -fx-background-color: #45494A;
-}
-
-.split-pane{
-    -fx-border-width: 0;
-    -fx-background-insets : 0;
-    -fx-background-color: transparent;
+/* TODO : delete */
+.bordered-label {
+    -fx-border-width: 1px;
+    -fx-border-color: -fx-accent;
+    -fx-padding: 3px;
 }

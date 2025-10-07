@@ -1,19 +1,27 @@
-
 /* === ONGLETS - Style IntelliJ Editor Tabs === */
 .tab-pane {
-    -fx-border-color: transparent !important;
+    -fx-border-color: blue !important;
+    -fx-padding: 0 !important;
+    -fx-border-insets: 0 !important;
+    -fx-border-width: 0 !important;
+    -fx-background-insets: 0 !important;
 }
 
 .tab-pane .tab-header-area {
     -fx-padding: 0 !important;
+    -fx-border-width: 0 !important;
+    -fx-border-insets: 0 !important;
+    -fx-background-insets: 0 !important;
 }
-
 
 .tab-pane .tab-label {
     -fx-label-padding: 0 10 0 0 !important; /* top, right, bottom, left */
 }
 
 .tab-pane .tab-header-background {
+    -fx-border-insets: 0 !important;
+    -fx-background-insets: 0 !important;
+    -fx-border-width: 0 !important;
     -fx-background-color: -fx-base !important;
     -fx-border-color: transparent !important;
 }
@@ -25,16 +33,15 @@
     -fx-background-color: transparent !important;
 }
 
-.tab-pane .tab-container:hover .tab-close-button{
-    -fx-background-color:-fx-background !important;
+.tab-pane .tab-container:hover .tab-close-button {
+    -fx-background-color: -fx-background !important;
 }
 
-.tab-pane .tab-close-button:hover{
-    -fx-background:white !important;
+.tab-pane .tab-close-button:hover {
+    -fx-background: white !important;
 }
 
-
-.tab-pane .tab:selected .tab-close-button{
+.tab-pane .tab:selected .tab-close-button {
     -fx-background-color: -fx-background !important;
 }
 
@@ -42,7 +49,7 @@
     -fx-background-color: -fx-base !important;
     -fx-border-color: transparent !important;
 
-    -fx-font-weight: normal;
+    -fx-font-weight: normal !important;
     -fx-padding: 6 6 8 6 !important;
     -fx-background-radius: 0 !important;
     -fx-border-radius: 0 !important;
@@ -63,11 +70,11 @@
 
 /* Tab sélectionné - ressemble aux onglets de code IntelliJ */
 .tab-pane .tab:selected {
-    -fx-background-color: linear-gradient(to bottom, transparent 0%, transparent 90%, -fx-background 90%, -fx-background 100%) !important;
+    -fx-background-color: linear-gradient(to bottom, transparent 0%, transparent 90%, -fx-lightmain 90%, -fx-lightmain 100%) !important;
     -fx-text-fill: white !important;
 }
 
-.tab-pane .tab:pressed{
+.tab-pane .tab:pressed {
     -fx-background-color: linear-gradient(to bottom, transparent 0%, transparent 90%, -fx-accent 90%, -fx-accent 100%) !important;
     -fx-text-fill: -fx-accent !important;
 }
@@ -75,9 +82,9 @@
 
 /* Zone de contenu des tabs */
 .tab-content-area {
-    -fx-background-color: -fx-base;
-    -fx-padding: 0;
+    -fx-background-color: -fx-base !important;
+    -fx-padding: 0 !important;
 
-    -fx-border-width: 1 0 0 0;
-    -fx-border-color: -fx-background;
+    -fx-border-width: 1 0 0 0 !important;
+    -fx-border-color: -fx-background !important;
 }
