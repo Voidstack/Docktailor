@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
-public class InitTest {
+public class InitTestDockPane {
     @Test
     public void additionShouldWork() {
         log.info("Démarrage du test additionShouldWork()");

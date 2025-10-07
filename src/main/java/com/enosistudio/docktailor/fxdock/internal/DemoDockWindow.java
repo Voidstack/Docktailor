@@ -6,7 +6,7 @@ import com.enosistudio.docktailor.fx.*;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;
 import com.enosistudio.docktailor.sample.mvc.MainApp;
 import com.enosistudio.docktailor.sample.mvc.controller.PersonDockPane;
-import com.enosistudio.docktailor.sample.mvc.controller.Test;
+import com.enosistudio.docktailor.sample.mvc.controller.TestDockPane;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,7 +34,8 @@ public class DemoDockWindow extends FxDockWindow {
     public DemoDockWindow() {
         super("DemoWindow");
 
-        String cssFile = R.loadStringFromFile("/css/main.css");
+        String cssFile = ServiceDocktailor.getDocktailorCss().getAbsoluteURL().toExternalForm();
+
         getScene().getStylesheets().add(cssFile);
 
         getIcons().add(MainApp.IMAGE);
@@ -97,6 +98,7 @@ public class DemoDockWindow extends FxDockWindow {
         FxMenuBar fxMenuBar = new FxMenuBar();
 
         Menu menuApplication = new Menu("Application");
+
         fxMenuBar.add(menuApplication);
 
         // Ajout des différentes vue de tacp
@@ -111,10 +113,11 @@ public class DemoDockWindow extends FxDockWindow {
             menuApplication.getItems().add(addCustomConfiguration("Configuration #2", GlobalSettings.getFILE_2()));
             menuApplication.getItems().add(addCustomConfiguration("Configuration #3", GlobalSettings.getFILE_3()));
 
+            menuApplication.getItems().add(new SeparatorMenuItem());
+
             MenuItem menuItemDefaultConf = new MenuItem("Charger la configuration par défaut");
             menuItemDefaultConf.setOnAction(e -> DemoDockWindow.loadDefaultAction());
             menuApplication.getItems().add(menuItemDefaultConf);
-
 
             MenuItem menuLeaveApp = new MenuItem("Quitter l'application");
             menuLeaveApp.setOnAction(e -> FxFramework.exit());
@@ -124,7 +127,7 @@ public class DemoDockWindow extends FxDockWindow {
 
         Menu menuWindows = new Menu("Windows");
         ServiceDocktailor.getInstance().add(PersonDockPane.class);
-        ServiceDocktailor.getInstance().add(Test.class);
+        ServiceDocktailor.getInstance().add(TestDockPane.class);
         menuWindows.getItems().addAll(ServiceDocktailor.getInstance().createMenuItems(this));
         fxMenuBar.add(menuWindows);
 

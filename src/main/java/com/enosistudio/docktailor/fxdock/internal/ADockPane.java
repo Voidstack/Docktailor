@@ -1,7 +1,6 @@
 package com.enosistudio.docktailor.fxdock.internal;
 
 import com.enosistudio.docktailor.fxdock.FxDockPane;
-import com.enosistudio.docktailor.svg.SVGRegion;
 import lombok.extern.slf4j.Slf4j;
 
 /**

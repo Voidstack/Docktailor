@@ -18,7 +18,6 @@ public class FxDockWindow extends FxWindow {
     private final BorderPane frame;
     private final FxDockRootPane root;
 
-
     public FxDockWindow(String name) {
         super(name);
 

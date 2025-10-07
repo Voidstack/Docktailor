@@ -1,0 +1,90 @@
+@import url("modena.css");
+
+@import url("component/menu.css");
+@import url("component/tab.css");
+@import url("component/scroll-bar.css");
+@import url("component/button.css");
+
+/* IntelliJ IDEA Dark Theme pour JavaFX */
+/* Variables de couleurs globales */
+.root {
+    /* Couleurs principales IntelliJ */
+    -fx-base: #2B2B2B;
+    -fx-darkgrey: #2B2B2B;
+
+    -fx-background: #3C3F41;
+    -fx-grey: #3C3F41;
+
+    -fx-lightgrey: #4E5254;
+
+    -fx-control-inner-background: #3C3F41;
+    -fx-control-inner-background-alt: #353739;
+
+    /* Texte */
+    -fx-text-fill: #FFFFFF;
+    -fx-text-base-color: #FFFFFF;
+    -fx-text-inner-color: red;
+
+    /* Accents */
+    -fx-accent: #3C6EA1;
+    -fx-selection-bar: #214283;
+    -fx-selection-bar-non-focused: #0D293E;
+
+    /* Bordures */
+    -fx-outer-border: #323232;
+    -fx-inner-border: #515151;
+    -fx-body-color: #3C3F41;
+
+    /* Focus - DÉSACTIVÉ */
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+
+    /* Couleurs spéciales */
+    -fx-dark-text-color: #BBBBBB;
+    -fx-mid-text-color: #8C8C8C;
+    -fx-light-text-color: #FFFFFF;
+
+    -fx-font-size: 13px;
+}
+
+/* === CHAMPS DE TEXTE === */
+.text-field {
+    -fx-background-color: #45494A;
+    -fx-background-radius: 4;
+    -fx-border-color: #646464;
+    -fx-border-radius: 4;
+    -fx-border-width: 1;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #787878;
+    -fx-padding: 6;
+}
+
+.text-field:focused {
+    -fx-border-color: #4A88C7;
+    -fx-border-width: 1;
+    -fx-background-color: #4A4E4F;
+}
+
+.text-area {
+    -fx-background-color: #45494A;
+    -fx-control-inner-background: #45494A;
+    -fx-border-color: #646464;
+    -fx-border-radius: 4;
+    -fx-border-width: 1;
+    -fx-text-fill: white;
+}
+
+.text-area:focused {
+    -fx-border-color: #4A88C7;
+    -fx-border-width: 1;
+}
+
+.text-area .content {
+    -fx-background-color: #45494A;
+}
+
+.split-pane{
+    -fx-border-width: 0;
+    -fx-background-insets : 0;
+    -fx-background-color: transparent;
+}

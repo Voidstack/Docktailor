@@ -1,0 +1,23 @@
+
+/* === BOUTONS === */
+.button {
+    -fx-background-color: -fx-grey;
+    -fx-background-radius: 4;
+    -fx-padding: 6 12 6 12;
+    -fx-border-width:0;
+}
+
+.button:hover {
+    -fx-background-color: derive(-fx-grey, 20%);
+}
+
+.button:pressed {
+    -fx-background-color: derive(-fx-grey, -20%);
+}
+
+/* === BOUTONS DANS LES CAPTIONS === */
+/* WE ABSOLUTLY DONT WANT TO CHANGE THE BUTTON STYLE IN THE CAPTION */
+.caption .button{
+    -fx-border-width:0;
+    -fx-background-color: transparent;
+}

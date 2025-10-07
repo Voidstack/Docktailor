@@ -1,16 +1,20 @@
 package com.enosistudio.docktailor.fxdock.internal;
 
+import com.enosistudio.RFile;
+import com.enosistudio.docktailor.common.Singleton;
 import com.enosistudio.docktailor.fx.FxMenuItem;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;
+import com.enosistudio.generated.R;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MenuItem;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.inject.Singleton;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -21,6 +25,7 @@ import java.util.List;
  */
 @Singleton
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ServiceDocktailor {
     @Setter @Getter
     private String docktailorFolder = "default";
@@ -32,8 +37,6 @@ public class ServiceDocktailor {
 
     @Delegate
     private final ObservableList<Class<? extends IDockPane>> draggableTabs = FXCollections.observableArrayList();
-
-    private ServiceDocktailor() {}
 
     public static ServiceDocktailor getInstance() {
         if (instance == null) {
@@ -81,5 +84,14 @@ public class ServiceDocktailor {
             }
         }
         return menuItems;
+    }
+
+    /**
+     * Permet de récupérer le CSS de docktailor.
+     *
+     * @return : String
+     */
+    public static RFile getDocktailorCss(){
+        return R.com.enosistudio.docktailor.css.mainCss;
     }
 }

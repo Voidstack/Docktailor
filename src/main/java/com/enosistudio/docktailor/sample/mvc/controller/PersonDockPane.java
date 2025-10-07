@@ -1,11 +1,13 @@
 package com.enosistudio.docktailor.sample.mvc.controller;
 
 import com.enosistudio.docktailor.fxdock.internal.ADockPane;
-import com.enosistudio.docktailor.fx.R;
+import com.enosistudio.generated.R;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
+
+import java.io.IOException;
 
 public class PersonDockPane extends ADockPane {
     @Override
@@ -25,7 +27,12 @@ public class PersonDockPane extends ADockPane {
 
     @Override
     public Parent loadView() {
-        return R.loadParentFromFxml("fxml/personne.fxml");
+        try {
+            return FXMLLoader.load(R.com.enosistudio.docktailor.fxml.personneFxml.getAbsoluteURL());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        return R.loadParentFromFxml("docktailor/fxml/personne.fxml");
     }
 
     @Override
