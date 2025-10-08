@@ -32,6 +32,8 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         log.info("MainApp : Application start");
+        Application.setUserAgentStylesheet(ServiceDocktailor.getDocktailorCss().getAbsoluteURL().toExternalForm());
+
         FxFramework.openDockSystemConf(ServiceDocktailor.getInstance().getLastUIConfigUsed());
     }
 }

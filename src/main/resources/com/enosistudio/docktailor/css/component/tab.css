@@ -1,6 +1,6 @@
 /* === ONGLETS - Style IntelliJ Editor Tabs === */
 .tab-pane {
-    -fx-border-color: blue !important;
+    -fx-background-color: blue !important;
     -fx-padding: 0 !important;
     -fx-border-insets: 0 !important;
     -fx-border-width: 0 !important;
@@ -23,7 +23,6 @@
     -fx-background-insets: 0 !important;
     -fx-border-width: 0 !important;
     -fx-background-color: -fx-base !important;
-    -fx-border-color: transparent !important;
 }
 
 .tab-pane .tab-close-button {

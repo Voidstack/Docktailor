@@ -34,10 +34,6 @@ public class DemoDockWindow extends FxDockWindow {
     public DemoDockWindow() {
         super("DemoWindow");
 
-        String cssFile = ServiceDocktailor.getDocktailorCss().getAbsoluteURL().toExternalForm();
-
-        getScene().getStylesheets().add(cssFile);
-
         getIcons().add(MainApp.IMAGE);
 
         // Creation de la barre supérieur.
