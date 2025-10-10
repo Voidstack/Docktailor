@@ -99,10 +99,6 @@ public class DemoDockWindow extends FxDockWindow {
 
         // Ajout des différentes vue de tacp
         Platform.runLater(() -> {
-            // ServiceDocktailor.getInstance().initFXMenuBar(fxMenuBar, this);
-//            fxMenuBar.separator();
-
-            menuApplication.getItems().add(addCustomConfiguration("Configuration #1", GlobalSettings.getFILE_1()));
 
             // Custom config
             menuApplication.getItems().add(addCustomConfiguration("Configuration #1", GlobalSettings.getFILE_1()));

@@ -25,6 +25,8 @@ public final class ConfigDocktailor {
         }
 
         this.cacheFile = new File(String.join(File.separator, appData, "Docktailor", fileName));
+
+        tryLoad().ifPresent(dataConfigDocktailor1 -> this.dataConfigDocktailor = dataConfigDocktailor1);
     }
 
     public Optional<DataConfigDocktailor> tryLoad() {
