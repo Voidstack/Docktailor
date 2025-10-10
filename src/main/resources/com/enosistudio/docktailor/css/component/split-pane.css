@@ -8,5 +8,5 @@
 .split-pane-divider {
     -fx-background-insets: 0 !important;
     -fx-border-insets: 0 !important;
-    -fx-background-color: -fx-base !important;
+    -fx-background-color: -fx-background !important;
 }
