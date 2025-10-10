@@ -43,10 +43,21 @@ public final class R {
                     public static final class component extends RFolder {
                         public static final RFolder _self = new component();
                         private component() { super("component", "com/enosistudio/docktailor/css/component"); }
+                        public static final RFile betterradiobuttonCss = new RFile("com/enosistudio/docktailor/css/component/betterRadioButton.css");
                         public static final RFile buttonCss = new RFile("com/enosistudio/docktailor/css/component/button.css");
+                        public static final RFile cartotooltipCss = new RFile("com/enosistudio/docktailor/css/component/cartoTooltip.css");
+                        public static final RFile checkboxCss = new RFile("com/enosistudio/docktailor/css/component/checkbox.css");
+                        public static final RFile colorpickerCss = new RFile("com/enosistudio/docktailor/css/component/colorPicker.css");
+                        public static final RFile listviewCss = new RFile("com/enosistudio/docktailor/css/component/listView.css");
                         public static final RFile menuCss = new RFile("com/enosistudio/docktailor/css/component/menu.css");
                         public static final RFile scrollBarCss = new RFile("com/enosistudio/docktailor/css/component/scroll-bar.css");
+                        public static final RFile separatorCss = new RFile("com/enosistudio/docktailor/css/component/separator.css");
+                        public static final RFile splitPaneCss = new RFile("com/enosistudio/docktailor/css/component/split-pane.css");
                         public static final RFile tabCss = new RFile("com/enosistudio/docktailor/css/component/tab.css");
+                        public static final RFile tableviewCss = new RFile("com/enosistudio/docktailor/css/component/tableView.css");
+                        public static final RFile toogleCss = new RFile("com/enosistudio/docktailor/css/component/toogle.css");
+                        public static final RFile toolbarCss = new RFile("com/enosistudio/docktailor/css/component/toolbar.css");
+                        public static final RFile treeviewCss = new RFile("com/enosistudio/docktailor/css/component/treeView.css");
                     }
                 }
                 

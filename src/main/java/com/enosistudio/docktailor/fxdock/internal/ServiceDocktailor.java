@@ -27,13 +27,17 @@ import java.util.List;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ServiceDocktailor {
+
+    /**
+     * Le dossier de sauvegarde des fichiers de configuration.
+     */
     @Setter @Getter
-    private String docktailorFolder = "default";
+    private String docktailorSaveFolder = "default";
     private static final String DOCKTAILOR_CONFIG_FILE = "docktailor.config";
     public static boolean IS_DEBUG = false;
     private static ServiceDocktailor instance;
     @Getter
-    private final ConfigDocktailor configDocktailor = new ConfigDocktailor(String.join(File.separator, docktailorFolder, DOCKTAILOR_CONFIG_FILE));
+    private final ConfigDocktailor configDocktailor = new ConfigDocktailor(String.join(File.separator, docktailorSaveFolder, DOCKTAILOR_CONFIG_FILE));
 
     @Delegate
     private final ObservableList<Class<? extends IDockPane>> draggableTabs = FXCollections.observableArrayList();
