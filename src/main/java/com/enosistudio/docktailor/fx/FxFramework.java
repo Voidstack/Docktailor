@@ -8,6 +8,7 @@ import com.enosistudio.docktailor.fxdock.internal.ServiceDocktailor;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -17,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 // TODO shorter name?
 @Slf4j
 public class FxFramework {
-    @Getter
+    @Getter @Setter
     private static FxSettingsSchema schema;
 
     private FxFramework() {
