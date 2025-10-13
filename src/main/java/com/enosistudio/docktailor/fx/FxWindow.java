@@ -1,5 +1,6 @@
 package com.enosistudio.docktailor.fx;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -30,6 +31,7 @@ public class FxWindow extends Stage {
     }
 
     public void open() {
+//        Platform.runLater(this::show);
         show();
     }
 
