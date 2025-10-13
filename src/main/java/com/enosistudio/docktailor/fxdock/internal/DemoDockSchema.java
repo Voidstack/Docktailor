@@ -9,8 +9,6 @@ import javafx.stage.Stage;
  * Demo Schema creates custom dock windows and dock panes.
  */
 public class DemoDockSchema extends FxDockSchema {
-    public static final String BROWSER = "BROWSER";
-
     public DemoDockSchema(AGlobalSettings store) {
         super(store);
     }

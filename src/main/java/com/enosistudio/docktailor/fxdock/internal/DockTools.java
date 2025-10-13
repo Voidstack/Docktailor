@@ -499,7 +499,7 @@ public class DockTools {
         double op = w.getOpacity();
         w.setOpacity(0);
 
-        w.show();
+        w.open();
 
         // take into account window decorations
         // apparently, this is available only after show()
@@ -533,7 +533,7 @@ public class DockTools {
         w.setY(pos.getY() - m.getTop());
         w.setWidth(client.getWidth() + m.getRight() + m.getLeft());
         w.setHeight(client.getHeight() + m.getTop() + m.getBottom());
-        w.show();
+        w.open();
 
         collapseEmptySpace(p);
     }

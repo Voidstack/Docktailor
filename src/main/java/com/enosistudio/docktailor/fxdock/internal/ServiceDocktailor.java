@@ -39,7 +39,7 @@ public class ServiceDocktailor {
      * Le fichier de configuration par défaut de docktailor. Il est utilisé si le fichier de configuration de l'utilisateur n'existe pas.
      */
     @Setter @Getter
-    private static String defaultUiFile = ServiceDocktailor.class.getResource("../../docktailor_default.ui").getFile();
+    private static String defaultUiFile = ServiceDocktailor.class.getResource("/com/enosistudio/docktailor/docktailor_default.ui").getFile();
 
     /**
      * Le nom du fichier de configuration de docktailor. Il sauvegarde le dernier fichier de configuration utilisé.

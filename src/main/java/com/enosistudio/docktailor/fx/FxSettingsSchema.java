@@ -5,7 +5,6 @@ import com.enosistudio.docktailor.common.SStream;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -27,11 +26,10 @@ import java.util.List;
  * Stores and restores the UI state.
  */
 // TODO consider making it generic <ActualWindow>
-    @Slf4j(topic = "FxSettingsSchema")
+@Slf4j(topic = "FxSettingsSchema")
 public abstract class FxSettingsSchema {
     protected static final String FX_PREFIX = "FX.";
     private static final String SFX_WINDOWS = "WINDOWS";
-    private static final String SFX_COLUMNS = ".COLS";
     private static final String SFX_DIVIDERS = ".DIVS";
     private static final String SFX_EXPANDED = ".EXP";
     private static final String SFX_SELECTION = ".SEL";
@@ -148,7 +146,7 @@ public abstract class FxSettingsSchema {
             String state = ss.nextString(WINDOW_NORMAL);
 
             if ((width > 0) && (height > 0)) {
-                if(FX.isValidCoordinates(x, y)) {
+                if (FX.isValidCoordinates(x, y)) {
                     // iconified windows have (x,y) of -32000 for some reason
                     // their coordinates are essentially lost (unless there is a way to get them in FX)
                     w.setX(x);
@@ -175,6 +173,8 @@ public abstract class FxSettingsSchema {
                             break;
                         case WINDOW_ICONIFIED:
                             Platform.runLater(() -> s.setIconified(true));
+                            break;
+                        default:
                             break;
                     }
                 }
@@ -422,8 +422,7 @@ public abstract class FxSettingsSchema {
                 // FIX must run later because of FX split pane inability to set divider positions exactly
                 // it's likely a bug in SplitPane
                 sp.setDividerPositions(divs);
-                FX.later(() ->
-                {
+                FX.later(() -> {
                     sp.setDividerPositions(divs);
                 });
             }
@@ -432,69 +431,6 @@ public abstract class FxSettingsSchema {
         for (Node ch : sp.getItems()) {
         }
     }
-
-
-    protected void storeTableView(TableView t, String name) {
-        ObservableList<TableColumn<?, ?>> cs = t.getColumns();
-        int sz = cs.size();
-        ObservableList<TableColumn<?, ?>> sorted = t.getSortOrder();
-
-        // FIX hash of column name instead of id!
-        // columns: count,[id,width,sortOrder(0 for none, negative for descending, positive for ascending)
-        SStream s = new SStream();
-        s.add(sz);
-        for (int i = 0; i < sz; i++) {
-            TableColumn<?, ?> c = cs.get(i);
-
-            int sortOrder = sorted.indexOf(c);
-            if (sortOrder < 0) {
-                sortOrder = 0;
-            } else {
-                sortOrder++;
-                if (c.getSortType() == TableColumn.SortType.DESCENDING) {
-                    sortOrder = -sortOrder;
-                }
-            }
-
-            s.add(c.getId());
-            s.add(c.getWidth());
-            s.add(sortOrder);
-        }
-        globalSettings.setStream(FX_PREFIX + name + SFX_COLUMNS, s);
-
-        // selection
-        int ix = t.getSelectionModel().getSelectedIndex();
-        if (ix >= 0) {
-            globalSettings.setInt(FX_PREFIX + name + SFX_SELECTION, ix);
-        }
-    }
-
-    protected void restoreTableView(TableView t, String name) {
-        ObservableList<TableColumn<?, ?>> cs = t.getColumns();
-
-        // columns
-        SStream ss = globalSettings.getStream(FX_PREFIX + name + SFX_COLUMNS);
-        if (ss != null) {
-            int sz = ss.nextInt();
-            if (sz == cs.size()) {
-                for (int i = 0; i < sz; i++) {
-                    TableColumn<?, ?> c = cs.get(i);
-
-                    String id = ss.nextString();
-                    double w = ss.nextDouble();
-                    int sortOrder = ss.nextInt();
-
-                    // TODO
-                }
-            }
-        }
-
-        int ix = globalSettings.getInt(FX_PREFIX + name + SFX_SELECTION, -1);
-        if (ix >= 0) {
-            // TODO
-        }
-    }
-
 
     protected void storeTabPane(TabPane p, String name) {
         // selection
