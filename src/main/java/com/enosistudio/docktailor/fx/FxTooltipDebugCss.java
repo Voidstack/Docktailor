@@ -1,10 +1,5 @@
 package com.enosistudio.docktailor.fx;
 
-import com.enosistudio.docktailor.fxdock.internal.ServiceDocktailor;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Tooltip;
-import javafx.util.Duration;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

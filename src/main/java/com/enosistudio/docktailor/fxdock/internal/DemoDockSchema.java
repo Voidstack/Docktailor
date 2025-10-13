@@ -3,7 +3,7 @@ package com.enosistudio.docktailor.fxdock.internal;
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.fxdock.FxDockPane;
 import com.enosistudio.docktailor.fxdock.FxDockSchema;
-import javafx.stage.Stage;
+import com.enosistudio.docktailor.fxdock.FxDockWindow;
 
 /**
  * Demo Schema creates custom dock windows and dock panes.
@@ -31,12 +31,12 @@ public class DemoDockSchema extends FxDockSchema {
     }
 
     @Override
-    public Stage createWindow(String name) {
+    public FxDockWindow createWindow(String name) {
         return new DemoDockWindow();
     }
 
     @Override
-    public Stage createDefaultWindow() {
+    public FxDockWindow createDefaultWindow() {
         return new DemoDockWindow();
     }
 }

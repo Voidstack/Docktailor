@@ -2,6 +2,7 @@ package com.enosistudio.docktailor.fx;
 
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.SStream;
+import com.enosistudio.docktailor.fxdock.FxDockWindow;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -47,9 +48,9 @@ public abstract class FxSettingsSchema {
         this.globalSettings = globalSettings;
     }
 
-    public abstract Stage createDefaultWindow();
+    public abstract FxDockWindow createDefaultWindow();
 
-    protected abstract Stage createWindow(String name);
+    protected abstract FxDockWindow createWindow(String name);
 
     protected void loadWindowContent(WindowMonitor m, Stage w) {
         // :) content
@@ -494,7 +495,7 @@ public abstract class FxSettingsSchema {
             for (int i = 0; i < numEntries; i++) {
                 String name = st.nextString();
                 String id = st.nextString();
-                Stage w = createWindow(name);
+                FxDockWindow w = createWindow(name);
                 if (w != null) {
                     // ensure that the window monitor is created with the right id
                     WindowMonitor m = WindowMonitor.forWindow(w, id);
@@ -502,7 +503,7 @@ public abstract class FxSettingsSchema {
                     loadWindowContent(m, w);
 
                     if (!w.isShowing()) {
-                        w.show();
+                        w.open();
                     }
 
                     count++;
@@ -511,9 +512,9 @@ public abstract class FxSettingsSchema {
         }
 
         if (count == 0) {
-            Stage w = createDefaultWindow();
+            FxDockWindow w = createDefaultWindow();
             if (!w.isShowing()) {
-                w.show();
+                w.open();
             }
             count++;
         }

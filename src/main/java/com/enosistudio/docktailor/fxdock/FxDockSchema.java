@@ -8,7 +8,6 @@ import com.enosistudio.docktailor.fxdock.internal.*;
 import javafx.application.Platform;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,10 +35,10 @@ public abstract class FxDockSchema extends FxSettingsSchema {
     }
 
     @Override
-    public abstract Stage createWindow(String name);
+    public abstract FxDockWindow createWindow(String name);
 
     @Override
-    public abstract Stage createDefaultWindow();
+    public abstract FxDockWindow createDefaultWindow();
 
     public abstract FxDockPane createPane(String type);
 

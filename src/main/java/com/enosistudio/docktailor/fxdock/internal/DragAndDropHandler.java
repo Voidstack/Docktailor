@@ -1,7 +1,6 @@
 package com.enosistudio.docktailor.fxdock.internal;
 
 import com.enosistudio.docktailor.fx.FX;
-import com.enosistudio.docktailor.fx.FxTooltipDebugCss;
 import com.enosistudio.docktailor.fxdock.FxDockPane;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;
 import javafx.geometry.Point2D;

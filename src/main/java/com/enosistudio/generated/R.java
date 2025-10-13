@@ -76,16 +76,6 @@ public final class R {
                     private icons() { super("icons", "com/enosistudio/docktailor/icons"); }
                     public static final RFile logoPng = new RFile("com/enosistudio/docktailor/icons/logo.png");
                 }
-                
-                public static final class images extends RFolder {
-                    public static final RFolder _self = new images();
-                    private images() { super("images", "com/enosistudio/docktailor/images"); }
-                }
-                
-                public static final class svg extends RFolder {
-                    public static final RFolder _self = new svg();
-                    private svg() { super("svg", "com/enosistudio/docktailor/svg"); }
-                }
             }
         }
     }

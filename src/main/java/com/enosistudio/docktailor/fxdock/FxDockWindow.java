@@ -1,6 +1,5 @@
 package com.enosistudio.docktailor.fxdock;
 
-import com.enosistudio.docktailor.fx.FxTooltipDebugCss;
 import com.enosistudio.docktailor.fx.FxWindow;
 import com.enosistudio.docktailor.fxdock.internal.FxDockEmptyPane;
 import com.enosistudio.docktailor.fxdock.internal.FxDockRootPane;

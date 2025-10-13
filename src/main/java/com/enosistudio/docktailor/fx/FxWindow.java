@@ -1,6 +1,5 @@
 package com.enosistudio.docktailor.fx;
 
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -13,21 +12,21 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j(topic = "FxWindow")
 public class FxWindow extends Stage {
-    private final BorderPane contentPane;
+    private final BorderPane borderPane;
 
     public FxWindow(String name) {
-        this.contentPane = new BorderPane();
+        this.borderPane = new BorderPane();
         FX.setName(this, name);
 
-        Scene sc = new Scene(contentPane);
+        Scene sc = new Scene(borderPane);
 
         // FxTooltipDebugCss.install(sc);
 
         setScene(sc);
     }
 
-    protected BorderPane getContentPane() {
-        return contentPane;
+    protected BorderPane getBorderPane() {
+        return borderPane;
     }
 
     public void open() {
@@ -35,43 +34,43 @@ public class FxWindow extends Stage {
     }
 
     public Node getTop() {
-        return contentPane.getTop();
+        return borderPane.getTop();
     }
 
     public void setTop(Node n) {
-        contentPane.setTop(n);
+        borderPane.setTop(n);
     }
 
     public Node getBottom() {
-        return contentPane.getBottom();
+        return borderPane.getBottom();
     }
 
     public void setBottom(Node n) {
-        contentPane.setBottom(n);
+        borderPane.setBottom(n);
     }
 
     public Node getLeft() {
-        return contentPane.getLeft();
+        return borderPane.getLeft();
     }
 
     public void setLeft(Node n) {
-        contentPane.setLeft(n);
+        borderPane.setLeft(n);
     }
 
     public Node getRight() {
-        return contentPane.getRight();
+        return borderPane.getRight();
     }
 
     public void setRight(Node n) {
-        contentPane.setRight(n);
+        borderPane.setRight(n);
     }
 
     public Node getCenter() {
-        return contentPane.getCenter();
+        return borderPane.getCenter();
     }
 
     public void setCenter(Node n) {
-        contentPane.setCenter(n);
+        borderPane.setCenter(n);
     }
 
     public void setSize(double width, double height) {
