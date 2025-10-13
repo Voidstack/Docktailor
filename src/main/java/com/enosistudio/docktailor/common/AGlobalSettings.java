@@ -3,7 +3,7 @@ package com.enosistudio.docktailor.common;
 /**
  * Abstract Settings Store.
  */
-public abstract class AGlobalSettings {
+public abstract sealed class AGlobalSettings permits GlobalSettings {
     public abstract void setStream(String key, SStream stream);
 
     public abstract SStream getStream(String key);

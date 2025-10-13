@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +32,13 @@ public class ServiceDocktailor {
     /**
      * Le dossier de sauvegarde des fichiers de configuration.
      */
-    @Setter @Getter
-    private String docktailorSaveFolder = "default";
+    @Setter
+    @Getter
+    private String docktailorSaveFolder = Path.of(System.getenv("APPDATA"), "enosistudio", "docktailor").toString();
+
+    /**
+     * Le nom du fichier de configuration de docktailor. Il sauvegarde le dernier fichier de configuration utilisé.
+     */
     private static final String DOCKTAILOR_CONFIG_FILE = "docktailor.config";
     public static boolean IS_DEBUG = false;
     private static ServiceDocktailor instance;
@@ -49,11 +55,11 @@ public class ServiceDocktailor {
         return instance;
     }
 
-    public void setLastUIConfigUsed(String file){
+    public void setLastUIConfigUsed(String file) {
         configDocktailor.getDataConfigDocktailor().setLastUIConfigUsed(file);
     }
 
-    public String getLastUIConfigUsed(){
+    public String getLastUIConfigUsed() {
         return configDocktailor.getDataConfigDocktailor().getLastUIConfigUsed();
     }
 
@@ -73,10 +79,11 @@ public class ServiceDocktailor {
 
     /**
      * Méthodes utilitaires pour récupérer les MenuItems de l'ensemble des dockPane référencé dans l'instance.
+     *
      * @param window : FxDockWindow
      * @return : List<MenuItem>
      */
-    public List<MenuItem> createMenuItems(FxDockWindow window){
+    public List<MenuItem> createMenuItems(FxDockWindow window) {
         List<MenuItem> menuItems = new ArrayList<>();
         for (Class<? extends IDockPane> draggableTab : draggableTabs) {
             try {
@@ -95,7 +102,7 @@ public class ServiceDocktailor {
      *
      * @return : String
      */
-    public static RFile getDocktailorCss(){
+    public static RFile getDocktailorCss() {
         return R.com.enosistudio.docktailor.css.mainCss;
     }
 }

@@ -1,10 +1,13 @@
 package com.enosistudio.docktailor.common;
 
+import com.enosistudio.docktailor.fxdock.internal.ServiceDocktailor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.nio.file.Path;
 
 
 /**
@@ -12,32 +15,31 @@ import java.io.File;
  */
 // FIX remove unnecessary level of indirection
 // Provider <- GlobalSettings <- instance <- ASettingsStore <- FxSettings
-@Slf4j @Singleton
-public class GlobalSettings extends AGlobalSettings {
+@Slf4j
+@Singleton
+@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
+public final class GlobalSettings extends AGlobalSettings {
     @Getter
     private static final String DEFAULT_FILE = "docktailor_default.conf";
     @Getter
-    private static final String FILE_1 = "docktailor_1.conf";
+    private static final String FILE_1 = Path.of(ServiceDocktailor.getInstance().getDocktailorSaveFolder(), "docktailor_1.conf").toString();
     @Getter
-    private static final String FILE_2 = "docktailor_2.conf";
+    private static final String FILE_2 = Path.of(ServiceDocktailor.getInstance().getDocktailorSaveFolder(), "docktailor_2.conf").toString();
     @Getter
-    private static final String FILE_3 = "docktailor_3.conf";
+    private static final String FILE_3 = Path.of(ServiceDocktailor.getInstance().getDocktailorSaveFolder(), "docktailor_3.conf").toString();
     @Setter
     private SettingsProviderBase provider;
 
-    private GlobalSettings() {
-    }
-
     private static GlobalSettings instance;
 
-    public static GlobalSettings getInstance(){
-        if(instance == null) {
+    public static GlobalSettings getInstance() {
+        if (instance == null) {
             instance = new GlobalSettings();
         }
         return GlobalSettings.instance;
     }
 
-    public  void setDefaultFileProvider() {
+    public void setDefaultFileProvider() {
         setFileProvider(new File(DEFAULT_FILE));
     }
 
