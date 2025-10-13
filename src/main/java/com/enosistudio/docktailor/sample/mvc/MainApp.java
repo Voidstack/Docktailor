@@ -1,5 +1,8 @@
 package com.enosistudio.docktailor.sample.mvc;
 
+import com.enosistudio.docktailor.common.AGlobalSettings;
+import com.enosistudio.docktailor.common.GlobalSettings;
+import com.enosistudio.docktailor.fxdock.internal.DemoDockSchema;
 import com.enosistudio.docktailor.fxdock.internal.ServiceDocktailor;
 import com.enosistudio.docktailor.fx.FxFramework;
 //import com.enosistudio.docktailor.fx.R;
@@ -34,6 +37,9 @@ public class MainApp extends Application {
         log.info("MainApp : Application start");
         Application.setUserAgentStylesheet(ServiceDocktailor.getDocktailorCss().getAbsoluteURL().toExternalForm());
 
-        FxFramework.openDockSystemConf(ServiceDocktailor.getInstance().getLastUIConfigUsed());
+        GlobalSettings.getInstance().setFileProvider(ServiceDocktailor.getInstance().getLastUIConfigUsed());
+        AGlobalSettings store = GlobalSettings.getInstance();
+        DemoDockSchema demoDockSchema = new DemoDockSchema(store);
+        FxFramework.openDockSystemConf(demoDockSchema);
     }
 }

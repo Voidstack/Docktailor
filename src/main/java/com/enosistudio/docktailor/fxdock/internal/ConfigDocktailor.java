@@ -67,7 +67,7 @@ public final class ConfigDocktailor {
         private static final long serialVersionUID = 1L;
 
         // Nom du fichier de configuration utilisé pour la dernière fois.
-        private String lastUIConfigUsed = "docktailor_default.conf";
+        private String lastUIConfigUsed = "docktailor_default.ui";
 
         // List des différentes fenêtres de l'application trouvé par réflexion.
         private Set<Class<? extends IDockPane>> iControllerDockPane = new HashSet<>();

@@ -7,7 +7,9 @@ import com.enosistudio.docktailor.fxdock.internal.DemoDockSchema;
 import com.enosistudio.docktailor.fxdock.internal.ServiceDocktailor;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,42 +18,23 @@ import lombok.extern.slf4j.Slf4j;
  * FX Application Framework.
  */
 // TODO shorter name?
-@Slf4j
+@Slf4j @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FxFramework {
-    @Getter @Setter
+    @Getter
     private static FxSettingsSchema schema;
 
-    private FxFramework() {
-    }
-
-    public static void openDockSystemConf(String fileName) {
+    public static void openDockSystemConf(FxDockSchema fxDockSchema) {
         log.info("Docktailor : Ouverture de la configuration d'interface, {}", ServiceDocktailor.getInstance().getLastUIConfigUsed());
-        GlobalSettings.getInstance().setFileProvider(fileName);
+
+/*        GlobalSettings.getInstance().setFileProvider(fileName);
         AGlobalSettings store = GlobalSettings.getInstance();
-        DemoDockSchema demoDockSchema = new DemoDockSchema(store);
+        DemoDockSchema demoDockSchema = new DemoDockSchema(store); */
 
         if (schema != null) {
             FxFramework.closeCurrentLayout();
         }
 
-        schema = demoDockSchema;
-        schema.openLayout();
-    }
-
-    /**
-     * Ouvre une configuration d'interface.
-     * @param newSchema : GlobalSettings.getInstance().setFileProvider(fileName);
-     *         AGlobalSettings store = GlobalSettings.getInstance();
-     *         DemoDockSchema demoDockSchema = new DemoDockSchema(store);
-     */
-    public static void openDockSystemConf(FxDockSchema newSchema) {
-        log.info("Docktailor : Ouverture de la configuration d'interface, {}", ServiceDocktailor.getInstance().getLastUIConfigUsed());
-
-        if (schema != null) {
-            FxFramework.closeCurrentLayout();
-        }
-
-        schema = newSchema;
+        schema = fxDockSchema;
         schema.openLayout();
     }
 

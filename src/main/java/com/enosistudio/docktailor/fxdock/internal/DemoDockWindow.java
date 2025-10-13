@@ -1,5 +1,7 @@
 package com.enosistudio.docktailor.fxdock.internal;
 
+import com.enosistudio.docktailor.common.AGlobalSettings;
+import com.enosistudio.docktailor.common.GlobalSettings;
 import com.enosistudio.docktailor.common.Hex;
 import com.enosistudio.docktailor.fx.FxAction;
 import com.enosistudio.docktailor.fx.FxFramework;
@@ -76,11 +78,16 @@ public class DemoDockWindow extends FxDockWindow {
 
     protected static void actionLoadSettings(String fileName) {
         log.info("Docktailor : Load default interface configuration : {}", fileName);
-        FxFramework.openDockSystemConf(fileName);
-        ServiceDocktailor.getInstance().setLastUIConfigUsed(fileName);
-        ServiceDocktailor.getInstance().getConfigDocktailor().save();
 
-        //AppConfigManager.getInstance().saveProperty(AppConfigManager.LAST_UI_CONFIG_SAVED, fileName);
+        GlobalSettings.getInstance().setFileProvider(fileName);
+        AGlobalSettings store = GlobalSettings.getInstance();
+        DemoDockSchema demoDockSchema = new DemoDockSchema(store);
+
+        FxFramework.openDockSystemConf(demoDockSchema);
+
+        // Save la config loaded
+        ServiceDocktailor.getInstance().setLastUIConfigUsed(fileName);
+        ServiceDocktailor.getInstance().getConfigDocktailor().save(); // Optionnel ici, si on veux VRAIMENT save dans le fichier
     }
 
     /**
@@ -91,8 +98,8 @@ public class DemoDockWindow extends FxDockWindow {
     protected static void actionSaveSettings(String fileName) {
         log.info("Docktailor : Save current interface configuration in {}", fileName);
         FxFramework.storeLayout(fileName);
-        ServiceDocktailor.getInstance().setLastUIConfigUsed(fileName);
         ServiceDocktailor.getInstance().getConfigDocktailor().save();
+        ServiceDocktailor.getInstance().setLastUIConfigUsed(fileName);
 
         //AppConfigManager.getInstance().saveProperty(AppConfigManager.LAST_UI_CONFIG_SAVED, fileName);
     }

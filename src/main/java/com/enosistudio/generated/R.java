@@ -33,6 +33,7 @@ public final class R {
             public static final class docktailor extends RFolder {
                 public static final RFolder _self = new docktailor();
                 private docktailor() { super("docktailor", "com/enosistudio/docktailor"); }
+                public static final RFile docktailorDefaultUi = new RFile("com/enosistudio/docktailor/docktailor_default.ui");
                 
                 public static final class css extends RFolder {
                     public static final RFolder _self = new css();
