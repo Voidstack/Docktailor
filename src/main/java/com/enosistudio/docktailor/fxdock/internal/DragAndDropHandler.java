@@ -135,7 +135,7 @@ public class DragAndDropHandler {
         Scene sc = new Scene(p, im.getWidth(), im.getHeight());
         s.setScene(sc);
 
-        FxTooltipDebugCss.install(sc);
+        // FxTooltipDebugCss.install(sc);
 
         s.setOpacity(DRAG_WINDOW_OPACITY);
         return s;

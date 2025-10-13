@@ -1,14 +1,17 @@
 package com.enosistudio.docktailor.fx;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
  * Convenient FX Stage.
  */
+@Slf4j(topic = "FxWindow")
 public class FxWindow extends Stage {
     private final BorderPane contentPane;
 
@@ -18,7 +21,7 @@ public class FxWindow extends Stage {
 
         Scene sc = new Scene(contentPane);
 
-        FxTooltipDebugCss.install(sc);
+        // FxTooltipDebugCss.install(sc);
 
         setScene(sc);
     }

@@ -62,7 +62,9 @@ public class DemoDockWindow extends FxDockWindow {
 
         LocalSettings.get(this).add("CHECKBOX_MENU", windowCheckAction);
 
-        Platform.runLater(() -> CustomCaption.useForStage(this, new CaptionConfiguration().setCaptionDragRegion(fxMenuBar).setControlBackgroundColor(Color.rgb(60, 63, 65))));
+        this.setOnShown(observable -> {
+            CustomCaption.useForStage(this, new CaptionConfiguration().setCaptionDragRegion(fxMenuBar).setControlBackgroundColor(Color.rgb(60, 63, 65)));
+        });
     }
 
     protected static void c(StringBuilder sb) {

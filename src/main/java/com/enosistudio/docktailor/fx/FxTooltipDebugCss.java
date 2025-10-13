@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FxTooltipDebugCss {
-    public static void install(Scene sc) {
+    /*public static void install(Scene sc) {
         if(!ServiceDocktailor.IS_DEBUG)
             return;
 
@@ -37,5 +37,5 @@ public class FxTooltipDebugCss {
                 Tooltip.install(node, tooltip);
             }
         });
-    }
+    }*/
 }

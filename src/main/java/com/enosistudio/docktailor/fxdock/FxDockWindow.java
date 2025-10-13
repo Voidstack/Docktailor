@@ -26,7 +26,7 @@ public class FxDockWindow extends FxWindow {
 
         Scene sc = new Scene(frame);
 
-        FxTooltipDebugCss.install(sc);
+        // FxTooltipDebugCss.install(sc);
 
         setScene(sc);
     }
