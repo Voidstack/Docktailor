@@ -2,10 +2,9 @@ package com.enosistudio.docktailor.sample.mvc;
 
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.GlobalSettings;
+import com.enosistudio.docktailor.fx.FxFramework;
 import com.enosistudio.docktailor.fxdock.internal.DemoDockSchema;
 import com.enosistudio.docktailor.fxdock.internal.ServiceDocktailor;
-import com.enosistudio.docktailor.fx.FxFramework;
-//import com.enosistudio.docktailor.fx.R;
 import com.enosistudio.generated.R;
 import javafx.application.Application;
 import javafx.scene.image.Image;

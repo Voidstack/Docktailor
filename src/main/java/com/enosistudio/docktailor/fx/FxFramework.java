@@ -1,16 +1,12 @@
 package com.enosistudio.docktailor.fx;
 
-import com.enosistudio.docktailor.common.AGlobalSettings;
-import com.enosistudio.docktailor.common.GlobalSettings;
 import com.enosistudio.docktailor.fxdock.FxDockSchema;
-import com.enosistudio.docktailor.fxdock.internal.DemoDockSchema;
 import com.enosistudio.docktailor.fxdock.internal.ServiceDocktailor;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 
