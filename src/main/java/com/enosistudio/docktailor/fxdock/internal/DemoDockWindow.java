@@ -118,8 +118,7 @@ public class DemoDockWindow extends FxDockWindow {
 
 
         Menu menuWindows = new Menu("Windows");
-        ServiceDocktailor.getInstance().add(PersonDockPane.class);
-        ServiceDocktailor.getInstance().add(TestDockPane.class);
+        ServiceDocktailor.getInstance().setAll(PersonDockPane.class, TestDockPane.class);
         menuWindows.getItems().addAll(ServiceDocktailor.getInstance().createMenuItems(this));
         fxMenuBar.add(menuWindows);
 
