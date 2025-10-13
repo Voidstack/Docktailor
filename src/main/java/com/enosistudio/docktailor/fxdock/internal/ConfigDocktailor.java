@@ -18,13 +18,7 @@ public final class ConfigDocktailor {
     private final File cacheFile;
 
     public ConfigDocktailor(String fileName) {
-        String appData = System.getenv("APPDATA");
-        if (appData == null) {
-            // fallback si pas sur Windows (Linux/Mac)
-            appData = System.getProperty("user.home");
-        }
-
-        this.cacheFile = new File(String.join(File.separator, appData, "Docktailor", fileName));
+        this.cacheFile = new File(fileName);
 
         tryLoad().ifPresent(dataConfigDocktailor1 -> this.dataConfigDocktailor = dataConfigDocktailor1);
     }

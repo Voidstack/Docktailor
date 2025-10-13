@@ -1,13 +1,11 @@
 package com.enosistudio.docktailor.common;
 
 import com.enosistudio.docktailor.fxdock.internal.ServiceDocktailor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.nio.file.Path;
 
 
 /**
@@ -19,14 +17,6 @@ import java.nio.file.Path;
 @Singleton
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public final class GlobalSettings extends AGlobalSettings {
-    @Getter
-    private static final String DEFAULT_FILE = "docktailor_default.conf";
-    @Getter
-    private static final String FILE_1 = Path.of(ServiceDocktailor.getInstance().getDocktailorSaveFolder(), "docktailor_1.conf").toString();
-    @Getter
-    private static final String FILE_2 = Path.of(ServiceDocktailor.getInstance().getDocktailorSaveFolder(), "docktailor_2.conf").toString();
-    @Getter
-    private static final String FILE_3 = Path.of(ServiceDocktailor.getInstance().getDocktailorSaveFolder(), "docktailor_3.conf").toString();
     @Setter
     private SettingsProviderBase provider;
 
@@ -40,7 +30,7 @@ public final class GlobalSettings extends AGlobalSettings {
     }
 
     public void setDefaultFileProvider() {
-        setFileProvider(new File(DEFAULT_FILE));
+        setFileProvider(new File(ServiceDocktailor.getDefaultUiFile()));
     }
 
     /**
@@ -52,7 +42,7 @@ public final class GlobalSettings extends AGlobalSettings {
             file = new File(fileName);
         } catch (NullPointerException e) {
             log.info("Docktailor : Le fichier le configuration d'interface n'a pas été trouvé : {}", fileName);
-            file = new File(DEFAULT_FILE);
+            file = new File(ServiceDocktailor.getDefaultUiFile());
         }
         setFileProvider(file);
     }

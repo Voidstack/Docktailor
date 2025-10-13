@@ -1,8 +1,10 @@
 package com.enosistudio.docktailor.fxdock.internal;
 
-import com.enosistudio.docktailor.common.GlobalSettings;
 import com.enosistudio.docktailor.common.Hex;
-import com.enosistudio.docktailor.fx.*;
+import com.enosistudio.docktailor.fx.FxAction;
+import com.enosistudio.docktailor.fx.FxFramework;
+import com.enosistudio.docktailor.fx.FxMenuBar;
+import com.enosistudio.docktailor.fx.LocalSettings;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;
 import com.enosistudio.docktailor.sample.mvc.MainApp;
 import com.enosistudio.docktailor.sample.mvc.controller.PersonDockPane;
@@ -15,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.yetihafen.javafx.customcaption.CaptionConfiguration;
 import net.yetihafen.javafx.customcaption.CustomCaption;
@@ -28,6 +31,13 @@ import java.util.Random;
  */
 @Slf4j
 public class DemoDockWindow extends FxDockWindow {
+    @Getter
+    private static final String FILE_1 = Path.of(ServiceDocktailor.getDocktailorSaveFolder(), "docktailor_1.ui").toString();
+    @Getter
+    private static final String FILE_2 = Path.of(ServiceDocktailor.getDocktailorSaveFolder(), "docktailor_2.ui").toString();
+    @Getter
+    private static final String FILE_3 = Path.of(ServiceDocktailor.getDocktailorSaveFolder(), "docktailor_3.ui").toString();
+
     public final FxAction windowCheckAction = new FxAction();
     //private static int seq;
 
@@ -50,10 +60,7 @@ public class DemoDockWindow extends FxDockWindow {
 
         LocalSettings.get(this).add("CHECKBOX_MENU", windowCheckAction);
 
-        Platform.runLater(() -> CustomCaption.useForStage(this, new CaptionConfiguration()
-                .setCaptionDragRegion(fxMenuBar)
-                .setControlBackgroundColor(Color.rgb(60, 63, 65 ))
-        ));
+        Platform.runLater(() -> CustomCaption.useForStage(this, new CaptionConfiguration().setCaptionDragRegion(fxMenuBar).setControlBackgroundColor(Color.rgb(60, 63, 65))));
     }
 
     protected static void c(StringBuilder sb) {
@@ -64,7 +71,7 @@ public class DemoDockWindow extends FxDockWindow {
 
     private static void loadDefaultAction() {
         log.info("Docktailor : Load default interface configuration");
-        actionLoadSettings(GlobalSettings.getDEFAULT_FILE());
+        actionLoadSettings(ServiceDocktailor.getDefaultUiFile());
     }
 
     protected static void actionLoadSettings(String fileName) {
@@ -101,9 +108,9 @@ public class DemoDockWindow extends FxDockWindow {
         Platform.runLater(() -> {
 
             // Custom config
-            menuApplication.getItems().add(addCustomConfiguration("Configuration #1", GlobalSettings.getFILE_1()));
-            menuApplication.getItems().add(addCustomConfiguration("Configuration #2", GlobalSettings.getFILE_2()));
-            menuApplication.getItems().add(addCustomConfiguration("Configuration #3", GlobalSettings.getFILE_3()));
+            menuApplication.getItems().add(addCustomConfiguration("Configuration #1", getFILE_1()));
+            menuApplication.getItems().add(addCustomConfiguration("Configuration #2", getFILE_2()));
+            menuApplication.getItems().add(addCustomConfiguration("Configuration #3", getFILE_3()));
 
             menuApplication.getItems().add(new SeparatorMenuItem());
 

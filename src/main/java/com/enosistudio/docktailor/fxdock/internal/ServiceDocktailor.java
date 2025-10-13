@@ -32,14 +32,19 @@ public class ServiceDocktailor {
     /**
      * Le dossier de sauvegarde des fichiers de configuration.
      */
-    @Setter
-    @Getter
-    private String docktailorSaveFolder = Path.of(System.getenv("APPDATA"), "enosistudio", "docktailor").toString();
+    @Setter @Getter
+    private static String docktailorSaveFolder = Path.of(System.getenv("APPDATA"), "enosistudio", "docktailor").toString();
+
+    /**
+     * Le fichier de configuration par défaut de docktailor. Il est utilisé si le fichier de configuration de l'utilisateur n'existe pas.
+     */
+    @Setter @Getter
+    private static String defaultUiFile = "docktailor_default.conf";
 
     /**
      * Le nom du fichier de configuration de docktailor. Il sauvegarde le dernier fichier de configuration utilisé.
      */
-    private static final String DOCKTAILOR_CONFIG_FILE = "docktailor.config";
+    private static final String DOCKTAILOR_CONFIG_FILE = "docktailor.conf";
     public static boolean IS_DEBUG = false;
     private static ServiceDocktailor instance;
     @Getter
