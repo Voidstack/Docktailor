@@ -2,7 +2,6 @@ package com.enosistudio.docktailor.fxdock.internal;
 
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.GlobalSettings;
-import com.enosistudio.docktailor.common.Hex;
 import com.enosistudio.docktailor.fx.FxAction;
 import com.enosistudio.docktailor.fx.FxFramework;
 import com.enosistudio.docktailor.fx.FxMenuBar;
@@ -29,7 +28,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Demo Window.
@@ -72,24 +70,16 @@ public class DemoDockWindow extends FxDockWindow {
             CustomCaption.useForStage(this, new CaptionConfiguration().setCaptionDragRegion(fxMenuBar).setControlBackgroundColor(Color.rgb(60, 63, 65)));
         });
 
-        this.widthProperty().addListener((obs, oldVal, newVal) -> showPopup());
-        this.heightProperty().addListener((obs, oldVal, newVal) -> showPopup());
-        this.xProperty().addListener((obs, oldVal, newVal) -> showPopup());
-        this.yProperty().addListener((obs, oldVal, newVal) -> showPopup());
+        getOnDocktailorEvent().addListener(this::showPopup);
     }
 
     @Getter
     private final PopupSaveUI popup = new PopupSaveUI();
-    public static void showPopup(){
-        for (DemoDockWindow demoDockWindow : demoDockWindows) {
-            demoDockWindow.getPopup().show(demoDockWindow.getParentStackPane());
-        }
-    }
-
-    protected static void c(StringBuilder sb) {
-        int min = 100;
-        int v = min + new Random().nextInt(255 - min);
-        sb.append(Hex.toHexByte(v));
+    public void showPopup(){
+//        for (DemoDockWindow demoDockWindow : demoDockWindows) {
+//            demoDockWindow.getPopup().show(demoDockWindow.getParentStackPane());
+//        }
+        popup.show(this.getParentStackPane());
     }
 
     private static void loadDefaultAction() {
@@ -149,7 +139,7 @@ public class DemoDockWindow extends FxDockWindow {
             menuApplication.getItems().add(menuLeaveApp);
 
             MenuItem showPopup= new MenuItem("Show popup save");
-            showPopup.setOnAction(e -> this.showPopup());
+            showPopup.setOnAction(e -> showPopup());
             menuApplication.getItems().add(showPopup);
         });
 

@@ -5,13 +5,13 @@ import com.enosistudio.docktailor.fxdock.internal.FxDockEmptyPane;
 import com.enosistudio.docktailor.fxdock.internal.FxDockRootPane;
 import com.enosistudio.docktailor.fxdock.internal.FxDockSplitPane;
 import com.enosistudio.docktailor.fxdock.internal.FxDockTabPane;
+import com.enosistudio.docktailor.other.DocktailorEvent;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import lombok.Getter;
-
 
 /**
  * Base class for docking framework Stage.
@@ -21,6 +21,9 @@ public class FxDockWindow extends Stage {
     private final StackPane parentStackPane;
     private final BorderPane frame;
     private final FxDockRootPane root;
+
+    @Getter
+    private final DocktailorEvent onDocktailorEvent = new DocktailorEvent();
 
     public FxDockWindow(String name) {
         FX.setName(this, name);
@@ -32,8 +35,16 @@ public class FxDockWindow extends Stage {
         Scene sc = new Scene(parentStackPane);
 
         // FxTooltipDebugCss.install(sc);
-
         setScene(sc);
+
+        initDockEvent();
+    }
+
+    private void initDockEvent() {
+        this.widthProperty().addListener((obs, oldVal, newVal) -> onDocktailorEvent.invoke());
+        this.heightProperty().addListener((obs, oldVal, newVal) -> onDocktailorEvent.invoke());
+        this.xProperty().addListener((obs, oldVal, newVal) -> onDocktailorEvent.invoke());
+        this.yProperty().addListener((obs, oldVal, newVal) -> onDocktailorEvent.invoke());
     }
 
     public void addDockPane(FxDockPane newDockPane) {

@@ -6,6 +6,8 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,13 @@ public class PopupSaveUI extends HBox {
     private final TranslateTransition tt = new TranslateTransition(Duration.millis(300), this);
     private final ParallelTransition inTransition = new ParallelTransition(fadeIn, tt);
     private static final List<PopupSaveUI> instances = new ArrayList<>();
+
+    @Setter
+    private EventHandler<ActionEvent> onSave = event -> {
+        FxFramework.storeLayout(ServiceDocktailor.getInstance().getLastUIConfigUsed());
+        ServiceDocktailor.getInstance().getConfigDocktailor().save();
+        hides();
+    };
 
     public PopupSaveUI() {
         instances.add(this);
@@ -49,11 +59,8 @@ public class PopupSaveUI extends HBox {
         btnSave.setTooltip(new Tooltip("Sauvegarder la configuration")); // tooltip
         btnSave.setMaxWidth(Double.MAX_VALUE); // prend toute la largeur
         btnSave.setMaxHeight(Double.MAX_VALUE);
-        btnSave.setOnAction(event -> {
-            FxFramework.storeLayout(ServiceDocktailor.getInstance().getLastUIConfigUsed());
-            ServiceDocktailor.getInstance().getConfigDocktailor().save();
-            hides();
-        });
+        btnSave.setOnAction(onSave);
+
         this.getChildren().add(btnSave);
         HBox.setHgrow(btnSave, Priority.ALWAYS);
 
@@ -81,7 +88,7 @@ public class PopupSaveUI extends HBox {
         fadeOut.play();
     }
 
-    private void hides() {
+    public static void hides() {
         for (PopupSaveUI instance : instances) {
             instance.hide();
         }
