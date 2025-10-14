@@ -14,6 +14,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Paint;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.util.Objects;
@@ -53,7 +54,6 @@ import java.util.Objects;
  * }
  * </pre>
  *
- * @see FxWindow
  * @see FxMenuItem
  */
 public final class FX {
@@ -62,11 +62,11 @@ public final class FX {
 
     private FX(){}
 
-    public static FxWindow getWindow(Node n) {
+    public static Stage getWindow(Node n) {
         Scene sc = n.getScene();
         if (sc != null) {
             Window w = sc.getWindow();
-            if (w instanceof FxWindow fxWindow) {
+            if (w instanceof Stage fxWindow) {
                 return fxWindow;
             }
         }

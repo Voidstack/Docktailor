@@ -13,3 +13,11 @@
 .button:pressed {
     -fx-background-color: derive(-fx-body-color, -20%);
 }
+
+.buttonValid{
+    -fx-background-color: -fx-accent;
+}
+
+.buttonTransluent{
+    -fx-background-color: transparent;
+}

@@ -8,6 +8,7 @@ import com.enosistudio.docktailor.fx.FxFramework;
 import com.enosistudio.docktailor.fx.FxMenuBar;
 import com.enosistudio.docktailor.fx.LocalSettings;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;
+import com.enosistudio.docktailor.other.PopupSaveUI;
 import com.enosistudio.docktailor.sample.mvc.MainApp;
 import com.enosistudio.docktailor.sample.mvc.controller.PersonDockPane;
 import com.enosistudio.docktailor.sample.mvc.controller.TestDockPane;
@@ -26,6 +27,8 @@ import net.yetihafen.javafx.customcaption.CustomCaption;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -43,8 +46,11 @@ public class DemoDockWindow extends FxDockWindow {
     public final FxAction windowCheckAction = new FxAction();
     //private static int seq;
 
+    private static final List<DemoDockWindow> demoDockWindows = new ArrayList<>();
+
     public DemoDockWindow() {
         super("DemoWindow");
+        demoDockWindows.add(this);
 
         getIcons().add(MainApp.IMAGE);
 
@@ -65,6 +71,19 @@ public class DemoDockWindow extends FxDockWindow {
         this.setOnShown(observable -> {
             CustomCaption.useForStage(this, new CaptionConfiguration().setCaptionDragRegion(fxMenuBar).setControlBackgroundColor(Color.rgb(60, 63, 65)));
         });
+
+        this.widthProperty().addListener((obs, oldVal, newVal) -> showPopup());
+        this.heightProperty().addListener((obs, oldVal, newVal) -> showPopup());
+        this.xProperty().addListener((obs, oldVal, newVal) -> showPopup());
+        this.yProperty().addListener((obs, oldVal, newVal) -> showPopup());
+    }
+
+    @Getter
+    private final PopupSaveUI popup = new PopupSaveUI();
+    public static void showPopup(){
+        for (DemoDockWindow demoDockWindow : demoDockWindows) {
+            demoDockWindow.getPopup().show(demoDockWindow.getParentStackPane());
+        }
     }
 
     protected static void c(StringBuilder sb) {
@@ -87,9 +106,7 @@ public class DemoDockWindow extends FxDockWindow {
 
         FxFramework.openDockSystemConf(demoDockSchema);
 
-        // Save la config loaded
         ServiceDocktailor.getInstance().setLastUIConfigUsed(fileName);
-        ServiceDocktailor.getInstance().getConfigDocktailor().save(); // Optionnel ici, si on veux VRAIMENT save dans le fichier
     }
 
     /**
@@ -130,6 +147,10 @@ public class DemoDockWindow extends FxDockWindow {
             MenuItem menuLeaveApp = new MenuItem("Quitter l'application");
             menuLeaveApp.setOnAction(e -> FxFramework.exit());
             menuApplication.getItems().add(menuLeaveApp);
+
+            MenuItem showPopup= new MenuItem("Show popup save");
+            showPopup.setOnAction(e -> this.showPopup());
+            menuApplication.getItems().add(showPopup);
         });
 
 

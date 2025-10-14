@@ -1,6 +1,6 @@
 package com.enosistudio.docktailor.fxdock;
 
-import com.enosistudio.docktailor.fx.FxWindow;
+import com.enosistudio.docktailor.fx.FX;
 import com.enosistudio.docktailor.fxdock.internal.FxDockEmptyPane;
 import com.enosistudio.docktailor.fxdock.internal.FxDockRootPane;
 import com.enosistudio.docktailor.fxdock.internal.FxDockSplitPane;
@@ -8,22 +8,28 @@ import com.enosistudio.docktailor.fxdock.internal.FxDockTabPane;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import lombok.Getter;
 
 
 /**
  * Base class for docking framework Stage.
  */
-public class FxDockWindow extends FxWindow {
+public class FxDockWindow extends Stage {
+    @Getter
+    private final StackPane parentStackPane;
     private final BorderPane frame;
     private final FxDockRootPane root;
 
     public FxDockWindow(String name) {
-        super(name);
+        FX.setName(this, name);
 
         root = new FxDockRootPane(this);
         frame = new BorderPane(root);
+        parentStackPane = new StackPane(frame);
 
-        Scene sc = new Scene(frame);
+        Scene sc = new Scene(parentStackPane);
 
         // FxTooltipDebugCss.install(sc);
 
@@ -59,42 +65,40 @@ public class FxDockWindow extends FxWindow {
         root.setContent(n);
     }
 
-    @Override
+    public void open(){
+        show();
+    }
+
     public final Node getTop() {
         return frame.getTop();
     }
 
-    @Override
     public final void setTop(Node n) {
         frame.setTop(n);
     }
 
-    @Override
     public final Node getBottom() {
         return frame.getBottom();
     }
 
-    @Override
+
     public final void setBottom(Node n) {
         frame.setBottom(n);
     }
 
-    @Override
+
     public final Node getLeft() {
         return frame.getLeft();
     }
 
-    @Override
     public final void setLeft(Node n) {
         frame.setLeft(n);
     }
 
-    @Override
     public final Node getRight() {
         return frame.getRight();
     }
 
-    @Override
     public final void setRight(Node n) {
         frame.setRight(n);
     }
