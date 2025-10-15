@@ -5,45 +5,60 @@
 [![Maven](https://img.shields.io/badge/Maven-3.8.5%2B-orange)](https://maven.apache.org/docs/3.8.5/release-notes.html)
 [![Java](https://img.shields.io/badge/Java-17%2B-orange.svg)](https://www.oracle.com/java/)
 
-**Docktailor** est un framework JavaFX de gestion de vues permettant la création d'interfaces utilisateur avec des fenêtres détachables. Inspiré par les systèmes de docking modernes trouvés dans les IDE professionnels, Docktailor offre une solution élégante pour créer des applications avec des interfaces flexibles et personnalisables.
+**Docktailor** is a lightweight JavaFX framework for building modern user interfaces with **detachable and dockable windows**.
+Inspired by the docking systems used in professional IDEs, Docktailor provides a clean, extensible architecture for creating flexible and highly customizable desktop applications.
 
-## ✨ Fonctionnalités
+---
 
-- 🪟 **Fenêtres détachables** - Permettez aux utilisateurs de détacher et d'organiser leurs tabs selon leurs préférences
-- 🎯 **API simple et intuitive** - Framework conçu pour être facile à intégrer et à utiliser
-- 🔄 **Gestion flexible des vues** - Architecture permettant une gestion efficace de multiples vues
-- 🎨 **Personnalisable** - Adaptez le comportement et l'apparence à vos besoins (l'api fournit un style par défaut inspiré par IntelliJ)
+## ✨ Features
 
-## 🚀 Démarrage rapide
+* 🪟 **Detachable Windows** — Let users undock and rearrange tabs freely
+* 🎯 **Simple & Intuitive API** — Designed to integrate seamlessly into existing JavaFX projects
+* 🔄 **Flexible View Management** — Handle multiple views dynamically with minimal boilerplate
+* 🎨 **Fully Customizable** — Easily adapt the layout, behavior, and look & feel (ships with a default IntelliJ-inspired theme)
 
-**Récupérer le template** - https://github.com/Voidstack/docktailor-template
+---
 
-### Prérequis
+## 🚀 Quick Start
 
-- Java 17 ou supérieur
-- Maven
-```xml
-<dependency>
-    <groupId>com.voidstack</groupId>
-    <artifactId>docktailor</artifactId>
-    <version>1.0.0</version>
-</dependency>
-```
-- Gradle
-```gradle
-implementation 'com.voidstack:docktailor:1.0.0'
-```
+**Starter Template:** [Voidstack/docktailor-template](https://github.com/Voidstack/docktailor-template)
+
+### Requirements
+
+* **Java 17+**
+* **Maven**
+
+  ```xml
+  <dependency>
+      <groupId>com.voidstack</groupId>
+      <artifactId>docktailor</artifactId>
+      <version>1.0.0</version>
+  </dependency>
+  ```
+* **Gradle**
+
+  ```gradle
+  implementation 'com.voidstack:docktailor:1.0.0'
+  ```
+
+---
 
 ## 📝 Roadmap
 
-- Documentation complète de l'API
-- Réduire le stuttering
+* Complete API documentation
+* Performance improvements (reduce stuttering)
+
+---
 
 ## 📄 License
 
-Ce projet est sous licence Apache License 2.0 - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+Licensed under the **Apache License 2.0** — see the [LICENSE](LICENSE) file for details.
 
-## 🤝 Contribution
+---
 
-- https://buymeacoffee.com/enosistudio
-- ⭐ Si vous trouvez ce projet utile, n'hésitez pas à lui donner une étoile !
+## 🤝 Contributing
+
+* ☕ [Buy me a coffee](https://buymeacoffee.com/enosistudio)
+* ⭐ If you find this project helpful, please give it a star — it really helps!
+
+---
