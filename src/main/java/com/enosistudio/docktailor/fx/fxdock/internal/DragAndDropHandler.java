@@ -36,15 +36,28 @@ public class DragAndDropHandler {
     protected static Stage dragWindow;
     protected static ADockDropOperation dockDropOperation;
 
+    /**
+     *
+     */
     private DragAndDropHandler() {
     }
 
+    /**
+     *
+     * @param n
+     * @param client
+     */
     public static void attach(Node n, FxDockPane client) {
         n.addEventHandler(MouseEvent.DRAG_DETECTED, ev -> onDragDetected(ev, client));
         n.addEventHandler(MouseEvent.MOUSE_DRAGGED, ev -> onMouseDragged(ev, client));
         n.addEventHandler(MouseEvent.MOUSE_RELEASED, ev -> onMouseReleased());
     }
 
+    /**
+     *
+     * @param ev
+     * @param client
+     */
     protected static void onDragDetected(MouseEvent ev, FxDockPane client) {
         if (dragWindow == null) {
             double x = ev.getScreenX();
@@ -66,12 +79,20 @@ public class DragAndDropHandler {
         }
     }
 
+    /**
+     *
+     */
     protected static void cancelDrag() {
         // any key cancels the drag operation
         stopDrag();
         dockDropOperation = null;
     }
 
+    /**
+     *
+     * @param ev
+     * @param client
+     */
     protected static void onMouseDragged(MouseEvent ev, FxDockPane client) {
         if (dragWindow != null) {
             double x = ev.getScreenX();
@@ -85,6 +106,10 @@ public class DragAndDropHandler {
         }
     }
 
+    /**
+     *
+     * @param op
+     */
     protected static void setDropOp(ADockDropOperation op) {
         if (dockDropOperation != null) {
             if (dockDropOperation.isSame(op)) {
@@ -101,6 +126,9 @@ public class DragAndDropHandler {
         }
     }
 
+    /**
+     *
+     */
     protected static void onMouseReleased() {
         // remove drag window
         stopDrag();
@@ -111,6 +139,9 @@ public class DragAndDropHandler {
         }
     }
 
+    /**
+     *
+     */
     protected static void stopDrag() {
         // delete the drag window
         if (dragWindow != null) {
@@ -124,6 +155,11 @@ public class DragAndDropHandler {
         }
     }
 
+    /**
+     *
+     * @param client
+     * @return
+     */
     protected static Stage createDragWindow(FxDockPane client) {
         Window owner = FX.getParentWindow(client);
         Image im = createDragImage(client);
@@ -139,7 +175,11 @@ public class DragAndDropHandler {
         return s;
     }
 
-
+    /**
+     *
+     * @param client
+     * @return
+     */
     protected static Image createDragImage(FxDockPane client) {
         SnapshotParameters sp = new SnapshotParameters();
         sp.setFill(Color.TRANSPARENT);
@@ -169,6 +209,14 @@ public class DragAndDropHandler {
         return c.snapshot(sp, null);
     }
 
+    /**
+     *
+     * @param client
+     * @param root
+     * @param screenx
+     * @param screeny
+     * @return
+     */
     protected static ADockDropOperation checkWindowEdge(FxDockPane client, FxDockRootPane root, double screenx, double screeny) {
         // TODO allow to create a split
         if (root.getContent() == client) {
@@ -234,7 +282,13 @@ public class DragAndDropHandler {
         return null;
     }
 
-
+    /**
+     *
+     * @param client
+     * @param screenx
+     * @param screeny
+     * @return
+     */
     protected static ADockDropOperation createDropToNewWindow(FxDockPane client, double screenx, double screeny) {
         return new ADockDropOperation(null, new WhereScreen(screenx, screeny)) {
             @Override
@@ -244,6 +298,14 @@ public class DragAndDropHandler {
         };
     }
 
+    /**
+     *
+     * @param client
+     * @param target
+     * @param screenx
+     * @param screeny
+     * @return
+     */
     protected static ADockDropOperation createDropOnPane(FxDockPane client, Pane target, double screenx, double screeny) {
         Point2D p = target.screenToLocal(screenx, screeny);
         double x = p.getX();
@@ -344,6 +406,14 @@ public class DragAndDropHandler {
         }
     }
 
+    /**
+     *
+     * @param client
+     * @param parent
+     * @param screenx
+     * @param screeny
+     * @return
+     */
     protected static ADockDropOperation createDropOnDivider(FxDockPane client, FxDockSplitPane parent, double screenx, double screeny) {
         List<Pane> splits = DockTools.collectDividers(parent);
         int sz = splits.size();
@@ -379,7 +449,13 @@ public class DragAndDropHandler {
         return null;
     }
 
-
+    /**
+     *
+     * @param client
+     * @param screenx
+     * @param screeny
+     * @return
+     */
     public static ADockDropOperation createDropOp(FxDockPane client, double screenx, double screeny) {
         // first, check if we are outside of any window
         FxDockWindow w = DockTools.findWindow(screenx, screeny);
