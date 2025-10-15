@@ -34,10 +34,6 @@
 implementation 'com.voidstack:docktailor:1.0.0'
 ```
 
-## 🤝 Contribution
-
-https://buymeacoffee.com/enosistudio
-
 ## 📝 Roadmap
 
 - Documentation complète de l'API
@@ -47,4 +43,7 @@ https://buymeacoffee.com/enosistudio
 
 Ce projet est sous licence Apache License 2.0 - voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-⭐ Si vous trouvez ce projet utile, n'hésitez pas à lui donner une étoile !
+## 🤝 Contribution
+
+- https://buymeacoffee.com/enosistudio
+- ⭐ Si vous trouvez ce projet utile, n'hésitez pas à lui donner une étoile !
