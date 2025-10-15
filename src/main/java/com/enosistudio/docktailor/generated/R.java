@@ -1,4 +1,4 @@
-package com.enosistudio.generated;
+package com.enosistudio.docktailor.generated;
 
 import com.enosistudio.RFile;
 import com.enosistudio.RFolder;

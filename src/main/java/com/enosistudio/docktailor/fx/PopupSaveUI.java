@@ -1,7 +1,7 @@
 package com.enosistudio.docktailor.fx;
 
+import com.enosistudio.docktailor.DocktailorService;
 import com.enosistudio.docktailor.DocktailorUtility;
-import com.enosistudio.docktailor.fx.fxdock.internal.DocktailorService;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;

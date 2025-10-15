@@ -1,10 +1,10 @@
 package com.enosistudio.docktailor.sample;
 
+import com.enosistudio.docktailor.DocktailorService;
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.fx.fxdock.FxDockPane;
 import com.enosistudio.docktailor.fx.fxdock.FxDockSchema;
 import com.enosistudio.docktailor.fx.fxdock.FxDockWindow;
-import com.enosistudio.docktailor.fx.fxdock.internal.DocktailorService;
 import com.enosistudio.docktailor.fx.fxdock.internal.IDockPane;
 
 /**

@@ -1,5 +1,6 @@
 package com.enosistudio.docktailor.sample;
 
+import com.enosistudio.docktailor.DocktailorService;
 import com.enosistudio.docktailor.DocktailorUtility;
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.GlobalSettings;
@@ -8,7 +9,6 @@ import com.enosistudio.docktailor.fx.FxMenuBar;
 import com.enosistudio.docktailor.fx.LocalSettings;
 import com.enosistudio.docktailor.fx.PopupSaveUI;
 import com.enosistudio.docktailor.fx.fxdock.FxDockWindow;
-import com.enosistudio.docktailor.fx.fxdock.internal.DocktailorService;
 import com.enosistudio.docktailor.sample.controller.PersonDockPane;
 import com.enosistudio.docktailor.sample.controller.TestDockPane;
 import javafx.application.Platform;

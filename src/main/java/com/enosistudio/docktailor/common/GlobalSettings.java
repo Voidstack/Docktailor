@@ -1,6 +1,6 @@
 package com.enosistudio.docktailor.common;
 
-import com.enosistudio.docktailor.fx.fxdock.internal.DocktailorService;
+import com.enosistudio.docktailor.DocktailorService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

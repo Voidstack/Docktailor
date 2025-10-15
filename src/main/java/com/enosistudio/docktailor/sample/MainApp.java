@@ -1,10 +1,10 @@
 package com.enosistudio.docktailor.sample;
 
+import com.enosistudio.docktailor.DocktailorService;
 import com.enosistudio.docktailor.DocktailorUtility;
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.GlobalSettings;
-import com.enosistudio.docktailor.fx.fxdock.internal.DocktailorService;
-import com.enosistudio.generated.R;
+import com.enosistudio.docktailor.generated.R;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;

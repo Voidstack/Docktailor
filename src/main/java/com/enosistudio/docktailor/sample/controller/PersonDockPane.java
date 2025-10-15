@@ -1,7 +1,7 @@
 package com.enosistudio.docktailor.sample.controller;
 
 import com.enosistudio.docktailor.fx.fxdock.internal.ADockPane;
-import com.enosistudio.generated.R;
+import com.enosistudio.docktailor.generated.R;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.Node;

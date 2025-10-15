@@ -2,7 +2,7 @@ package com.enosistudio.docktailor.sample.controller;
 
 import com.enosistudio.docktailor.fx.fxdock.internal.ADockPane;
 import com.enosistudio.docktailor.fx.svg.SVGRegion;
-import com.enosistudio.generated.R;
+import com.enosistudio.docktailor.generated.R;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
