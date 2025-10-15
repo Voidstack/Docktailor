@@ -1,8 +1,9 @@
 package com.enosistudio.docktailor.fx;
 
+import com.enosistudio.docktailor.DocktailorUtility;
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.SStream;
-import com.enosistudio.docktailor.fxdock.FxDockWindow;
+import com.enosistudio.docktailor.fx.fxdock.FxDockWindow;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

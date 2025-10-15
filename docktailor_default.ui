@@ -1,0 +1,12 @@
+FX.DemoWindow_0=930,495,704,385,N
+FX.DemoWindow_0.layout=T,1,P,TestControler
+FX.DemoWindow_0.SETTINGS.CHECKBOX_MENU=false
+FX.DemoWindow_0.StackPane.StackPane.BorderPane.BorderPane.FxDockTabPane.SEL=0
+FX.DemoWindow_0.T.tab=0
+FX.DemoWindow_1=335,249,587,367,N
+FX.DemoWindow_1.layout=T,1,P,Personne
+FX.DemoWindow_1.SETTINGS.CHECKBOX_MENU=false
+FX.DemoWindow_1.StackPane.StackPane.BorderPane.BorderPane.FxDockTabPane.SEL=0
+FX.DemoWindow_1.StackPane.StackPane.BorderPane.BorderPane.FxDockTabPane.StackPane.BorderPane.VBox.CheckBox=false
+FX.DemoWindow_1.T.tab=0
+FX.WINDOWS=2,DemoWindow,0,DemoWindow,1

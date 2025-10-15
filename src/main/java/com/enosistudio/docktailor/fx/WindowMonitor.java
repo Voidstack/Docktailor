@@ -1,5 +1,6 @@
 package com.enosistudio.docktailor.fx;
 
+import com.enosistudio.docktailor.DocktailorUtility;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;

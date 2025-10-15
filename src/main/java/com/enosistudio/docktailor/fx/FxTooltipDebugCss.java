@@ -1,12 +1,18 @@
 package com.enosistudio.docktailor.fx;
 
+import com.enosistudio.docktailor.DocktailorService;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Tooltip;
+import javafx.util.Duration;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@SuppressWarnings("unused")
 public class FxTooltipDebugCss {
-    /*public static void install(Scene sc) {
-        if(!ServiceDocktailor.IS_DEBUG)
+    public static void install(Scene sc) {
+        if(!DocktailorService.IS_DEBUG)
             return;
 
         Tooltip tooltip = new Tooltip();
@@ -32,5 +38,5 @@ public class FxTooltipDebugCss {
                 Tooltip.install(node, tooltip);
             }
         });
-    }*/
+    }
 }

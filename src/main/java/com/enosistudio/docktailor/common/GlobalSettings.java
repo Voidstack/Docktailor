@@ -1,6 +1,6 @@
 package com.enosistudio.docktailor.common;
 
-import com.enosistudio.docktailor.fxdock.internal.DocktailorService;
+import com.enosistudio.docktailor.fx.fxdock.internal.DocktailorService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +13,11 @@ import java.io.File;
  */
 // FIX remove unnecessary level of indirection
 // Provider <- GlobalSettings <- instance <- ASettingsStore <- FxSettings
+@Setter
 @Slf4j
 @Singleton
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public final class GlobalSettings extends AGlobalSettings {
-    @Setter
     private SettingsProviderBase provider;
 
     private static GlobalSettings instance;

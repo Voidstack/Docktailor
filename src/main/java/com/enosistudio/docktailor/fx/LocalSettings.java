@@ -8,6 +8,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Node;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,12 +23,11 @@ import java.util.Map;
  *    add(...);
  */
 // FIX must be a part of FxSettings and use their storage provider!
+@SuppressWarnings("unused")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LocalSettings {
     private static final Object PROP_BINDINGS = new Object();
     private final Map<String, Entry> entries = new HashMap<>();
-
-    public LocalSettings() {
-    }
 
     /**
      * returns a Node-specific instance, or null if not found.  This method should not be called from the client code
@@ -99,11 +100,10 @@ public class LocalSettings {
         return this;
     }
 
-
-    public <T extends Enum> LocalSettings add(String subKey, Property<T> p, Class<T> type, T defaultValue) {
+    @SuppressWarnings("unused")
+    public <T extends Enum<T>> LocalSettings add(String subKey, Property<T> p, Class<T> type, T defaultValue) {
         entries.put(subKey, new Entry() {
-            StringConverter<T> conv = Converters.enumConverter(type);
-
+            final StringConverter<T> conv = Converters.enumConverter(type);
 
             @Override
             public void saveValue(String prefix, AGlobalSettings store) {
@@ -217,16 +217,14 @@ public class LocalSettings {
     }
 
     public void loadValues(String prefix, AGlobalSettings store) {
-        for (String k : entries.keySet()) {
-            Entry en = entries.get(k);
-            en.loadValue(prefix, store);
+        for (Map.Entry<String, Entry> entry : entries.entrySet()) {
+            entry.getValue().loadValue(prefix, store);
         }
     }
 
     public void saveValues(String prefix, AGlobalSettings store) {
-        for (String k : entries.keySet()) {
-            Entry en = entries.get(k);
-            en.saveValue(prefix, store);
+        for (Map.Entry<String, Entry> entry : entries.entrySet()) {
+            entry.getValue().saveValue(prefix, store);
         }
     }
 
