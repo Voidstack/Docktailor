@@ -22,6 +22,7 @@ import java.util.*;
  * Window Monitor. Remembers the location/size and attributes of windows. Keeps track of Z order of open windows.
  */
 @Slf4j(topic = "WindowMonitor")
+@SuppressWarnings("unused")
 public class WindowMonitor {
     private static final String SEPARATOR = "_";
     private static final Object PROP_CLOSING = new Object();
@@ -31,9 +32,9 @@ public class WindowMonitor {
      * in reverse order: top window is last
      */
     private static final List<Window> stack = new ArrayList<>();
-    private final static ReadOnlyObjectWrapper<Node> lastFocusOwner = new ReadOnlyObjectWrapper<>();
+    private static final ReadOnlyObjectWrapper<Node> lastFocusOwner = new ReadOnlyObjectWrapper<>();
     private static boolean exiting;
-    private static EShutdownChoice EShutdownChoice;
+    private static EShutdownChoice shutdownChoice;
 
     static {
         init();
@@ -44,16 +45,8 @@ public class WindowMonitor {
     @Getter
     private final String id;
     @Getter
-    private double x;
-    @Getter
-    private double y;
-    private double width;
-    private double height;
-    private double xNorm;
-    private double yNorm;
-    private double widthNorm;
-    private double heightNorm;
-
+    private double x, y, width, height;
+    private double xNorm, yNorm, widthNorm, heightNorm;
 
     public WindowMonitor(Window w, String id) {
         this.window = w;
@@ -64,12 +57,10 @@ public class WindowMonitor {
         width = w.getWidth();
         height = w.getHeight();
 
-        ChangeListener<Node> focusListener = (s, p, c) ->
-                updateFocusOwner(c);
+        ChangeListener<Node> focusListener = (s, p, c) -> updateFocusOwner(c);
 
         // FIX does not work
-        w.sceneProperty().addListener((src, prev, cur) ->
-        {
+        w.sceneProperty().addListener((src, prev, cur) -> {
             if (prev != null) {
                 prev.focusOwnerProperty().removeListener(focusListener);
             }
@@ -78,62 +69,52 @@ public class WindowMonitor {
                 cur.focusOwnerProperty().addListener(focusListener);
             }
         });
-        if (w.getScene() != null) {
-            if (w.getScene().getFocusOwner() != null) {
-                updateFocusOwner(w.getScene().getFocusOwner());
-            }
+        if (w.getScene() != null && w.getScene().getFocusOwner() != null) {
+            updateFocusOwner(w.getScene().getFocusOwner());
         }
 
-        w.focusedProperty().addListener((src, prev, cur) ->
-        {
+        w.focusedProperty().addListener((src, prev, cur) -> {
             if (cur) {
                 updateFocusedWindow(w);
             }
         });
 
-        w.xProperty().addListener((p) ->
-        {
+        w.xProperty().addListener(p -> {
             xNorm = x;
             x = w.getX();
         });
 
-        w.yProperty().addListener((p) ->
-        {
+        w.yProperty().addListener(p -> {
             yNorm = y;
             y = w.getY();
         });
 
-        w.widthProperty().addListener((p) ->
-        {
+        w.widthProperty().addListener(p -> {
             widthNorm = width;
             width = w.getWidth();
         });
 
-        w.heightProperty().addListener((p) ->
-        {
+        w.heightProperty().addListener(p -> {
             heightNorm = height;
             height = w.getHeight();
         });
 
         if (w instanceof Stage s) {
-            s.iconifiedProperty().addListener((p) ->
-            {
+            s.iconifiedProperty().addListener(p -> {
                 if (s.isIconified()) {
                     x = xNorm;
                     y = yNorm;
                 }
             });
 
-            s.maximizedProperty().addListener((p) ->
-            {
+            s.maximizedProperty().addListener(p -> {
                 if (s.isMaximized()) {
                     x = xNorm;
                     y = yNorm;
                 }
             });
 
-            s.fullScreenProperty().addListener((p) ->
-            {
+            s.fullScreenProperty().addListener(p -> {
                 if (s.isFullScreen()) {
                     x = xNorm;
                     y = yNorm;
@@ -145,8 +126,7 @@ public class WindowMonitor {
     }
 
     private static void init() {
-        FX.addChangeListener(Window.getWindows(), (ch) ->
-        {
+        FX.addChangeListener(Window.getWindows(), ch -> {
             boolean save = false;
 
             while (ch.next()) {
@@ -208,7 +188,7 @@ public class WindowMonitor {
                 String id = name + SEPARATOR + useID;
                 if (ids.contains(id)) {
                     // this should not happen if FxSettings.openLayout() is called once at the launch
-                    throw new Error("duplicate id:" + id);
+                    throw new IllegalStateException("duplicate id:" + id);
                 }
                 return id;
             }
@@ -279,7 +259,7 @@ public class WindowMonitor {
         try {
             String style = "";
             FX.applyStyleSheet(w, null, style);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             log.error("", e);
         }
     }
@@ -291,14 +271,12 @@ public class WindowMonitor {
         return new ArrayList<>(stack);
     }
 
-    /**
-     * Finds a topmost window in the supplied list.
-     */
-    public static <W extends Window> W findTopWindow(List<W> list) {
+    @SuppressWarnings("unchecked")
+    public static <W extends Window> W findTopWindow(List<? extends Window> list) {
         for (int i = stack.size() - 1; i >= 0; i--) {
             Window w = stack.get(i);
             if (list.contains(w)) {
-                return (W) w;
+                return (W) w;         // cast nécessaire
             }
         }
         return null;
@@ -372,7 +350,7 @@ public class WindowMonitor {
     public static void exit() {
         if (!exiting) {
             exiting = true;
-            EShutdownChoice = EShutdownChoice.UNDEFINED;
+            shutdownChoice = EShutdownChoice.UNDEFINED;
 
             if (confirmExit()) {
                 doExit();
@@ -397,10 +375,10 @@ public class WindowMonitor {
             if (op != null) {
                 int count = countEssentialWindows(null);
                 boolean multiple = count > 1;
-                EShutdownChoice rsp = op.confirmClosing(exiting, multiple, EShutdownChoice);
+                EShutdownChoice rsp = op.confirmClosing(exiting, multiple, shutdownChoice);
                 switch (rsp) {
                     case DISCARD_ALL, SAVE_ALL:
-                        EShutdownChoice = rsp;
+                        shutdownChoice = rsp;
                         break;
                     case CONTINUE:
                         break;
@@ -419,17 +397,9 @@ public class WindowMonitor {
     public String getIDPart() {
         int ix = id.lastIndexOf(SEPARATOR);
         if (ix < 0) {
-            throw new Error("no id: " + id);
+            throw new IllegalStateException("no id: " + id);
         }
         return id.substring(ix + 1);
-    }
-
-    public double getW() {
-        return width;
-    }
-
-    public double getH() {
-        return height;
     }
 
     private static class CloseRequestListener implements EventHandler<WindowEvent> {
@@ -448,10 +418,7 @@ public class WindowMonitor {
                 return;
             }
 
-            // user or program closing the window
-            EShutdownChoice = EShutdownChoice.UNDEFINED;
-
-            EShutdownChoice rsp = operation.confirmClosing(exiting, false, EShutdownChoice);
+            EShutdownChoice rsp = operation.confirmClosing(exiting, false, EShutdownChoice.UNDEFINED);
             if (Objects.requireNonNull(rsp) == EShutdownChoice.CANCEL) {
                 ev.consume();
                 return;

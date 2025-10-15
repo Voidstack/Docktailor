@@ -73,8 +73,8 @@ public abstract class FxSettingsSchema {
     protected void storeWindowLocal(Window w, WindowMonitor m) {
         double x = m.getX();
         double y = m.getY();
-        double width = m.getW();
-        double height = m.getH();
+        double width = m.getWidth();
+        double height = m.getHeight();
 
         SStream ss = new SStream();
         ss.add(x);

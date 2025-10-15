@@ -243,24 +243,27 @@ public class DockTools {
         return null;
     }
 
+    /**
+     * Unlinks the specified node from its parent. If the parent is a recognized type,
+     * it replaces the node with a placeholder or removes it. If the parent is not a recognized type,
+     * an exception is thrown.
+     *
+     * @param node the node to be unlinked from its parent
+     * @throws IllegalArgumentException if the parent is not a recognized type
+     */
     private static void unlink(Node node) {
-        Node n = getParent(node);
-        if (n == null) {
-            return; // Fix: added return statement
-        } else if (n instanceof FxDockSplitPane p) {
-            // make sure an empty pane is left in place
-            int ix = indexInParent(node);
-            p.setPane(ix, new DeletedPane());
-        } else if (n instanceof FxDockTabPane p) {
-            // make sure an empty pane is left in place
-            //        int ix = indexInParent(node);
-            //       p.setTab(ix, node);
-        } else if (n instanceof FxDockRootPane p) {
-            p.setContent(new DeletedPane());
-        } else if (n instanceof DeletedPane) {
-            return; // Fix: added return statement
-        } else {
-            throw new IllegalArgumentException("?" + n);
+        Node parent = getParent(node);
+        if (parent == null) return;
+
+        if (parent instanceof FxDockSplitPane splitPane) {
+            // Replace the node with a DeletedPane in the split pane
+            splitPane.setPane(indexInParent(node), new DeletedPane());
+        } else if (parent instanceof FxDockRootPane rootPane) {
+            // Replace the content of the root pane with a DeletedPane
+            rootPane.setContent(new DeletedPane());
+        } else if (!(parent instanceof FxDockTabPane || parent instanceof DeletedPane)) {
+            // Throw an exception for unexpected parent types
+            throw new IllegalArgumentException("Unexpected parent: " + parent);
         }
     }
 
@@ -274,7 +277,7 @@ public class DockTools {
         }
     }
 
-    private static Node makeSplit(Node client, Node old, EWhere EWhere) {
+    private static Node makeSplit(Node client, Node old, EWhere where) {
         if (client == old) {
             old = new FxDockEmptyPane();
         }
@@ -283,7 +286,7 @@ public class DockTools {
         Node p = getParent(old);
         if (p instanceof FxDockSplitPane sp) {
             if (sp.getOrientation() == Orientation.HORIZONTAL) {
-                switch (EWhere) {
+                switch (where) {
                     case LEFT:
                         sp.addPane(0, client);
                         return sp;
@@ -294,7 +297,7 @@ public class DockTools {
                         break;
                 }
             } else {
-                switch (EWhere) {
+                switch (where) {
                     case TOP:
                         sp.addPane(0, client);
                         return sp;
@@ -307,12 +310,12 @@ public class DockTools {
             }
         }
 
-        return switch (EWhere) {
+        return switch (where) {
             case BOTTOM -> new FxDockSplitPane(Orientation.VERTICAL, old, client);
             case LEFT -> new FxDockSplitPane(Orientation.HORIZONTAL, client, old);
             case RIGHT -> new FxDockSplitPane(Orientation.HORIZONTAL, old, client);
             case TOP -> new FxDockSplitPane(Orientation.VERTICAL, client, old);
-            default -> throw new IllegalArgumentException("?" + EWhere);
+            default -> throw new IllegalArgumentException("?" + where);
         };
     }
 
@@ -419,9 +422,9 @@ public class DockTools {
     }
 
     private static boolean insertSplit(FxDockPane client, FxDockSplitPane sp, Object object) {
-        if (object instanceof EWhere EWhere) {
+        if (object instanceof EWhere where) {
             Orientation or = sp.getOrientation();
-            switch (EWhere) {
+            switch (where) {
                 case LEFT:
                     if (or == Orientation.HORIZONTAL) {
                         sp.addPane(0, client);
@@ -558,24 +561,24 @@ public class DockTools {
         b.adjustSplits();
     }
 
-    private static void addToRootPane(FxDockPane client, FxDockRootPane rp, EWhere EWhere) {
+    private static void addToRootPane(FxDockPane client, FxDockRootPane rp, EWhere where) {
         Node old = rp.getContent();
 
-        if (Objects.requireNonNull(EWhere) == EWhere.CENTER) {
+        if (Objects.requireNonNull(where) == EWhere.CENTER) {
             rp.setContent(makeTab(old, client));
         } else {
-            rp.setContent(makeSplit(client, old, EWhere));
+            rp.setContent(makeSplit(client, old, where));
         }
     }
 
-    private static void addToTabPane(FxDockPane client, FxDockTabPane tp, int index, EWhere EWhere) {
-        if (Objects.requireNonNull(EWhere) == EWhere.CENTER) {
+    private static void addToTabPane(FxDockPane client, FxDockTabPane tp, int index, EWhere where) {
+        if (Objects.requireNonNull(where) == EWhere.CENTER) {
             tp.addTab(client);
             tp.select(client);
         } else {
             Node p = getParent(tp);
             int ix = indexInParent(tp);
-            Node sp = makeSplit(client, tp, EWhere);
+            Node sp = makeSplit(client, tp, where);
             if (p != sp) {
                 replaceChild(p, ix, sp);
             }
@@ -583,17 +586,17 @@ public class DockTools {
     }
 
 
-    private static void addToSplitPane(FxDockPane client, Pane target, FxDockSplitPane sp, int index, EWhere EWhere) {
+    private static void addToSplitPane(FxDockPane client, Pane target, FxDockSplitPane sp, int index, EWhere where) {
         // determine index from where and sp orientation
         int ix;
         if (sp.getOrientation() == Orientation.HORIZONTAL) {
-            ix = switch (EWhere) {
+            ix = switch (where) {
                 case LEFT -> index;
                 case RIGHT -> index + 1;
                 default -> -1;
             };
         } else {
-            ix = switch (EWhere) {
+            ix = switch (where) {
                 case BOTTOM -> index + 1;
                 case TOP -> index;
                 default -> -1;
@@ -604,7 +607,7 @@ public class DockTools {
             Node p = getParent(target);
             int ip = indexInParent(target);
 
-            if (EWhere == EWhere.CENTER) {
+            if (where == EWhere.CENTER) {
                 if (target instanceof FxDockEmptyPane) {
                     sp.setPane(ip, client);
                 } else {
@@ -612,7 +615,7 @@ public class DockTools {
                     replaceChild(p, ip, t);
                 }
             } else {
-                Node n = makeSplit(client, target, EWhere);
+                Node n = makeSplit(client, target, where);
                 replaceChild(p, ip, n);
             }
         } else {
@@ -627,26 +630,26 @@ public class DockTools {
      *
      * @param client the FxDockPane to be moved.
      * @param target the Pane where the client will be moved to.
-     * @param EWhere  the position relative to the target where the client should be placed.
+     * @param where  the position relative to the target where the client should be placed.
      * @throws IllegalArgumentException if the target's parent is not a recognized type.
      */
-    public static void moveToPane(FxDockPane client, Pane target, EWhere EWhere) {
+    public static void moveToPane(FxDockPane client, Pane target, EWhere where) {
         BeforeDrop b = new BeforeDrop(client, target);
         Node targetParent = getParent(target);
 
         // handle the case where client and target are the same and where is CENTER
-        if (client == target && EWhere == EWhere.CENTER) {
+        if (client == target && where == EWhere.CENTER) {
             return;
         }
 
         if (targetParent instanceof FxDockSplitPane fxDockSplitPane) {
             int targetIndex = indexInParent(target);
-            addToSplitPane(client, target, fxDockSplitPane, targetIndex, EWhere);
+            addToSplitPane(client, target, fxDockSplitPane, targetIndex, where);
         } else if (targetParent instanceof FxDockTabPane fxDockTabPane) {
             int targetIndex = indexInParent(target);
-            addToTabPane(client, fxDockTabPane, targetIndex, EWhere);
+            addToTabPane(client, fxDockTabPane, targetIndex, where);
         } else if (targetParent instanceof FxDockRootPane fxDockRootPane) {
-            addToRootPane(client, fxDockRootPane, EWhere);
+            addToRootPane(client, fxDockRootPane, where);
         } else {
             throw new IllegalArgumentException("?" + targetParent);
         }
