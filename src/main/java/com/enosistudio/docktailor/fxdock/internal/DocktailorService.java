@@ -22,53 +22,90 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Référence les différents IDraggableTab dans une liste via reflexion.
+ * Singleton service class for managing Docktailor's draggable tabs and configurations.
+ * This class provides methods to handle configuration files, manage draggable tabs,
+ * and create menu items for the Docktailor application.
  */
 @Singleton
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ServiceDocktailor {
+public class DocktailorService {
 
     /**
-     * Le dossier de sauvegarde des fichiers de configuration.
+     * The folder where Docktailor's configuration files are saved.
      */
     @Setter @Getter
     private static String docktailorSaveFolder = Path.of(System.getenv("APPDATA"), "enosistudio", "docktailor").toString();
 
     /**
-     * Le fichier de configuration par défaut de docktailor. Il est utilisé si le fichier de configuration de l'utilisateur n'existe pas.
+     * The default configuration file for Docktailor.
+     * This file is used if the user's configuration file does not exist.
      */
     @Setter @Getter
-    private static String defaultUiFile = ServiceDocktailor.class.getResource("/com/enosistudio/docktailor/docktailor_default.ui").getFile();
+    private static String defaultUiFile = DocktailorService.class.getResource("/com/enosistudio/docktailor/docktailor_default.ui").getFile();
 
     /**
-     * Le nom du fichier de configuration de docktailor. Il sauvegarde le dernier fichier de configuration utilisé.
+     * The name of the configuration file that stores the last used configuration.
      */
     private static final String DOCKTAILOR_CONFIG_FILE = "docktailor.conf";
+
+    /**
+     * Flag indicating whether the application is in debug mode.
+     */
     public static boolean IS_DEBUG = false;
-    private static ServiceDocktailor instance;
+
+    /**
+     * Singleton instance of the DocktailorService.
+     */
+    private static DocktailorService instance;
+
+    /**
+     * Configuration object for managing Docktailor's settings.
+     */
     @Getter
     private final ConfigDocktailor configDocktailor = new ConfigDocktailor(String.join(File.separator, docktailorSaveFolder, DOCKTAILOR_CONFIG_FILE));
 
+    /**
+     * List of draggable tab classes managed by this service.
+     */
     @Delegate
     private final ObservableList<Class<? extends IDockPane>> draggableTabs = FXCollections.observableArrayList();
 
-    public static ServiceDocktailor getInstance() {
+    /**
+     * Retrieves the singleton instance of DocktailorService.
+     *
+     * @return The singleton instance of DocktailorService.
+     */
+    public static DocktailorService getInstance() {
         if (instance == null) {
-            instance = new ServiceDocktailor();
+            instance = new DocktailorService();
         }
         return instance;
     }
 
+    /**
+     * Sets the name of the last used UI configuration file.
+     *
+     * @param file The name of the configuration file.
+     */
     public void setLastUIConfigUsed(String file) {
         configDocktailor.getDataConfigDocktailor().setLastUIConfigUsed(file);
     }
 
+    /**
+     * Retrieves the name of the last used UI configuration file.
+     *
+     * @return The name of the last used configuration file.
+     */
     public String getLastUIConfigUsed() {
         return configDocktailor.getDataConfigDocktailor().getLastUIConfigUsed();
     }
 
-
+    /**
+     * Creates new instances of all draggable tabs managed by this service.
+     *
+     * @return A list of new instances of draggable tabs.
+     */
     public List<IDockPane> getNewInstances() {
         List<IDockPane> values = new ArrayList<>();
         for (Class<? extends IDockPane> draggableTab : this.draggableTabs) {
@@ -83,10 +120,10 @@ public class ServiceDocktailor {
     }
 
     /**
-     * Méthodes utilitaires pour récupérer les MenuItems de l'ensemble des dockPane référencé dans l'instance.
+     * Creates menu items for all draggable tabs managed by this service.
      *
-     * @param window : FxDockWindow
-     * @return : List<MenuItem>
+     * @param window The FxDockWindow to which the menu items will be linked.
+     * @return A list of menu items for the draggable tabs.
      */
     public List<MenuItem> createMenuItems(FxDockWindow window) {
         List<MenuItem> menuItems = new ArrayList<>();
@@ -103,9 +140,9 @@ public class ServiceDocktailor {
     }
 
     /**
-     * Permet de récupérer le CSS de docktailor.
+     * Retrieves the CSS file used by Docktailor.
      *
-     * @return : String
+     * @return The CSS file as an RFile object.
      */
     public static RFile getDocktailorCss() {
         return R.com.enosistudio.docktailor.css.mainCss;

@@ -1,6 +1,6 @@
 package com.enosistudio.docktailor.common;
 
-import com.enosistudio.docktailor.fxdock.internal.ServiceDocktailor;
+import com.enosistudio.docktailor.fxdock.internal.DocktailorService;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public final class GlobalSettings extends AGlobalSettings {
     }
 
     public void setDefaultFileProvider() {
-        setFileProvider(new File(ServiceDocktailor.getDefaultUiFile()));
+        setFileProvider(new File(DocktailorService.getDefaultUiFile()));
     }
 
     /**
@@ -42,7 +42,7 @@ public final class GlobalSettings extends AGlobalSettings {
             file = new File(fileName);
         } catch (NullPointerException e) {
             log.info("Docktailor : Le fichier le configuration d'interface n'a pas été trouvé : {}", fileName);
-            file = new File(ServiceDocktailor.getDefaultUiFile());
+            file = new File(DocktailorService.getDefaultUiFile());
         }
         setFileProvider(file);
     }

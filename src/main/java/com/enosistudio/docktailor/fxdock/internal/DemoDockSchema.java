@@ -21,7 +21,7 @@ public class DemoDockSchema extends FxDockSchema {
      */
     @Override
     public FxDockPane createPane(String id) throws IllegalArgumentException {
-        for (IDockPane newInstance : ServiceDocktailor.getInstance().getNewInstances()) {
+        for (IDockPane newInstance : DocktailorService.getInstance().getNewInstances()) {
             if (id.equals(newInstance.getTabName())) {
                 return newInstance.createDockPane();
             }

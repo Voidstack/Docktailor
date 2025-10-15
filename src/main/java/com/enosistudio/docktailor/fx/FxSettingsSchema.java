@@ -520,7 +520,7 @@ public abstract class FxSettingsSchema {
         }
 
         // #001 : Fixed
-        FxFramework.getSchema().resetRuntime();
+        DocktailorUtility.getSchema().resetRuntime();
 
         return count;
     }
@@ -541,7 +541,7 @@ public abstract class FxSettingsSchema {
 
         for (int i = 0; i < sz; i++) {
             Window w = ws.get(i);
-            FxFramework.store(w);
+            DocktailorUtility.store(w);
 
             String name = FX.getName(w);
             String id = WindowMonitor.forWindow(w).getIDPart();
@@ -564,7 +564,7 @@ public abstract class FxSettingsSchema {
 
         for (int i = 0; i < sz; i++) {
             Window w = ws.get(i);
-            FxFramework.store(w);
+            DocktailorUtility.store(w);
 
             String name = FX.getName(w);
             String id = WindowMonitor.forWindow(w).getIDPart();

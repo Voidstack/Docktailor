@@ -2,9 +2,9 @@ package com.enosistudio.docktailor.sample.mvc;
 
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.GlobalSettings;
-import com.enosistudio.docktailor.fx.FxFramework;
+import com.enosistudio.docktailor.fx.DocktailorUtility;
 import com.enosistudio.docktailor.fxdock.internal.DemoDockSchema;
-import com.enosistudio.docktailor.fxdock.internal.ServiceDocktailor;
+import com.enosistudio.docktailor.fxdock.internal.DocktailorService;
 import com.enosistudio.generated.R;
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -26,7 +26,7 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         ARGS.addAll(Arrays.stream(args).toList());
-        ServiceDocktailor.IS_DEBUG = ARGS.contains("-debug");
+        DocktailorService.IS_DEBUG = ARGS.contains("-debug");
 
         launch(args);
     }
@@ -34,11 +34,11 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         log.info("MainApp : Application start");
-        Application.setUserAgentStylesheet(ServiceDocktailor.getDocktailorCss().getAbsoluteURL().toExternalForm());
+        Application.setUserAgentStylesheet(DocktailorService.getDocktailorCss().getAbsoluteURL().toExternalForm());
 
-        GlobalSettings.getInstance().setFileProvider(ServiceDocktailor.getInstance().getLastUIConfigUsed());
+        GlobalSettings.getInstance().setFileProvider(DocktailorService.getInstance().getLastUIConfigUsed());
         AGlobalSettings store = GlobalSettings.getInstance();
         DemoDockSchema demoDockSchema = new DemoDockSchema(store);
-        FxFramework.openDockSystemConf(demoDockSchema);
+        DocktailorUtility.openDockSystemConf(demoDockSchema);
     }
 }

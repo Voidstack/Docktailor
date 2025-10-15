@@ -3,7 +3,7 @@ package com.enosistudio.docktailor.fxdock.internal;
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.GlobalSettings;
 import com.enosistudio.docktailor.fx.FxAction;
-import com.enosistudio.docktailor.fx.FxFramework;
+import com.enosistudio.docktailor.fx.DocktailorUtility;
 import com.enosistudio.docktailor.fx.FxMenuBar;
 import com.enosistudio.docktailor.fx.LocalSettings;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;
@@ -35,11 +35,11 @@ import java.util.List;
 @Slf4j
 public class DemoDockWindow extends FxDockWindow {
     @Getter
-    private static final String FILE_1 = Path.of(ServiceDocktailor.getDocktailorSaveFolder(), "docktailor_1.ui").toString();
+    private static final String FILE_1 = Path.of(DocktailorService.getDocktailorSaveFolder(), "docktailor_1.ui").toString();
     @Getter
-    private static final String FILE_2 = Path.of(ServiceDocktailor.getDocktailorSaveFolder(), "docktailor_2.ui").toString();
+    private static final String FILE_2 = Path.of(DocktailorService.getDocktailorSaveFolder(), "docktailor_2.ui").toString();
     @Getter
-    private static final String FILE_3 = Path.of(ServiceDocktailor.getDocktailorSaveFolder(), "docktailor_3.ui").toString();
+    private static final String FILE_3 = Path.of(DocktailorService.getDocktailorSaveFolder(), "docktailor_3.ui").toString();
 
     public final FxAction windowCheckAction = new FxAction();
     //private static int seq;
@@ -84,7 +84,7 @@ public class DemoDockWindow extends FxDockWindow {
 
     private static void loadDefaultAction() {
         log.info("Docktailor : Load default interface configuration");
-        actionLoadSettings(ServiceDocktailor.getDefaultUiFile());
+        actionLoadSettings(DocktailorService.getDefaultUiFile());
     }
 
     protected static void actionLoadSettings(String fileName) {
@@ -94,9 +94,9 @@ public class DemoDockWindow extends FxDockWindow {
         AGlobalSettings store = GlobalSettings.getInstance();
         DemoDockSchema demoDockSchema = new DemoDockSchema(store);
 
-        FxFramework.openDockSystemConf(demoDockSchema);
+        DocktailorUtility.openDockSystemConf(demoDockSchema);
 
-        ServiceDocktailor.getInstance().setLastUIConfigUsed(fileName);
+        DocktailorService.getInstance().setLastUIConfigUsed(fileName);
     }
 
     /**
@@ -106,9 +106,9 @@ public class DemoDockWindow extends FxDockWindow {
      */
     protected static void actionSaveSettings(String fileName) {
         log.info("Docktailor : Save current interface configuration in {}", fileName);
-        FxFramework.storeLayout(fileName);
-        ServiceDocktailor.getInstance().getConfigDocktailor().save();
-        ServiceDocktailor.getInstance().setLastUIConfigUsed(fileName);
+        DocktailorUtility.storeLayout(fileName);
+        DocktailorService.getInstance().getConfigDocktailor().save();
+        DocktailorService.getInstance().setLastUIConfigUsed(fileName);
 
         //AppConfigManager.getInstance().saveProperty(AppConfigManager.LAST_UI_CONFIG_SAVED, fileName);
     }
@@ -135,7 +135,7 @@ public class DemoDockWindow extends FxDockWindow {
             menuApplication.getItems().add(menuItemDefaultConf);
 
             MenuItem menuLeaveApp = new MenuItem("Quitter l'application");
-            menuLeaveApp.setOnAction(e -> FxFramework.exit());
+            menuLeaveApp.setOnAction(e -> DocktailorUtility.exit());
             menuApplication.getItems().add(menuLeaveApp);
 
             MenuItem showPopup= new MenuItem("Show popup save");
@@ -145,8 +145,8 @@ public class DemoDockWindow extends FxDockWindow {
 
 
         Menu menuWindows = new Menu("Windows");
-        ServiceDocktailor.getInstance().setAll(PersonDockPane.class, TestDockPane.class);
-        menuWindows.getItems().addAll(ServiceDocktailor.getInstance().createMenuItems(this));
+        DocktailorService.getInstance().setAll(PersonDockPane.class, TestDockPane.class);
+        menuWindows.getItems().addAll(DocktailorService.getInstance().createMenuItems(this));
         fxMenuBar.add(menuWindows);
 
 

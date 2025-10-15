@@ -1,7 +1,7 @@
 package com.enosistudio.docktailor.other;
 
-import com.enosistudio.docktailor.fx.FxFramework;
-import com.enosistudio.docktailor.fxdock.internal.ServiceDocktailor;
+import com.enosistudio.docktailor.fx.DocktailorUtility;
+import com.enosistudio.docktailor.fxdock.internal.DocktailorService;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
@@ -30,8 +30,8 @@ public class PopupSaveUI extends HBox {
 
     @Setter
     private EventHandler<ActionEvent> onSave = event -> {
-        FxFramework.storeLayout(ServiceDocktailor.getInstance().getLastUIConfigUsed());
-        ServiceDocktailor.getInstance().getConfigDocktailor().save();
+        DocktailorUtility.storeLayout(DocktailorService.getInstance().getLastUIConfigUsed());
+        DocktailorService.getInstance().getConfigDocktailor().save();
         hides();
     };
 

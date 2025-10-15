@@ -1,7 +1,7 @@
 package com.enosistudio.docktailor.fxdock.internal;
 
 import com.enosistudio.docktailor.fx.FX;
-import com.enosistudio.docktailor.fx.FxFramework;
+import com.enosistudio.docktailor.fx.DocktailorUtility;
 import com.enosistudio.docktailor.fx.WindowMonitor;
 import com.enosistudio.docktailor.fxdock.FxDockPane;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;
@@ -480,7 +480,7 @@ public class DockTools {
     }
 
     public static FxDockWindow createWindow() {
-        return (FxDockWindow) FxFramework.createDefaultWindow();
+        return (FxDockWindow) DocktailorUtility.createDefaultWindow();
     }
 
     public static void moveToNewWindow(FxDockPane client, double screenx, double screeny) {

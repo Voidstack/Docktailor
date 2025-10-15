@@ -154,7 +154,7 @@ public class WindowMonitor {
                     for (Window w : ch.getAddedSubList()) {
                         if (!isIgnore(w)) {
                             log.debug(String.format("added: %s", w));
-                            FxFramework.restore(w);
+                            DocktailorUtility.restore(w);
                             // applyStyleSheet(w);
                         }
                     }
