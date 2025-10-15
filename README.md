@@ -1,6 +1,8 @@
 # Docktailor
 
+[![Maven Central](https://img.shields.io/maven-central/v/com.enosistudio/docktailor.svg)](https://central.sonatype.com/artifact/com.enosistudio/docktailor)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Maven](https://img.shields.io/badge/Maven-3.8.5%2B-orange)](https://maven.apache.org/docs/3.8.5/release-notes.html)
 [![Java](https://img.shields.io/badge/Java-17%2B-orange.svg)](https://www.oracle.com/java/)
 
 **Docktailor** est un framework JavaFX de gestion de vues permettant la création d'interfaces utilisateur avec des fenêtres détachables. Inspiré par les systèmes de docking modernes trouvés dans les IDE professionnels, Docktailor offre une solution élégante pour créer des applications avec des interfaces flexibles et personnalisables.
