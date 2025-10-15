@@ -1,10 +1,8 @@
 package com.enosistudio.docktailor.fxdock.internal;
 
-import com.enosistudio.RFile;
 import com.enosistudio.docktailor.common.Singleton;
 import com.enosistudio.docktailor.fx.FxMenuItem;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;
-import com.enosistudio.generated.R;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MenuItem;
@@ -139,12 +137,4 @@ public class DocktailorService {
         return menuItems;
     }
 
-    /**
-     * Retrieves the CSS file used by Docktailor.
-     *
-     * @return The CSS file as an RFile object.
-     */
-    public static RFile getDocktailorCss() {
-        return R.com.enosistudio.docktailor.css.mainCss;
-    }
 }

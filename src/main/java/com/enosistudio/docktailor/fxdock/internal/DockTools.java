@@ -1,7 +1,7 @@
 package com.enosistudio.docktailor.fxdock.internal;
 
-import com.enosistudio.docktailor.fx.FX;
 import com.enosistudio.docktailor.fx.DocktailorUtility;
+import com.enosistudio.docktailor.fx.FX;
 import com.enosistudio.docktailor.fx.WindowMonitor;
 import com.enosistudio.docktailor.fxdock.FxDockPane;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;

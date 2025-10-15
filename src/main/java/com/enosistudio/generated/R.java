@@ -1,16 +1,7 @@
 package com.enosistudio.generated;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.net.URL;
-
 import com.enosistudio.RFile;
 import com.enosistudio.RFolder;
-import org.jetbrains.annotations.Contract;
 
 /**
  * Generated resource constants class.

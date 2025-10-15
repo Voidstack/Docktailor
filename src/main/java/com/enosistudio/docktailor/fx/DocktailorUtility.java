@@ -1,7 +1,9 @@
 package com.enosistudio.docktailor.fx;
 
+import com.enosistudio.RFile;
 import com.enosistudio.docktailor.fxdock.FxDockSchema;
 import com.enosistudio.docktailor.fxdock.internal.DocktailorService;
+import com.enosistudio.generated.R;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lombok.AccessLevel;
@@ -102,5 +104,14 @@ public class DocktailorUtility {
     public static void exit() {
         storeLayout();
         WindowMonitor.exit();
+    }
+
+    /**
+     * Retrieves the CSS file used by Docktailor.
+     *
+     * @return The CSS file as an RFile object.
+     */
+    public static RFile getDocktailorCss() {
+        return R.com.enosistudio.docktailor.css.mainCss;
     }
 }

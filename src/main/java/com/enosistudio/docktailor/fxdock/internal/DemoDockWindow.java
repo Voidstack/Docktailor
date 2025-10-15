@@ -2,8 +2,8 @@ package com.enosistudio.docktailor.fxdock.internal;
 
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.GlobalSettings;
-import com.enosistudio.docktailor.fx.FxAction;
 import com.enosistudio.docktailor.fx.DocktailorUtility;
+import com.enosistudio.docktailor.fx.FxAction;
 import com.enosistudio.docktailor.fx.FxMenuBar;
 import com.enosistudio.docktailor.fx.LocalSettings;
 import com.enosistudio.docktailor.fxdock.FxDockWindow;

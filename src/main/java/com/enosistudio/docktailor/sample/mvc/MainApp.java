@@ -34,7 +34,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         log.info("MainApp : Application start");
-        Application.setUserAgentStylesheet(DocktailorService.getDocktailorCss().getAbsoluteURL().toExternalForm());
+        Application.setUserAgentStylesheet(DocktailorUtility.getDocktailorCss().getAbsoluteURL().toExternalForm());
 
         GlobalSettings.getInstance().setFileProvider(DocktailorService.getInstance().getLastUIConfigUsed());
         AGlobalSettings store = GlobalSettings.getInstance();
