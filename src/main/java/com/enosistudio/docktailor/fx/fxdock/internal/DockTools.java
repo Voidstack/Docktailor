@@ -5,6 +5,7 @@ import com.enosistudio.docktailor.fx.FX;
 import com.enosistudio.docktailor.fx.WindowMonitor;
 import com.enosistudio.docktailor.fx.fxdock.FxDockPane;
 import com.enosistudio.docktailor.fx.fxdock.FxDockWindow;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -13,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
 
@@ -606,12 +608,11 @@ public class DockTools {
         FxDockTabPane fxDockRootPane = new FxDockTabPane(client);
         w.setContent(fxDockRootPane);
 
-        w.setX(screenx);
+        w.setX(screenx-10000);
         w.setY(screeny);
 
         // moving window after show() seems to cause flicker
         double op = w.getOpacity();
-        w.setOpacity(0);
 
         w.open();
 
@@ -629,6 +630,9 @@ public class DockTools {
         w.setOpacity(op);
 
         collapseEmptySpace(p);
+
+        // trick unflicker
+        Platform.runLater(() -> w.setX(screenx));
     }
 
     /**

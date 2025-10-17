@@ -490,6 +490,7 @@ public abstract class FxSettingsSchema {
         // numEntries,name,id,... in reverse order
         SStream st = globalSettings.getStream(FX_PREFIX + SFX_WINDOWS);
         int count = 0;
+        int savedPosX = 0;
 
         int numEntries = st.nextInt(-1);
         if (numEntries > 0) {
@@ -504,7 +505,11 @@ public abstract class FxSettingsSchema {
                     loadWindowContent(m, w);
 
                     if (!w.isShowing()) {
+                        // fix flickering
+                        double opacity = w.getOpacity();
+                        w.setOpacity(0);
                         w.open();
+                        Platform.runLater(() -> w.setOpacity(opacity));
                     }
 
                     count++;
