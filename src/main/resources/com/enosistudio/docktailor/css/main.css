@@ -7,7 +7,7 @@
 */
 
 /* Import */
-@import url("modena.css");
+@import url("modena/modena.css");
 
 @import url("component/tableView.css");
 @import url("component/cartoTooltip.css");
