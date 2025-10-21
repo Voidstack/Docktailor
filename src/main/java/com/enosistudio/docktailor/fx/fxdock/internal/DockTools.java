@@ -14,7 +14,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import lombok.extern.slf4j.Slf4j;
 
@@ -92,7 +91,7 @@ public class DockTools {
         if (n instanceof FxDockBorderPane p) {
             return p.parent;
         } else if (n instanceof FxDockSplitPane p) {
-            return p.parent;
+            return p.parentNode;
         } else if (n instanceof FxDockTabPane p) {
             return p.parent;
         } else if (n instanceof FxDockEmptyPane p) {
@@ -144,7 +143,7 @@ public class DockTools {
         if (n instanceof FxDockBorderPane p) {
             return p.parent.get();
         } else if (n instanceof FxDockSplitPane p) {
-            return p.parent.get();
+            return p.parentNode.get();
         } else if (n instanceof FxDockTabPane p) {
             return p.parent.get();
         } else if (n instanceof FxDockEmptyPane p) {
@@ -379,37 +378,11 @@ public class DockTools {
 
         // check if nested splits are not needed
         Node p = getParent(old);
-        if (p instanceof FxDockSplitPane sp) {
-            if (sp.getOrientation() == Orientation.HORIZONTAL) {
-                switch (where) {
-                    case LEFT:
-                        sp.addPane(0, client);
-                        return sp;
-                    case RIGHT:
-                        sp.addPane(client);
-                        return sp;
-                    default:
-                        break;
-                }
-            } else {
-                switch (where) {
-                    case TOP:
-                        sp.addPane(0, client);
-                        return sp;
-                    case BOTTOM:
-                        sp.addPane(client);
-                        return sp;
-                    default:
-                        break;
-                }
-            }
-        }
+        if (p instanceof FxDockSplitPane sp && sp.addPane(where, client)) return sp;
 
         return switch (where) {
-            case BOTTOM -> new FxDockSplitPane(Orientation.VERTICAL, old, client);
-            case LEFT -> new FxDockSplitPane(Orientation.HORIZONTAL, client, old);
-            case RIGHT -> new FxDockSplitPane(Orientation.HORIZONTAL, old, client);
-            case TOP -> new FxDockSplitPane(Orientation.VERTICAL, client, old);
+            case BOTTOM, RIGHT -> new FxDockSplitPane(where, old, client);
+            case LEFT, TOP -> new FxDockSplitPane(where, client, old);
             default -> throw new IllegalArgumentException("?" + where);
         };
     }
@@ -516,39 +489,8 @@ public class DockTools {
         }
     }
 
-    private static boolean insertSplit(FxDockPane client, FxDockSplitPane sp, Object object) {
-        if (object instanceof EWhere where) {
-            Orientation or = sp.getOrientation();
-            switch (where) {
-                case LEFT:
-                    if (or == Orientation.HORIZONTAL) {
-                        sp.addPane(0, client);
-                        return true;
-                    }
-                    break;
-                case RIGHT:
-                    if (or == Orientation.HORIZONTAL) {
-                        sp.addPane(client);
-                        return true;
-                    }
-                    break;
-                case TOP:
-                    if (or == Orientation.VERTICAL) {
-                        sp.addPane(0, client);
-                        return true;
-                    }
-                    break;
-                case BOTTOM:
-                    if (or == Orientation.VERTICAL) {
-                        sp.addPane(client);
-                        return true;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-        return false;
+    private static boolean insertSplit(FxDockPane client, FxDockSplitPane sp, EWhere where) {
+        return sp.addPane(where, client);
     }
 
     /**
@@ -558,7 +500,7 @@ public class DockTools {
      * @param target the root pane to insert into
      * @param where  the location to insert at
      */
-    public static void insertPane(FxDockPane client, Node target, Object where) {
+    public static void insertPane(FxDockPane client, Node target, EWhere where) {
         if (target instanceof FxDockRootPane rp) {
 
             BeforeDrop b = new BeforeDrop(client, target);
@@ -608,7 +550,7 @@ public class DockTools {
         FxDockTabPane fxDockRootPane = new FxDockTabPane(client);
         w.setContent(fxDockRootPane);
 
-        w.setX(screenx-10000);
+        w.setX(screenx - 10000);
         w.setY(screeny);
 
         // moving window after show() seems to cause flicker

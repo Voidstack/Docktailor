@@ -1,6 +1,5 @@
-package com.enosistudio.docktailor.fx.svg.svginterface;
+package com.enosistudio.docktailor.fx.svg;
 
-import com.enosistudio.docktailor.fx.svg.SVGGroup;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
 

@@ -131,6 +131,7 @@ public class DocktailorService {
             try {
                 IDockPane instanceDraggable = draggableTab.getDeclaredConstructor().newInstance();
                 FxMenuItem m = new FxMenuItem(instanceDraggable.getTabName(), () -> window.addDockPane(instanceDraggable.createDockPane()));
+                m.setGraphic(instanceDraggable.getTabIcon());
                 menuItems.add(m);
             } catch (Exception e) {
                 log.error("ServiceDocktailor : ", e);

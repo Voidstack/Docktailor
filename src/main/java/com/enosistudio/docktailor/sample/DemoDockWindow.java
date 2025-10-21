@@ -3,6 +3,7 @@ package com.enosistudio.docktailor.sample;
 import com.enosistudio.docktailor.DocktailorService;
 import com.enosistudio.docktailor.DocktailorUtility;
 import com.enosistudio.docktailor.common.AGlobalSettings;
+import com.enosistudio.docktailor.common.FxTooltipDebugCss;
 import com.enosistudio.docktailor.common.GlobalSettings;
 import com.enosistudio.docktailor.fx.FxAction;
 import com.enosistudio.docktailor.fx.FxMenuBar;
@@ -71,11 +72,13 @@ public class DemoDockWindow extends FxDockWindow {
         });
 
         getOnDocktailorEvent().addListener(this::showPopup);
+
     }
 
     @Getter
     private final PopupSaveUI popup = new PopupSaveUI();
-    public void showPopup(){
+
+    public void showPopup() {
 //        for (DemoDockWindow demoDockWindow : demoDockWindows) {
 //            demoDockWindow.getPopup().show(demoDockWindow.getParentStackPane());
 //        }
@@ -138,17 +141,25 @@ public class DemoDockWindow extends FxDockWindow {
             menuLeaveApp.setOnAction(e -> DocktailorUtility.exit());
             menuApplication.getItems().add(menuLeaveApp);
 
-            MenuItem showPopup= new MenuItem("Show popup save");
+            MenuItem showPopup = new MenuItem("Show popup save");
             showPopup.setOnAction(e -> showPopup());
             menuApplication.getItems().add(showPopup);
-        });
 
+            CheckMenuItem checkMenuItem = new CheckMenuItem("Debug css");
+
+            checkMenuItem.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue)
+                    FxTooltipDebugCss.install(this.getScene());
+                else
+                    FxTooltipDebugCss.uninstall(this.getScene());
+            });
+            menuApplication.getItems().add(checkMenuItem);
+        });
 
         Menu menuWindows = new Menu("Windows");
         DocktailorService.getInstance().setAll(PersonDockPane.class, TestDockPane.class);
         menuWindows.getItems().addAll(DocktailorService.getInstance().createMenuItems(this));
         fxMenuBar.add(menuWindows);
-
 
         return fxMenuBar;
     }

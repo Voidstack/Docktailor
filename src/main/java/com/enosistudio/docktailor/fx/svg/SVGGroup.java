@@ -2,7 +2,6 @@ package com.enosistudio.docktailor.fx.svg;
 
 import com.enosistudio.docktailor.common.UtilColor;
 import com.enosistudio.docktailor.common.XmlParser;
-import com.enosistudio.docktailor.fx.svg.svginterface.ISVG;
 import javafx.beans.NamedArg;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
