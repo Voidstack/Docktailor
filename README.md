@@ -32,7 +32,7 @@ Inspired by the docking systems used in professional IDEs, Docktailor provides a
   <dependency>
       <groupId>com.voidstack</groupId>
       <artifactId>docktailor</artifactId>
-      <version>1.0.0</version>
+      <version>latest</version>
   </dependency>
   ```
 * **Gradle**
@@ -46,7 +46,8 @@ Inspired by the docking systems used in professional IDEs, Docktailor provides a
 ## 📝 Roadmap
 
 * Complete API documentation
-* Performance improvements (reduce stuttering)
+* Smooth transition
+* Save separator position on SplitPane
 
 ---
 
