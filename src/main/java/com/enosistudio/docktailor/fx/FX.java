@@ -41,7 +41,6 @@ import java.util.Objects;
  * to enable method chaining and more readable code.
  * <p>
  * Example usage:
- * <pre>
  * {@code
  * // Create a styled label with tooltip
  * Label label = FX.label("Username:", CssStyle.TEXT_BOLD, Pos.CENTER_LEFT);
@@ -52,7 +51,6 @@ import java.util.Objects;
  * // Get window containing a node
  * FxWindow window = FX.getWindow(someNode);
  * }
- * </pre>
  *
  * @see FxMenuItem
  */

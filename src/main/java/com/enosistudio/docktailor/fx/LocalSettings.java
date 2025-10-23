@@ -17,7 +17,6 @@ import java.util.Map;
 /**
  * Local Settings: specific to a Node or a Window. Supports chaining of calls, i.e.:
  *
- * <pre>
  * LocalSettings.get(this).
  *    add(...).
  *    add(...);
