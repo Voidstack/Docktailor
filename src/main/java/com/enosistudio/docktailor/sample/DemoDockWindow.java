@@ -8,7 +8,6 @@ import com.enosistudio.docktailor.common.GlobalSettings;
 import com.enosistudio.docktailor.fx.FxAction;
 import com.enosistudio.docktailor.fx.FxMenuBar;
 import com.enosistudio.docktailor.fx.LocalSettings;
-import com.enosistudio.docktailor.fx.PopupSaveUI;
 import com.enosistudio.docktailor.fx.fxdock.FxDockWindow;
 import com.enosistudio.docktailor.sample.controller.PersonDockPane;
 import com.enosistudio.docktailor.sample.controller.TestDockPane;
@@ -47,6 +46,8 @@ public class DemoDockWindow extends FxDockWindow {
 
     private static final List<DemoDockWindow> demoDockWindows = new ArrayList<>();
 
+    private CustomMenuBar customMenuBar = null;
+
     public DemoDockWindow() {
         super("DemoWindow");
         demoDockWindows.add(this);
@@ -56,33 +57,32 @@ public class DemoDockWindow extends FxDockWindow {
         // Creation de la barre supérieur.
         FxMenuBar fxMenuBar = createMenu();
 
+        HBox hBox = new HBox(fxMenuBar);
         // largeur de la MenuBar = largeur de la fenêtre - 50
-        getScene().widthProperty().addListener((obs, oldVal, newVal) -> {
-            fxMenuBar.setMaxWidth(newVal.doubleValue() - 138);
-        });
-
-        setTop(fxMenuBar);
+        getScene().widthProperty().addListener((obs, oldVal, newVal) ->
+                hBox.setMaxWidth(newVal.doubleValue() - 138));
+        setTop(hBox);
 
         setTitle(MainApp.TITLE);
 
         LocalSettings.get(this).add("CHECKBOX_MENU", windowCheckAction);
 
+        // On a besoin d'avoir les bounds généré
         this.setOnShown(observable -> {
-            CustomCaption.useForStage(this, new CaptionConfiguration().setCaptionDragRegion(fxMenuBar).setControlBackgroundColor(Color.rgb(60, 63, 65)));
+            this.customMenuBar = new CustomMenuBar(hBox, fxMenuBar);
+            CaptionConfiguration cc = new CaptionConfiguration().setCaptionDragRegion(customMenuBar).setControlBackgroundColor(Color.rgb(60, 63, 65)).setCaptionHeight((int)fxMenuBar.getHeight());
+
+            CustomCaption.useForStage(this, cc);
         });
 
         getOnDocktailorEvent().addListener(this::showPopup);
 
     }
 
-    @Getter
-    private final PopupSaveUI popup = new PopupSaveUI();
-
     public void showPopup() {
-//        for (DemoDockWindow demoDockWindow : demoDockWindows) {
-//            demoDockWindow.getPopup().show(demoDockWindow.getParentStackPane());
-//        }
-        popup.show(this.getParentStackPane());
+        if (this.customMenuBar != null) {
+            this.customMenuBar.displayBtnSave(true);
+        }
     }
 
     private static void loadDefaultAction() {
@@ -123,7 +123,6 @@ public class DemoDockWindow extends FxDockWindow {
 
         fxMenuBar.add(menuApplication);
 
-        // Ajout des différentes vue de tacp
         Platform.runLater(() -> {
 
             // Custom config
