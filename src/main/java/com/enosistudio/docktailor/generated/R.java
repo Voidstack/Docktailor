@@ -24,25 +24,25 @@ public final class R {
     
     public static final class com extends RFolder {
         public static final RFolder _self = new com();
-        private com() { super("com", "com"); }
+        private com() { super("com"); }
         
         public static final class enosistudio extends RFolder {
             public static final RFolder _self = new enosistudio();
-            private enosistudio() { super("enosistudio", "com/enosistudio"); }
+            private enosistudio() { super("com/enosistudio"); }
             
             public static final class docktailor extends RFolder {
                 public static final RFolder _self = new docktailor();
-                private docktailor() { super("docktailor", "com/enosistudio/docktailor"); }
+                private docktailor() { super("com/enosistudio/docktailor"); }
                 public static final RFile docktailorDefaultUi = new RFile("com/enosistudio/docktailor/docktailor_default.ui");
                 
                 public static final class css extends RFolder {
                     public static final RFolder _self = new css();
-                    private css() { super("css", "com/enosistudio/docktailor/css"); }
+                    private css() { super("com/enosistudio/docktailor/css"); }
                     public static final RFile mainCss = new RFile("com/enosistudio/docktailor/css/main.css");
                     
                     public static final class component extends RFolder {
                         public static final RFolder _self = new component();
-                        private component() { super("component", "com/enosistudio/docktailor/css/component"); }
+                        private component() { super("com/enosistudio/docktailor/css/component"); }
                         public static final RFile betterradiobuttonCss = new RFile("com/enosistudio/docktailor/css/component/betterRadioButton.css");
                         public static final RFile buttonCss = new RFile("com/enosistudio/docktailor/css/component/button.css");
                         public static final RFile cartotooltipCss = new RFile("com/enosistudio/docktailor/css/component/cartoTooltip.css");
@@ -62,7 +62,7 @@ public final class R {
                     
                     public static final class modena extends RFolder {
                         public static final RFolder _self = new modena();
-                        private modena() { super("modena", "com/enosistudio/docktailor/css/modena"); }
+                        private modena() { super("com/enosistudio/docktailor/css/modena"); }
                         public static final RFile blackonwhiteCss = new RFile("com/enosistudio/docktailor/css/modena/blackOnWhite.css");
                         public static final RFile dialogConfirmPng = new RFile("com/enosistudio/docktailor/css/modena/dialog-confirm.png");
                         public static final RFile dialogConfirm2xPng = new RFile("com/enosistudio/docktailor/css/modena/dialog-confirm@2x.png");
@@ -265,7 +265,7 @@ public final class R {
                 
                 public static final class fontawesome extends RFolder {
                     public static final RFolder _self = new fontawesome();
-                    private fontawesome() { super("fontawesome", "com/enosistudio/docktailor/fontawesome"); }
+                    private fontawesome() { super("com/enosistudio/docktailor/fontawesome"); }
                     public static final RFile addressBookRegularSvg = new RFile("com/enosistudio/docktailor/fontawesome/address-book-regular.svg");
                     public static final RFile barsSolidSvg = new RFile("com/enosistudio/docktailor/fontawesome/bars-solid.svg");
                     public static final RFile circleInfoSvg = new RFile("com/enosistudio/docktailor/fontawesome/circle-info.svg");
@@ -277,13 +277,13 @@ public final class R {
                 
                 public static final class fxml extends RFolder {
                     public static final RFolder _self = new fxml();
-                    private fxml() { super("fxml", "com/enosistudio/docktailor/fxml"); }
+                    private fxml() { super("com/enosistudio/docktailor/fxml"); }
                     public static final RFile personneFxml = new RFile("com/enosistudio/docktailor/fxml/personne.fxml");
                 }
                 
                 public static final class icons extends RFolder {
                     public static final RFolder _self = new icons();
-                    private icons() { super("icons", "com/enosistudio/docktailor/icons"); }
+                    private icons() { super("com/enosistudio/docktailor/icons"); }
                     public static final RFile logoPng = new RFile("com/enosistudio/docktailor/icons/logo.png");
                 }
             }
