@@ -24,7 +24,7 @@ Inspired by the docking systems used in professional IDEs, Docktailor provides a
 
 ### Requirements
 
-* **Java 17+**
+* **Java 21+**
 * **Maven**
 
   ```xml
@@ -37,7 +37,7 @@ Inspired by the docking systems used in professional IDEs, Docktailor provides a
 * **Gradle**
 
   ```gradle
-  implementation 'com.voidstack:docktailor:1.0.0'
+  implementation 'com.voidstack:docktailor:latest'
   ```
 
 ---
