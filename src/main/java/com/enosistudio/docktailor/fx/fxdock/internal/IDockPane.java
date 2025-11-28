@@ -5,7 +5,7 @@ import javafx.geometry.Side;
 import javafx.scene.Node;
 
 /**
- * C'est le controller qui doit hériter de cette interface.
+ * Interface that must be implemented by controllers to create dockable panes.
  */
 public interface IDockPane {
     Side getDefaultSide();

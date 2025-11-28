@@ -1,22 +1,19 @@
 package com.enosistudio.docktailor.fx.fxdock.internal;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.ReadOnlyProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import lombok.Getter;
 
 
 /**
  * FxDockRootPane.
  */
-public class FxDockBorderPane extends BorderPane {
-    protected final ReadOnlyObjectWrapper<Node> parent = new ReadOnlyObjectWrapper<>();
+public class FxDockBorderPane extends BorderPane implements IFxDockPane {
+    @Getter
+    protected final ReadOnlyObjectWrapper<Node> dockParent = new ReadOnlyObjectWrapper<>();
 
     public FxDockBorderPane() {
         setCenter(new FxDockEmptyPane());
-    }
-
-    public final ReadOnlyProperty<Node> dockParentProperty() {
-        return parent.getReadOnlyProperty();
     }
 }

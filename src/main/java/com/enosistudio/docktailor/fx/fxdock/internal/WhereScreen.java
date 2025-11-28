@@ -1,5 +1,7 @@
 package com.enosistudio.docktailor.fx.fxdock.internal;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Drop zone position in the screen coordinates.
  */
@@ -8,17 +10,15 @@ public record WhereScreen(double screenx, double screeny) {
     public boolean equals(Object x) {
         if (x == this) {
             return true;
-        } else if (x instanceof WhereScreen w) {
-            return
-                    (screenx == w.screenx) &&
-                            (screeny == w.screeny);
+        } else if (x instanceof WhereScreen(double screenx1, double screeny1)) {
+            return (screenx == screenx1) && (screeny == screeny1);
         } else {
             return false;
         }
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "(" + screenx + "," + screeny + ")";
     }
 }

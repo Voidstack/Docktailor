@@ -1,5 +1,6 @@
 package com.enosistudio.docktailor.common;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -8,8 +9,8 @@ import java.util.Objects;
  * Convenience methods that attempt to extract requested value, returning null if the said value can not be extracted.
  */
 @Slf4j(topic = "Parsers")
-public class Parsers {
-    private Parsers() {}
+@UtilityClass
+public class ParserUtils {
 
     public static Double parseDouble(Object x) {
         if (x instanceof Number xNumber) {

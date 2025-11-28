@@ -12,10 +12,11 @@ import java.io.IOException;
  * File-based Settings Provider.
  */
 @Setter @Slf4j(topic = "FileSettingsProvider")
-public class FileSettingsProvider extends SettingsProviderBase {
+public class FileASettingsProvider extends ASettingsProviderBase {
+    @lombok.Getter
     private File file;
 
-    public FileSettingsProvider(File f) {
+    public FileASettingsProvider(File f) {
         setFile(f);
     }
 
@@ -44,8 +45,8 @@ public class FileSettingsProvider extends SettingsProviderBase {
     }
 
     /**
-     * ATTENTION : la méthode ne reset pas la save mais simplement les données au runtime. Important pour éviter des
-     * bugs avec l'ouverture de fenêtre.
+     * WARNING: this method does not reset the save but only the runtime data. Important to avoid
+     * bugs with window opening.
      */
     @Override
     protected void resetRuntimeSettings() {

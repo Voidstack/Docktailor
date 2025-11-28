@@ -29,7 +29,7 @@ public class DemoDockSchema extends FxDockSchema {
             }
         }
 
-        throw new IllegalArgumentException("Le fichier de configuration pour docktailor est corrompue");
+        throw new IllegalArgumentException("Docktailor configuration file is corrupted");
     }
 
     @Override

@@ -1,14 +1,14 @@
 package com.enosistudio.docktailor.common;
 
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 
 import java.io.IOException;
 import java.nio.file.*;
 import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 
-@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
-public class FileWatcher {
+@UtilityClass
+public class FileWatcherUtils {
     public static void watchFile(Path filePath, Runnable onChange) throws IOException {
         Path dir = filePath.getParent();
         String fileName = filePath.getFileName().toString();
@@ -17,7 +17,7 @@ public class FileWatcher {
         dir.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
 
         AtomicLong lastTrigger = new AtomicLong(0);
-        long debounceDelayMs = 300; // temps minimal entre 2 déclenchements
+        long debounceDelayMs = 300; // minimum time between 2 triggers
 
         Thread thread = new Thread(() -> {
             try {

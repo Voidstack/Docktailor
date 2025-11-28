@@ -1,6 +1,0 @@
-FX.DemoWindow_0=930.4000244140625,495.20001220703125,704,385.6000061035156,N
-FX.DemoWindow_0.layout=T,1,P,TestControler
-FX.DemoWindow_0.SETTINGS.CHECKBOX_MENU=false
-FX.DemoWindow_0.StackPane.StackPane.BorderPane.BorderPane.FxDockTabPane.SEL=0
-FX.DemoWindow_0.T.tab=0
-FX.WINDOWS=1,DemoWindow,0

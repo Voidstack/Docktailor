@@ -4,7 +4,7 @@ import com.enosistudio.docktailor.fx.fxdock.FxDockPane;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * abstract qui permet de créer une classe Dockable.
+ * Abstract class that allows creating a dockable class.
  */
 @Slf4j
 public abstract class ADockPane implements IDockPane {

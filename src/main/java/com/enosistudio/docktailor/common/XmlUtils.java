@@ -1,6 +1,6 @@
 package com.enosistudio.docktailor.common;
 
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -12,10 +12,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 
-@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
-public class XmlParser {
+@UtilityClass
+public class XmlUtils {
     /**
-     * Méthode qui retourne un object Document depuis un url.
+     * Method that returns a Document object from a URL.
      * @param url : {resources}doc/test.xml
      * @return : org.w3c.dom.Document;
      */
@@ -30,10 +30,10 @@ public class XmlParser {
     }
 
     /**
-     * Retourne un Element du Document.
-     * @param doc : org.w3c.dom.Document le doc xml
-     * @param tagName : le nom de la balise
-     * @param index : 0 par défault, x retourne la balise numéro x dans l'ordre de lecture du doc xml
+     * Returns an Element from the Document.
+     * @param doc : org.w3c.dom.Document the XML document
+     * @param tagName : the tag name
+     * @param index : 0 by default, x returns the tag number x in the reading order of the XML document
      * @return : org.w3c.dom.Element
      */
     public static Element elementFromDocument(Document doc, String tagName, int index){
@@ -46,7 +46,7 @@ public class XmlParser {
     }
 
     /**
-     * Retourne la valeur de l'attribut d'un élément xml.
+     * Returns the value of an attribute from an XML element.
      * @param element : org.w3c.dom.Element
      * @param attribut : String
      * @return : String
@@ -54,7 +54,7 @@ public class XmlParser {
     public static String ValueFromAttribut(Element element, String attribut){
         String value = element.getAttribute(attribut);
         if(attribut.isEmpty()){
-            throw new NullPointerException("Contenue de l'attribut '"+attribut+" null.");
+            throw new NullPointerException("Attribute '"+attribut+"' content is null.");
         }
         return value;
     }

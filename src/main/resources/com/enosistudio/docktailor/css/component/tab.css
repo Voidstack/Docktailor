@@ -56,7 +56,7 @@
     -fx-border-insets: 0 !important;
 }
 
-/* Tab non sélectionné au hover */
+/* Unselected tab on hover */
 .tab:hover {
     -fx-background-color: #4C5052 !important;
     -fx-text-fill: #BBBBBB !important;
@@ -67,7 +67,7 @@
     -fx-background-color: linear-gradient(to bottom, transparent 0%, transparent 90%, transparent 90%, -fx-accent 100%) !important;
 }
 
-/* Tab sélectionné - ressemble aux onglets de code IntelliJ */
+/* Selected tab - looks like IntelliJ code tabs */
 .tab-pane .tab:selected {
     -fx-background-color: linear-gradient(to bottom, transparent 0%, transparent 90%, -fx-lightmain 90%, -fx-lightmain 100%) !important;
     -fx-text-fill: white !important;

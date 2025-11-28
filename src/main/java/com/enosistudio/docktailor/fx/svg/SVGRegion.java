@@ -1,8 +1,8 @@
 package com.enosistudio.docktailor.fx.svg;
 
-import com.enosistudio.docktailor.common.UtilColor;
+import com.enosistudio.docktailor.common.ColorUtils;
 import com.enosistudio.docktailor.common.Vector2;
-import com.enosistudio.docktailor.common.XmlParser;
+import com.enosistudio.docktailor.common.XmlUtils;
 import javafx.beans.NamedArg;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -59,7 +59,7 @@ public class SVGRegion extends Region implements ISVG {
      * @param url the URL of the SVG file
      */
     public SVGRegion(@NamedArg("url") String url) {
-        this(url, DEFAULT_SIZE, UtilColor.colorToHex(DEFAULT_FILL_COLOR));
+        this(url, DEFAULT_SIZE, ColorUtils.colorToHex(DEFAULT_FILL_COLOR));
     }
 
     /**
@@ -69,7 +69,7 @@ public class SVGRegion extends Region implements ISVG {
      * @param size the size of the SVG region
      */
     public SVGRegion(@NamedArg("url") String url, @NamedArg("size") int size) {
-        this(url, size, UtilColor.colorToHex(DEFAULT_FILL_COLOR));
+        this(url, size, ColorUtils.colorToHex(DEFAULT_FILL_COLOR));
     }
 
     /**
@@ -83,7 +83,7 @@ public class SVGRegion extends Region implements ISVG {
         this.svgPath = new SVGPath();
         setMouseTransparent(true);
         setTransform(size, size);
-        setColorFill(color == null ? UtilColor.colorToHex(DEFAULT_FILL_COLOR) : color);
+        setColorFill(color == null ? ColorUtils.colorToHex(DEFAULT_FILL_COLOR) : color);
         setShape(svgPath);
         setSVGPathFromUrl(url);
     }
@@ -181,7 +181,7 @@ public class SVGRegion extends Region implements ISVG {
      * @return the concatenated content of the 'd' attributes
      */
     private String extractPathFromSVGFile(@NonNull String url) {
-        Document xmlDocument = XmlParser.fileToDocument(url);
+        Document xmlDocument = XmlUtils.fileToDocument(url);
         xmlDocument.getDocumentElement().normalize();
 
         // Get all "path" elements

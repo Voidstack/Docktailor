@@ -5,6 +5,7 @@ import com.enosistudio.docktailor.common.SStream;
 import com.enosistudio.docktailor.fx.FxSettingsSchema;
 import com.enosistudio.docktailor.fx.WindowMonitor;
 import com.enosistudio.docktailor.fx.fxdock.internal.*;
+import com.enosistudio.docktailor.utils.ParentTrackerUtils;
 import javafx.application.Platform;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
@@ -23,7 +24,6 @@ public abstract class FxDockSchema extends FxSettingsSchema {
 
     private static final String SUFFIX_CONTENT = ".layout";
     private static final String SUFFIX_SELECTED_TAB = ".tab";
-    private static final String SUFFIX_SPLITS = ".splits";
     private static final String TYPE_EMPTY = "E";
     private static final String TYPE_PANE = "P";
     private static final String TYPE_HSPLIT = "H";
@@ -128,18 +128,32 @@ public abstract class FxDockSchema extends FxSettingsSchema {
     /**
      * Loads a split pane from the storage.
      *
-     * @param s  the stream containing the split pane data
-     * @param or the orientation of the split pane
+     * @param s        the stream containing the split pane data
+     * @param or       the orientation of the split pane
+     * @param dividers
      * @return the loaded FxDockSplitPane
      */
-    protected FxDockSplitPane loadSplit(SStream s, Orientation or) {
+    protected FxDockSplitPane loadSplit(SStream s, Orientation or, SerializableDividers dividers) {
         FxDockSplitPane sp = new FxDockSplitPane();
         sp.setOrientation(or);
+
+        // First, load and add all children
         int sz = s.nextInt();
         for (int i = 0; i < sz; i++) {
             Node ch = loadContentRecursively(s);
             sp.addPane(ch);
         }
+
+        // Then set divider positions AFTER children exist
+        // Use Platform.runLater to work around JavaFX SplitPane layout timing bug
+        double[] positions = dividers.getPositions().stream()
+                .mapToDouble(d -> d)
+                .toArray();
+
+        if (positions.length > 0) {
+            Platform.runLater(() -> sp.setDividerPositions(positions));
+        }
+
         return sp;
     }
 
@@ -156,10 +170,20 @@ public abstract class FxDockSchema extends FxSettingsSchema {
         } else if (TYPE_PANE.equals(t)) {
             String type = s.nextString();
             return createPane(type);
-        } else if (TYPE_HSPLIT.equals(t)) {
-            return loadSplit(s, Orientation.HORIZONTAL);
-        } else if (TYPE_VSPLIT.equals(t)) {
-            return loadSplit(s, Orientation.VERTICAL);
+        } else if (t.contains(TYPE_HSPLIT + "(DividerData")) {
+
+            String test = t.replaceFirst("H\\(", "");
+            test = test.replaceFirst("\\)", "");
+            SerializableDividers dividers = SerializableDividers.fromString(test);
+
+            return loadSplit(s, Orientation.HORIZONTAL, dividers);
+        } else if (t.contains(TYPE_VSPLIT + "(DividerData")) {
+
+            String test = t.replaceFirst("V\\(", "");
+            test = test.replaceFirst("\\)", "");
+            SerializableDividers dividers = SerializableDividers.fromString(test);
+
+            return loadSplit(s, Orientation.VERTICAL, dividers);
         } else if (TYPE_TAB.equals(t)) {
             FxDockTabPane tp = new FxDockTabPane();
             int sz = s.nextInt();
@@ -191,7 +215,11 @@ public abstract class FxDockSchema extends FxSettingsSchema {
         } else if (n instanceof FxDockSplitPane p) {
             int ct = p.getPaneCount();
             Orientation or = p.getOrientation();
-            s.add(or == Orientation.HORIZONTAL ? TYPE_HSPLIT : TYPE_VSPLIT);
+
+            // Save divider positions
+            String str = "(" + SerializableDividers.ofDividers(p.getDividers()) + ")";
+
+            s.add((or == Orientation.HORIZONTAL ? TYPE_HSPLIT : TYPE_VSPLIT) + str); // ajouter les infos ici ?
             s.add(ct);
             for (Node ch : p.getPanes()) {
                 saveContentRecursively(s, ch);
@@ -235,7 +263,7 @@ public abstract class FxDockSchema extends FxSettingsSchema {
      * @param node the node to construct the path for
      */
     protected void getPathRecursive(StringBuilder sb, Node node) {
-        Node n = DockTools.getParent(node);
+        Node n = ParentTrackerUtils.getParent(node);
         if (n != null) {
             getPathRecursive(sb, n);
             if (n instanceof FxDockSplitPane p) {
@@ -262,6 +290,21 @@ public abstract class FxDockSchema extends FxSettingsSchema {
     }
 
     /**
+     * Override storeNode to prevent FxDockSplitPane from being processed by FxSettingsSchema.
+     * FxDockSplitPane dividers are saved in the layout string, not as separate settings.
+     *
+     * @param n the node to store
+     */
+    @Override
+    public void storeNode(Node n) {
+        // Skip FxDockSplitPane entirely - dividers are saved in layout string
+        if (n instanceof FxDockSplitPane) {
+            return;
+        }
+        super.storeNode(n);
+    }
+
+    /**
      * Restores the content settings for a node, including split positions and bindings.
      *
      * @param prefix the prefix for the content settings
@@ -272,10 +315,11 @@ public abstract class FxDockSchema extends FxSettingsSchema {
             if (n instanceof FxDockPane) {
                 // Load pane-specific settings
             } else if (n instanceof FxDockSplitPane p) {
+                // Only restore children's settings, NOT dividers
+                // Dividers were already set during tree construction in loadSplit()
                 for (Node ch : p.getPanes()) {
                     restoreContent(prefix, ch);
                 }
-                Platform.runLater(() -> loadSplitPaneSettings(prefix, p));
             } else if (n instanceof FxDockTabPane p) {
                 loadTabPaneSettings(prefix, p);
                 for (Node ch : p.getPanes()) {
@@ -293,11 +337,17 @@ public abstract class FxDockSchema extends FxSettingsSchema {
      */
     protected void storeContent(String prefix, Node n) {
         if (n != null) {
-            storeNode(n);
+            // Don't call storeNode for FxDockSplitPane - we handle it specifically below
+            // This prevents double-saving divider positions via FxSettingsSchema
+            if (!(n instanceof FxDockSplitPane)) {
+                storeNode(n);
+            }
+
             if (n instanceof FxDockPane) {
                 // Save pane-specific settings
             } else if (n instanceof FxDockSplitPane p) {
-                saveSplitPaneSettings(prefix, p);
+                // Dividers are already saved in the layout string via saveContentRecursively()
+                // No need to save them again in separate keys
                 for (Node ch : p.getPanes()) {
                     storeContent(prefix, ch);
                 }
@@ -306,38 +356,6 @@ public abstract class FxDockSchema extends FxSettingsSchema {
                 for (Node ch : p.getPanes()) {
                     storeContent(prefix, ch);
                 }
-            }
-        }
-    }
-
-    /**
-     * Saves the divider positions of a split pane to the storage.
-     *
-     * @param prefix the prefix for the split pane settings
-     * @param p      the split pane to save settings for
-     */
-    protected void saveSplitPaneSettings(String prefix, FxDockSplitPane p) {
-        double[] divs = p.getDividerPositions();
-        SStream s = new SStream();
-        s.addAll(divs);
-        String k = getPath(prefix, p, SUFFIX_SPLITS);
-        store().setStream(k, s);
-    }
-
-    /**
-     * Loads the divider positions of a split pane from the storage.
-     *
-     * @param prefix the prefix for the split pane settings
-     * @param p      the split pane to load settings for
-     */
-    protected void loadSplitPaneSettings(String prefix, FxDockSplitPane p) {
-        String k = getPath(prefix, p, SUFFIX_SPLITS);
-        SStream s = store().getStream(k);
-        int ct = s.size();
-        if (p.getDividers().size() == ct) {
-            for (int i = 0; i < ct; i++) {
-                double pos = s.nextDouble();
-                p.setDividerPosition(i, pos);
             }
         }
     }

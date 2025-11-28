@@ -38,7 +38,6 @@ public final class R {
                 public static final class css extends RFolder {
                     public static final RFolder _self = new css();
                     private css() { super("com/enosistudio/docktailor/css"); }
-                    public static final RFile mainCss = new RFile("com/enosistudio/docktailor/css/main.css");
                     
                     public static final class component extends RFolder {
                         public static final RFolder _self = new component();
@@ -252,6 +251,7 @@ public final class R {
                         public static final RFile htmleditorUnderlineYellow2xPng = new RFile("com/enosistudio/docktailor/css/modena/HTMLEditor-Underline-Yellow@2x.png");
                         public static final RFile htmleditorUnderlinePng = new RFile("com/enosistudio/docktailor/css/modena/HTMLEditor-Underline.png");
                         public static final RFile htmleditorUnderline2xPng = new RFile("com/enosistudio/docktailor/css/modena/HTMLEditor-Underline@2x.png");
+                        public static final RFile mainCss = new RFile("com/enosistudio/docktailor/css/modena/main.css");
                         public static final RFile modenaEmbeddedPerformanceCss = new RFile("com/enosistudio/docktailor/css/modena/modena-embedded-performance.css");
                         public static final RFile modenaNoTransparencyCss = new RFile("com/enosistudio/docktailor/css/modena/modena-no-transparency.css");
                         public static final RFile modenaCss = new RFile("com/enosistudio/docktailor/css/modena/modena.css");

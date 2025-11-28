@@ -35,17 +35,17 @@ public interface ISVG {
             throw new IllegalArgumentException("URL must not be empty");
         }
 
-        // Vérifie si c'est une URL
+        // Check if it's a URL
         try {
             return new URL(strUrl).toString();
         } catch (MalformedURLException ignored) {
         }
 
-        // Vérifie si c'est un fichier local
+        // Check if it's a local file
         File file = new File(strUrl);
         if (file.exists()) return file.getAbsolutePath();
 
-        // Vérifie si c'est une ressource classpath
+        // Check if it's a classpath resource
         String path = strUrl.startsWith("/") ? strUrl : "/" + strUrl;
         if (SVGGroup.class.getResource(path) != null) return strUrl;
 

@@ -1,6 +1,6 @@
 package com.enosistudio.docktailor.fx;
 
-import com.enosistudio.docktailor.DocktailorUtility;
+import com.enosistudio.docktailor.DocktailorService;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -135,7 +135,7 @@ public class WindowMonitor {
                     for (Window w : ch.getAddedSubList()) {
                         if (!isIgnore(w)) {
                             log.debug(String.format("added: %s", w));
-                            DocktailorUtility.restore(w);
+                            DocktailorService.getSchema().restoreWindow(w);
                             // applyStyleSheet(w);
                         }
                     }
@@ -277,7 +277,7 @@ public class WindowMonitor {
         for (int i = stack.size() - 1; i >= 0; i--) {
             Window w = stack.get(i);
             if (list.contains(w)) {
-                return (W) w;         // cast nécessaire
+                return (W) w;         // cast required
             }
         }
         return null;

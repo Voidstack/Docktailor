@@ -1,6 +1,7 @@
 package com.enosistudio.docktailor.fx.fxdock.internal;
 
 import com.enosistudio.docktailor.fx.fxdock.FxDockWindow;
+import com.enosistudio.docktailor.utils.ParentTrackerUtils;
 import javafx.scene.Node;
 
 
@@ -25,6 +26,6 @@ public class FxDockRootPane extends FxDockBorderPane {
             n = new FxDockEmptyPane();
         }
         setCenter(n);
-        DockTools.setParent(this, n);
+        ParentTrackerUtils.setParent(this, n);
     }
 }

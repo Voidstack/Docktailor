@@ -1,8 +1,6 @@
 package com.enosistudio.docktailor.sample;
 
 import com.enosistudio.docktailor.DocktailorService;
-import com.enosistudio.docktailor.DocktailorUtility;
-import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.GlobalSettings;
 import com.enosistudio.docktailor.generated.R;
 import javafx.application.Application;
@@ -19,13 +17,11 @@ public class MainApp extends Application {
     public static final List<String> ARGS = new ArrayList<>();
 
     public static final Image IMAGE = new Image(R.com.enosistudio.docktailor.icons.logoPng.getResourcePath());
-
-//    public static final Image IMAGE = R.loadImage("docktailor/icons/logo.png");
     public static final String TITLE = "DockTailor example";
 
     public static void main(String[] args) {
         ARGS.addAll(Arrays.stream(args).toList());
-        DocktailorService.IS_DEBUG = ARGS.contains("-debug");
+        DocktailorService.isDebug = ARGS.contains("-debug");
 
         launch(args);
     }
@@ -33,11 +29,11 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         log.info("MainApp : Application start");
-        Application.setUserAgentStylesheet(DocktailorUtility.getDocktailorCss().toExternalForm());
+        Application.setUserAgentStylesheet(R.com.enosistudio.docktailor.css.modena.mainCss.toExternalForm());
 
-        GlobalSettings.getInstance().setFileProvider(DocktailorService.getInstance().getLastUIConfigUsed());
-        AGlobalSettings store = GlobalSettings.getInstance();
+        GlobalSettings store = DocktailorService.getInstance().getGlobalSettings();
+        store.setFileProvider(DocktailorService.getInstance().getLastUIConfigUsed());
         DemoDockSchema demoDockSchema = new DemoDockSchema(store);
-        DocktailorUtility.openDockSystemConf(demoDockSchema);
+        DocktailorService.openDockSystemConf(demoDockSchema);
     }
 }

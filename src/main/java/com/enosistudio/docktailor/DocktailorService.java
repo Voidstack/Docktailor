@@ -1,10 +1,15 @@
 package com.enosistudio.docktailor;
 
+import com.enosistudio.docktailor.common.GlobalSettings;
 import com.enosistudio.docktailor.common.Singleton;
 import com.enosistudio.docktailor.fx.FxMenuItem;
+import com.enosistudio.docktailor.fx.FxSettingsSchema;
+import com.enosistudio.docktailor.fx.WindowMonitor;
+import com.enosistudio.docktailor.fx.fxdock.FxDockSchema;
 import com.enosistudio.docktailor.fx.fxdock.FxDockWindow;
 import com.enosistudio.docktailor.fx.fxdock.internal.ConfigDocktailor;
 import com.enosistudio.docktailor.fx.fxdock.internal.IDockPane;
+import com.enosistudio.docktailor.generated.R;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MenuItem;
@@ -19,7 +24,9 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Singleton service class for managing Docktailor's draggable tabs and configurations.
@@ -28,8 +35,12 @@ import java.util.List;
  */
 @Singleton
 @Slf4j
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DocktailorService {
+    /**
+     * The current FxSettingsSchema being used.
+     */
+    @Getter
+    private static FxSettingsSchema schema;
 
     /**
      * The folder where Docktailor's configuration files are saved.
@@ -42,17 +53,20 @@ public class DocktailorService {
      * This file is used if the user's configuration file does not exist.
      */
     @Setter @Getter
-    private static String defaultUiFile = DocktailorService.class.getResource("/com/enosistudio/docktailor/docktailor_default.ui").getFile();
+    private static String defaultUiFile = R.com.enosistudio.docktailor.docktailorDefaultUi.getURL().getFile();
 
     /**
      * The name of the configuration file that stores the last used configuration.
      */
     private static final String DOCKTAILOR_CONFIG_FILE = "docktailor.conf";
 
+    @Getter
+    private final GlobalSettings globalSettings = new GlobalSettings();
+
     /**
      * Flag indicating whether the application is in debug mode.
      */
-    public static boolean IS_DEBUG = false;
+    public static boolean isDebug = false;
 
     /**
      * Singleton instance of the DocktailorService.
@@ -71,6 +85,15 @@ public class DocktailorService {
     @Delegate
     private final ObservableList<Class<? extends IDockPane>> draggableTabs = FXCollections.observableArrayList();
 
+    @Getter
+    private final Map<String, String> predefinedConfigFiles = new HashMap<>();
+
+    public DocktailorService(){
+        predefinedConfigFiles.put("Configuration #1", Path.of(DocktailorService.getDocktailorSaveFolder(), "docktailor_1.ui").toString());
+        predefinedConfigFiles.put("Configuration #2", Path.of(DocktailorService.getDocktailorSaveFolder(), "docktailor_2.ui").toString());
+        predefinedConfigFiles.put("Configuration #3", Path.of(DocktailorService.getDocktailorSaveFolder(), "docktailor_3.ui").toString());
+    }
+
     /**
      * Retrieves the singleton instance of DocktailorService.
      *
@@ -81,6 +104,31 @@ public class DocktailorService {
             instance = new DocktailorService();
         }
         return instance;
+    }
+
+    /**
+     * Opens a new dock system configuration using the provided FxDockSchema.
+     * If a layout is already open, it closes the current layout before opening the new one.
+     *
+     * @param fxDockSchema The FxDockSchema to be used for the new layout.
+     */
+    public static void openDockSystemConf(FxDockSchema fxDockSchema) {
+        log.info("Docktailor: Opening UI configuration: {}", DocktailorService.getInstance().getLastUIConfigUsed());
+
+        if (schema != null) {
+            schema.closeLayout();
+        }
+
+        schema = fxDockSchema;
+        schema.openLayout();
+    }
+
+    /**
+     * Exits the application, ensuring the current layout is stored before exiting.
+     */
+    public static void exit() {
+        schema.storeLayout();
+        WindowMonitor.exit();
     }
 
     /**
