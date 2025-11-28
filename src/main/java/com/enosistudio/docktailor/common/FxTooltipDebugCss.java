@@ -20,13 +20,13 @@ public class FxTooltipDebugCss {
 
         if (node != lastNode) {
             if (lastNode != null) {
-                Tooltip.uninstall(lastNode, tooltip); // retire de l'ancien noeud
+                Tooltip.uninstall(lastNode, tooltip); // Remove from the old node
             }
             lastNode = node;
             updateTooltipText(node);
-            Tooltip.install(node, tooltip); // installe sur le nouveau noeud
+            Tooltip.install(node, tooltip); // Install on the new node
         } else {
-            // si on veut rafraîchir le texte même si c'est le même node
+            // Refresh the text even if it's the same node
             updateTooltipText(node);
         }
     };
@@ -53,10 +53,10 @@ public class FxTooltipDebugCss {
     public static void uninstall(Scene sc) {
         sc.removeEventFilter(MouseEvent.MOUSE_MOVED, handler);
         if (lastNode != null) {
-            Tooltip.uninstall(lastNode, tooltip); // nettoie le dernier noeud
+            Tooltip.uninstall(lastNode, tooltip); // Clean up the last node
             lastNode = null;
         }
-        // vide le texte (optionnel), exécution sur le thread UI
+        // Clear the text (optional), execute on UI thread
         Platform.runLater(() -> tooltip.setText(""));
     }
 }

@@ -4,6 +4,8 @@
 [![Java](https://img.shields.io/badge/Java-21%2B-blue.svg)](https://www.oracle.com/java/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
+![Alt text](data/demo.gif)
+
 **Docktailor** is a lightweight JavaFX framework for building modern user interfaces with **detachable and dockable windows**.
 Inspired by the docking systems used in professional IDEs, Docktailor provides a clean, extensible architecture for creating flexible and highly customizable desktop applications.
 

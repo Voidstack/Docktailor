@@ -29,7 +29,7 @@ public class Vector2 {
     public double calculDistance(Vector2 arg) {
         double deltaX = this.getX() - arg.getX();
         double deltaY = this.getY() - arg.getY();
-        return Math.sqrt(deltaX * deltaY + deltaY * deltaY);
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
 
     /**

@@ -1,7 +1,6 @@
 package com.enosistudio.docktailor.common;
 
 import com.enosistudio.docktailor.DocktailorService;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,23 +14,8 @@ import java.io.File;
 // Provider <- GlobalSettings <- instance <- ASettingsStore <- FxSettings
 @Setter
 @Slf4j
-@Singleton
-@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public final class GlobalSettings extends AGlobalSettings {
-    private SettingsProviderBase provider;
-
-    private static GlobalSettings instance;
-
-    public static GlobalSettings getInstance() {
-        if (instance == null) {
-            instance = new GlobalSettings();
-        }
-        return GlobalSettings.instance;
-    }
-
-    public void setDefaultFileProvider() {
-        setFileProvider(new File(DocktailorService.getDefaultUiFile()));
-    }
+    private ASettingsProviderBase provider;
 
     /**
      * @param fileName : GlobalSettings.FILE_X
@@ -41,8 +25,8 @@ public final class GlobalSettings extends AGlobalSettings {
         try {
             file = new File(fileName);
         } catch (NullPointerException e) {
-            log.info("Docktailor : Le fichier le configuration d'interface n'a pas été trouvé : {}", fileName);
-            file = new File(DocktailorService.getDefaultUiFile());
+            log.info("Docktailor: UI configuration file not found: {}", fileName);
+            file = new File(DocktailorService.getInstance().getDefaultUiFile());
         }
         setFileProvider(file);
     }
@@ -51,7 +35,7 @@ public final class GlobalSettings extends AGlobalSettings {
      * a convenience shortcut to set file-based provider and load the settings
      */
     private void setFileProvider(File f) {
-        FileSettingsProvider p = new FileSettingsProvider(f);
+        FileASettingsProvider p = new FileASettingsProvider(f);
         p.loadQuiet();
         setProvider(p);
     }
@@ -78,12 +62,78 @@ public final class GlobalSettings extends AGlobalSettings {
 
     @Override
     public void save() {
+        // Protect default UI file from being overwritten
+        if (isUsingDefaultFile()) {
+            String firstConfigFile = getFirstPredefinedConfigFile();
+            log.info("Docktailor: Default UI file is read-only. Redirecting save to: {}", firstConfigFile);
+
+            // Switch to first predefined config file
+            setFileProvider(firstConfigFile);
+
+            // Update last used config
+            DocktailorService.getInstance().setLastUIConfigUsed(firstConfigFile);
+        }
         provider.save();
     }
 
     @Override
     public void save(String fileName) {
+        // Protect default UI file from being overwritten
+        if (isDefaultFile(fileName)) {
+            String firstConfigFile = getFirstPredefinedConfigFile();
+            log.warn("Docktailor: Cannot save to default UI file. Redirecting to: {}", firstConfigFile);
+            provider.save(firstConfigFile);
+
+            // Update last used config
+            DocktailorService.getInstance().setLastUIConfigUsed(firstConfigFile);
+            return;
+        }
         provider.save(fileName);
+    }
+
+    /**
+     * Check if currently using the default UI file
+     */
+    private boolean isUsingDefaultFile() {
+        if (provider instanceof FileASettingsProvider fileProvider) {
+            File currentFile = fileProvider.getFile();
+            File defaultFile = new File(DocktailorService.getInstance().getDefaultUiFile());
+
+            try {
+                return currentFile.getCanonicalPath().equals(defaultFile.getCanonicalPath());
+            } catch (Exception e) {
+                log.error("Docktailor: Error comparing file paths", e);
+                return false;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if the given filename is the default UI file
+     */
+    private boolean isDefaultFile(String fileName) {
+        if(fileName == null) return true;
+        try {
+            File targetFile = new File(fileName);
+            File defaultFile = new File(DocktailorService.getInstance().getDefaultUiFile());
+            return targetFile.getCanonicalPath().equals(defaultFile.getCanonicalPath());
+        } catch (Exception e) {
+            log.error("Docktailor: Error comparing file paths", e);
+            return false;
+        }
+    }
+
+    /**
+     * Get the first predefined config file
+     */
+    private String getFirstPredefinedConfigFile() {
+        return DocktailorService.getInstance()
+                .getPredefinedUiFiles()
+                .values()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No predefined config files available"));
     }
 
     @Override

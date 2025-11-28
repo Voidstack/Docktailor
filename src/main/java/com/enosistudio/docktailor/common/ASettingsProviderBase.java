@@ -12,10 +12,10 @@ import java.util.List;
  * In-memory map-based Settings Provider.
  */
 @Slf4j(topic = "SettingsProviderBase")
-public abstract class SettingsProviderBase {
+public abstract class ASettingsProviderBase {
     // stores String or String[]
     protected HashMap<String, Object> data = new HashMap<>();
-    protected SettingsProviderBase() {
+    protected ASettingsProviderBase() {
     }
 
     protected static String decode(String s) {
@@ -31,7 +31,7 @@ public abstract class SettingsProviderBase {
                 if (c == '\\') {
                     i++;
                     String sub = s.substring(i, i + 2);
-                    sb.append((char) Hex.parseByte(sub));
+                    sb.append((char) HexUtils.parseByte(sub));
                     i++;
                 } else {
                     sb.append(c);
@@ -71,7 +71,7 @@ public abstract class SettingsProviderBase {
 
     protected static void encode(char c, StringBuilder sb) {
         sb.append('\\');
-        sb.append(Hex.toHexByte(c));
+        sb.append(HexUtils.toHexByte(c));
     }
 
     protected abstract void saveSettings();

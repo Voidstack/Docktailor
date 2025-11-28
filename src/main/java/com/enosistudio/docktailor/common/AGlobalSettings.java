@@ -23,7 +23,7 @@ public abstract sealed class AGlobalSettings permits GlobalSettings {
     public abstract void resetRuntime();
 
     public int getInt(String key, int defaultValue) {
-        return Parsers.parseInt(getString(key), defaultValue);
+        return ParserUtils.parseInt(getString(key), defaultValue);
     }
 
 

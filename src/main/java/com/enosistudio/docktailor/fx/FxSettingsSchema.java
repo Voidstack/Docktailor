@@ -1,6 +1,6 @@
 package com.enosistudio.docktailor.fx;
 
-import com.enosistudio.docktailor.DocktailorUtility;
+import com.enosistudio.docktailor.DocktailorService;
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.SStream;
 import com.enosistudio.docktailor.fx.fxdock.FxDockWindow;
@@ -165,8 +165,8 @@ public abstract class FxSettingsSchema {
                     }
 
                     switch (state) {
-                        // Platform.runLater obligatoire sinon bug
-                        // surtout pour "Maximized"
+                        // Platform.runLater required otherwise bug occurs
+                        // especially for "Maximized"
                         case WINDOW_FULLSCREEN:
                             Platform.runLater(() -> s.setFullScreen(true));
                             break;
@@ -526,7 +526,7 @@ public abstract class FxSettingsSchema {
         }
 
         // #001 : Fixed
-        DocktailorUtility.getSchema().resetRuntime();
+        DocktailorService.getSchema().resetRuntime();
 
         return count;
     }
@@ -547,7 +547,7 @@ public abstract class FxSettingsSchema {
 
         for (int i = 0; i < sz; i++) {
             Window w = ws.get(i);
-            DocktailorUtility.store(w);
+            DocktailorService.getSchema().storeWindow(w);
 
             String name = FX.getName(w);
             String id = WindowMonitor.forWindow(w).getIDPart();
@@ -570,7 +570,7 @@ public abstract class FxSettingsSchema {
 
         for (int i = 0; i < sz; i++) {
             Window w = ws.get(i);
-            DocktailorUtility.store(w);
+            DocktailorService.getSchema().storeWindow(w);
 
             String name = FX.getName(w);
             String id = WindowMonitor.forWindow(w).getIDPart();

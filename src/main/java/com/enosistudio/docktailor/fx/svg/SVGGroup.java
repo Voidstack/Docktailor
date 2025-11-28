@@ -1,7 +1,7 @@
 package com.enosistudio.docktailor.fx.svg;
 
-import com.enosistudio.docktailor.common.UtilColor;
-import com.enosistudio.docktailor.common.XmlParser;
+import com.enosistudio.docktailor.common.ColorUtils;
+import com.enosistudio.docktailor.common.XmlUtils;
 import javafx.beans.NamedArg;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -13,7 +13,7 @@ import org.w3c.dom.Element;
 import java.util.regex.Pattern;
 
 /**
- * Gère les bordures mais complexe a resize
+ * Handles borders but complex to resize
  */
 @Getter
 public class SVGGroup extends Group implements ISVG {
@@ -42,7 +42,7 @@ public class SVGGroup extends Group implements ISVG {
         setMouseTransparent(true);
         setTransform(100, 100);
         this.url = ISVG.validateUrl(url);
-        this.currentSVGPath = createPath(extractPathFromSVGFile(this.url), UtilColor.colorToHex(this.colorFill), UtilColor.colorToHex(colorStroke));
+        this.currentSVGPath = createPath(extractPathFromSVGFile(this.url), ColorUtils.colorToHex(this.colorFill), ColorUtils.colorToHex(colorStroke));
 
         getChildren().add(currentSVGPath);
     }
@@ -54,22 +54,21 @@ public class SVGGroup extends Group implements ISVG {
         this.colorFill = colorFill;
         this.colorStroke = colorStroke;
         this.strokeSize = size;
-        this.currentSVGPath = createPath(path, UtilColor.colorToHex(this.colorFill), UtilColor.colorToHex(this.colorStroke));
+        this.currentSVGPath = createPath(path, ColorUtils.colorToHex(this.colorFill), ColorUtils.colorToHex(this.colorStroke));
 
         setMouseTransparent(true);
         getChildren().add(currentSVGPath);
     }
 
     private String extractPathFromSVGFile(String url) {
-        Document xmlDocument = XmlParser.fileToDocument(url);
-        Element elementPath = XmlParser.elementFromDocument(xmlDocument, "path", 0);
-        return XmlParser.ValueFromAttribut(elementPath, "d");
+        Document xmlDocument = XmlUtils.fileToDocument(url);
+        Element elementPath = XmlUtils.elementFromDocument(xmlDocument, "path", 0);
+        return XmlUtils.ValueFromAttribut(elementPath, "d");
     }
 
     private SVGPath createPath(String d, String fill, String stroke) {
         SVGPath path = new SVGPath();
         path.setContent(d);
-        //path.setStyle("-fill:" + fill + ";-hover-fill:" + hoverFill+";");
         path.setStyle(
                 "-fx-stroke-width: " + strokeSize + ";" +
                         "-fx-stroke: " + stroke + ";" +
@@ -77,27 +76,12 @@ public class SVGGroup extends Group implements ISVG {
         return path;
     }
 
-
-    public static void main(String[] args) {
-        System.out.println(Color.RED);
-    }
-
     public void updatePath() {
         this.currentSVGPath.setStyle(
                 "-fx-stroke-width: " + this.strokeSize + ";" +
-                        "-fx-stroke: " + UtilColor.colorToHex(this.colorStroke) + ";" +
-                        "-fx-fill: " + UtilColor.colorToHex(this.colorFill) + ";");
+                        "-fx-stroke: " + ColorUtils.colorToHex(this.colorStroke) + ";" +
+                        "-fx-fill: " + ColorUtils.colorToHex(this.colorFill) + ";");
     }
-
-    private static String constructDetailedExceptionMessage(String var0, Throwable var1) {
-        if (var1 == null) {
-            return var0;
-        } else {
-            String var2 = var1.getMessage();
-            return constructDetailedExceptionMessage(var2 != null ? var0 + ": " + var2 : var0, var1.getCause());
-        }
-    }
-
 
     @Override
     public void setColorFill(Color colorFill) {

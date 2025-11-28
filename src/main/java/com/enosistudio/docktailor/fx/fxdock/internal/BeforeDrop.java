@@ -1,5 +1,6 @@
 package com.enosistudio.docktailor.fx.fxdock.internal;
 
+import com.enosistudio.docktailor.utils.ParentTrackerUtils;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
@@ -16,7 +17,7 @@ public class BeforeDrop {
 
     public BeforeDrop(Node client, Node target) {
         this.client = client;
-        this.clientParent = DockTools.getParent(client);
+        this.clientParent = ParentTrackerUtils.getParent(client);
 
         collectSizes(client);
         collectSizes(target);
@@ -32,7 +33,7 @@ public class BeforeDrop {
                 sizeNode(n);
             }
 
-            n = DockTools.getParent(n);
+            n = ParentTrackerUtils.getParent(n);
         }
     }
 
@@ -61,36 +62,26 @@ public class BeforeDrop {
                 return;
             }
 
-            n = DockTools.getParent(n);
+            n = ParentTrackerUtils.getParent(n);
         }
     }
 
-    // for now, simply allocate space equally between panes in the affected split panes
+    /**
+     * Restores split pane divider positions after a drop operation.
+     * Only restores if the pane count hasn't changed; otherwise, divider positions
+     * are handled by FxDockSplitPane.initializeDividersRecursively().
+     */
     protected void restoreSplits(FxDockSplitPane p) {
         Object x = data.get(p);
-        if (x == null) {
-            allocateEqually(p);
-        } else {
+        if (x != null) {
             SplitSize s = (SplitSize) x;
             if (s.childCount == p.getPaneCount()) {
-                // restore previous configuration
+                // Restore previous configuration only if pane count unchanged
                 p.setDividerPositions(s.dividers);
-            } else {
-                allocateEqually(p);
             }
+            // If pane count changed, dividers are initialized by FxDockSplitPane.initializeDividersRecursively()
         }
-    }
-
-    // Inutile
-    protected void allocateEqually(FxDockSplitPane p) {
-		/*int sz = p.getDividers().size();
-		double total = (sz + 1);
-
-		for(int i=0; i<sz; i++)
-		{
-			double pos = (i + 1) / total;
-			p.setDividerPosition(i, pos);
-		}*/
+        // If no saved data, dividers are initialized by FxDockSplitPane.initializeDividersRecursively()
     }
 
     static class SplitSize {

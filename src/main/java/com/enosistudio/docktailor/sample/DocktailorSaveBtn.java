@@ -1,7 +1,6 @@
 package com.enosistudio.docktailor.sample;
 
 import com.enosistudio.docktailor.DocktailorService;
-import com.enosistudio.docktailor.DocktailorUtility;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Simple btn qui permet la save on veux aussi save les intances pour pouvoir faire un désaffichage groupé lors de la save.
+ * Simple button that allows saving. Also saves instances to enable grouped hiding during save.
  */
 public class DocktailorSaveBtn extends Button {
 
@@ -28,9 +27,9 @@ public class DocktailorSaveBtn extends Button {
     private final TranslateTransition tt = new TranslateTransition(Duration.millis(300), this);
     private final ParallelTransition inTransition = new ParallelTransition(fadeIn, tt);
 
-    // Méthode utilisé pour la save
+    // Method used for saving
     private final EventHandler<ActionEvent> onSave = event -> {
-        DocktailorUtility.storeLayout(DocktailorService.getInstance().getLastUIConfigUsed());
+        DocktailorService.getSchema().storeLayout(DocktailorService.getInstance().getLastUIConfigUsed());
         DocktailorService.getInstance().getConfigDocktailor().save();
         displayBtnSave(false);
     };

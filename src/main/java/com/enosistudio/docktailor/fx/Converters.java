@@ -1,6 +1,6 @@
 package com.enosistudio.docktailor.fx;
 
-import com.enosistudio.docktailor.common.Parsers;
+import com.enosistudio.docktailor.common.ParserUtils;
 import javafx.beans.property.*;
 import javafx.util.StringConverter;
 
@@ -40,7 +40,7 @@ public class Converters {
             booleanConverter = new StringConverter<>() {
                 @Override
                 public Boolean fromString(String s) {
-                    return Parsers.parseBoolean(s);
+                    return ParserUtils.parseBoolean(s);
                 }
 
                 @Override
@@ -58,7 +58,7 @@ public class Converters {
             intConverter = new StringConverter<>() {
                 @Override
                 public Integer fromString(String s) {
-                    return Parsers.parseInt(s, 0);
+                    return ParserUtils.parseInt(s, 0);
                 }
 
                 @Override
@@ -76,7 +76,7 @@ public class Converters {
             intNumberConverter = new StringConverter<>() {
                 @Override
                 public Number fromString(String s) {
-                    return Parsers.parseInt(s, 0);
+                    return ParserUtils.parseInt(s, 0);
                 }
 
                 @Override
@@ -94,7 +94,7 @@ public class Converters {
             doubleNumberConverter = new StringConverter<>() {
                 @Override
                 public Number fromString(String s) {
-                    return Parsers.parseDouble(s, 0.0);
+                    return ParserUtils.parseDouble(s, 0.0);
                 }
 
                 @Override

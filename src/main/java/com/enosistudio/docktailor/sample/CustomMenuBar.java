@@ -11,7 +11,6 @@ public class CustomMenuBar extends DragRegion {
     private final HBox right = new HBox();
     private final DocktailorSaveBtn saveBtn =new DocktailorSaveBtn();
 
-
     public CustomMenuBar(HBox hbox, MenuBar menuBar) {
         super(hbox);
 

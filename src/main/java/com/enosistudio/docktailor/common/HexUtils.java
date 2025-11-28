@@ -1,9 +1,10 @@
 package com.enosistudio.docktailor.common;
 
+import lombok.experimental.UtilityClass;
 
-public class Hex {
+@UtilityClass
+public class HexUtils {
     public static final String HEX = "0123456789ABCDEF";
-    private Hex() {}
 
     public static String toHexString(int d, int digits) {
         char[] buf = new char[digits];

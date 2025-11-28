@@ -1,9 +1,11 @@
 package com.enosistudio.docktailor.common;
 
+import lombok.experimental.UtilityClass;
+
 import java.awt.*;
 
-@SuppressWarnings("unused")
-public class UtilColor {
+@UtilityClass
+public class ColorUtils {
 
     public static final javafx.scene.paint.Color FX_GREEN = new javafx.scene.paint.Color(.09f, .65f, .45f, .8f);
     public static final Color AWT_GREEN = new Color(.09f, .65f, .45f, .8f);
@@ -19,7 +21,7 @@ public class UtilColor {
 
     public static Color hexToColor(String hex){
         if(!hex.matches("^0x[A-Fa-f0-9]{8}$")){
-            throw new IllegalArgumentException("Format de couleur invalide");
+            throw new IllegalArgumentException("Invalid color format");
         }
         int red = Integer.parseInt(hex.substring(2, 4), 16);
         int green = Integer.parseInt(hex.substring(4, 6), 16);
@@ -32,7 +34,7 @@ public class UtilColor {
     }
 
     /**
-     * Retourne Noir ou Blanc pour contraster au mieux de la couleur en param
+     * Returns Black or White to best contrast with the provided color
      * @param color :
      * @return : BLACK/WHITE
      */

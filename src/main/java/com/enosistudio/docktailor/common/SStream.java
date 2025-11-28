@@ -73,7 +73,7 @@ public class SStream implements Iterable<String> {
 
 
     public double nextDouble(double defaultValue) {
-        return Parsers.parseDouble(nextString(), defaultValue);
+        return ParserUtils.parseDouble(nextString(), defaultValue);
     }
 
 
@@ -83,7 +83,7 @@ public class SStream implements Iterable<String> {
 
 
     public int nextInt(int defaultValue) {
-        return Parsers.parseInt(nextString(), defaultValue);
+        return ParserUtils.parseInt(nextString(), defaultValue);
     }
 
     public int nextInt() {

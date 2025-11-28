@@ -1,12 +1,14 @@
 package com.enosistudio.docktailor.fx.fxdock.internal;
 
 import com.enosistudio.docktailor.fx.fxdock.FxDockPane;
+import com.enosistudio.docktailor.utils.HierarchyCleanupUtils;
+import com.enosistudio.docktailor.utils.ParentTrackerUtils;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.ReadOnlyProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -16,8 +18,9 @@ import java.util.List;
  * FxDockTabPane.
  */
 @Slf4j
-public class FxDockTabPane extends TabPane {
-    protected final ReadOnlyObjectWrapper<Node> parent = new ReadOnlyObjectWrapper<>();
+public class FxDockTabPane extends TabPane implements IFxDockPane {
+    @Getter
+    protected final ReadOnlyObjectWrapper<Node> dockParent = new ReadOnlyObjectWrapper<>();
 
     public FxDockTabPane() {
         this.setTabClosingPolicy(TabClosingPolicy.ALL_TABS);
@@ -27,12 +30,6 @@ public class FxDockTabPane extends TabPane {
         this();
         addTab(n);
     }
-
-
-    public final ReadOnlyProperty<Node> dockParentProperty() {
-        return parent.getReadOnlyProperty();
-    }
-
 
     public Node getTab(int ix) {
         if (ix >= 0) {
@@ -61,44 +58,43 @@ public class FxDockTabPane extends TabPane {
      * @return
      */
     protected Tab newTab(Node nd) {
-        Node n = DockTools.prepareToAdd(nd);
+        Node n = HierarchyCleanupUtils.prepareToAdd(nd);
 
         Tab t = new Tab(null, n);
         if (n instanceof FxDockPane p) {
             // t.setGraphic(p.getTitleField());
             t.setGraphic(p.getCustomTab());
 
-            t.setOnClosed((ev) ->
-            {
-                Node pp = DockTools.getParent(this);
-                DockTools.collapseEmptySpace(pp);
+            t.setOnClosed(ev -> {
+                Node pp = ParentTrackerUtils.getParent(this);
+                HierarchyCleanupUtils.collapseEmptySpace(pp);
             });
         }
         return t;
     }
 
     public void addTab(Node n) {
-        if (this.getTabs().size() != 1 || !this.getTabs().get(0).getTabPane().getTabs().get(0).getContent().equals(n)) {
+        if (this.getTabs().size() != 1 || !this.getTabs().getFirst().getTabPane().getTabs().getFirst().getContent().equals(n)) {
             Tab t = newTab(n);
             getTabs().add(t);
-            DockTools.setParent(this, n);
+            ParentTrackerUtils.setParent(this, n);
         }
-        // Pour éviter d'ajouter une fenêtre vide lorsqu'on drag&drop une fenêtre sur elle-même.
-        // ca provoque des bugs de placement un peu bizarre mais flemme.
+        // To avoid adding an empty window when drag & drop a window onto itself.
+        // This causes some weird placement bugs but it's acceptable.
     }
 
 
     public void addTab(int ix, Node n) {
         Tab t = newTab(n);
         getTabs().add(ix, t);
-        DockTools.setParent(this, n);
+        ParentTrackerUtils.setParent(this, n);
     }
 
 
     public void removeTab(int ix) {
         Tab t = getTabs().remove(ix);
         Node n = t.getContent();
-        DockTools.setParent(null, n);
+        ParentTrackerUtils.setParent(null, n);
     }
 
 

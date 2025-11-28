@@ -3,12 +3,14 @@ package com.enosistudio.docktailor.fx.fxdock.internal;
 import com.enosistudio.docktailor.fx.FX;
 import com.enosistudio.docktailor.fx.fxdock.FxDockPane;
 import com.enosistudio.docktailor.fx.fxdock.FxDockWindow;
+import com.enosistudio.docktailor.utils.*;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -44,7 +46,7 @@ public class DragAndDropHandler {
 
     /**
      *
-     * @param n :
+     * @param n      :
      * @param client :
      */
     public static void attach(Node n, FxDockPane client) {
@@ -55,7 +57,7 @@ public class DragAndDropHandler {
 
     /**
      *
-     * @param ev :
+     * @param ev     :
      * @param client :
      */
     protected static void onDragDetected(MouseEvent ev, FxDockPane client) {
@@ -90,7 +92,7 @@ public class DragAndDropHandler {
 
     /**
      *
-     * @param ev :
+     * @param ev     :
      * @param client :
      */
     protected static void onMouseDragged(MouseEvent ev, FxDockPane client) {
@@ -190,9 +192,14 @@ public class DragAndDropHandler {
             return im;
         }
 
-        // include selected tab
-        FxDockTabPane tp = (FxDockTabPane) DockTools.getParent(client);
-        Node n = tp.lookup(".tab:selected");
+        // include the tab of the dragged client pane (not the currently selected tab)
+        FxDockTabPane tp = (FxDockTabPane) ParentTrackerUtils.getParent(client);
+        int clientTabIndex = tp.indexOfTab(client);
+        if (clientTabIndex < 0) {
+            return im; // Fallback: tab not found
+        }
+        Tab clientTab = tp.getTabs().get(clientTabIndex);
+        Node n = clientTab.getGraphic(); // Get the tab header/graphic for the dragged pane
         WritableImage tim = n.snapshot(sp, null);
 
         double dy = tim.getHeight();
@@ -211,8 +218,8 @@ public class DragAndDropHandler {
 
     /**
      *
-     * @param client :
-     * @param root :
+     * @param client  :
+     * @param root    :
      * @param screenx :
      * @param screeny :
      * @return :
@@ -231,7 +238,7 @@ public class DragAndDropHandler {
         }
 
         double h = root.getHeight();
-        if (w <= WINDOW_EDGE_VERTICAL + WINDOW_EDGE_VERTICAL) {
+        if (h <= WINDOW_EDGE_VERTICAL + WINDOW_EDGE_VERTICAL) {
             // too short
             return null;
         }
@@ -242,7 +249,7 @@ public class DragAndDropHandler {
             ADockDropOperation op = new ADockDropOperation(root, EWhereEdge.LEFT) {
                 @Override
                 public void executePrivate() {
-                    DockTools.insertPane(client, root, EWhere.LEFT);
+                    LayoutComposerUtils.insertPane(client, root, EWhere.LEFT);
                 }
             };
             op.addRect(root, 0, 0, WINDOW_EDGE_HORIZONTAL, h);
@@ -251,7 +258,7 @@ public class DragAndDropHandler {
             ADockDropOperation op = new ADockDropOperation(root, EWhereEdge.RIGHT) {
                 @Override
                 public void executePrivate() {
-                    DockTools.insertPane(client, root, EWhere.RIGHT);
+                    LayoutComposerUtils.insertPane(client, root, EWhere.RIGHT);
                 }
             };
             op.addRect(root, w - WINDOW_EDGE_HORIZONTAL, 0, WINDOW_EDGE_HORIZONTAL, h);
@@ -263,7 +270,7 @@ public class DragAndDropHandler {
             ADockDropOperation op = new ADockDropOperation(root, EWhereEdge.TOP) {
                 @Override
                 public void executePrivate() {
-                    DockTools.insertPane(client, root, EWhere.TOP);
+                    LayoutComposerUtils.insertPane(client, root, EWhere.TOP);
                 }
             };
             op.addRect(root, 0, 0, w, WINDOW_EDGE_VERTICAL);
@@ -272,7 +279,7 @@ public class DragAndDropHandler {
             ADockDropOperation op = new ADockDropOperation(root, EWhereEdge.BOTTOM) {
                 @Override
                 public void executePrivate() {
-                    DockTools.insertPane(client, root, EWhere.BOTTOM);
+                    LayoutComposerUtils.insertPane(client, root, EWhere.BOTTOM);
                 }
             };
             op.addRect(root, 0, h - WINDOW_EDGE_VERTICAL, w, WINDOW_EDGE_VERTICAL);
@@ -284,7 +291,7 @@ public class DragAndDropHandler {
 
     /**
      *
-     * @param client :
+     * @param client  :
      * @param screenx :
      * @param screeny :
      * @return :
@@ -293,15 +300,15 @@ public class DragAndDropHandler {
         return new ADockDropOperation(null, new WhereScreen(screenx, screeny)) {
             @Override
             public void executePrivate() {
-                DockTools.moveToNewWindow(client, screenx - deltaX, screeny - deltaY);
+                LayoutComposerUtils.moveToNewWindow(client, screenx - deltaX, screeny - deltaY);
             }
         };
     }
 
     /**
      *
-     * @param client :
-     * @param target :
+     * @param client  :
+     * @param target  :
      * @param screenx :
      * @param screeny :
      * @return :
@@ -322,7 +329,7 @@ public class DragAndDropHandler {
         ADockDropOperation op = new ADockDropOperation(target, where) {
             @Override
             public void executePrivate() {
-                DockTools.moveToPane(client, target, where);
+                LayoutComposerUtils.moveToPane(client, target, where);
             }
         };
 
@@ -347,11 +354,11 @@ public class DragAndDropHandler {
     private static EWhere determineWhere(double x, double y, double x1, double x2, double y1, double y2, double w, double h) {
         if (x < x1) {
             if (y < y1) {
-                return DockTools.aboveDiagonal(x, y, 0, 0, x1, y1) ? EWhere.TOP : EWhere.LEFT;
+                return GeometryUtils.aboveDiagonal(x, y, 0, 0, x1, y1) ? EWhere.TOP : EWhere.LEFT;
             } else if (y < y2) {
                 return EWhere.LEFT;
             } else {
-                return DockTools.aboveDiagonal(x, y, 0, h, x1, y2) ? EWhere.LEFT : EWhere.BOTTOM;
+                return GeometryUtils.aboveDiagonal(x, y, 0, h, x1, y2) ? EWhere.LEFT : EWhere.BOTTOM;
             }
         } else if (x < x2) {
             if (y < y1) {
@@ -363,11 +370,11 @@ public class DragAndDropHandler {
             }
         } else {
             if (y < y1) {
-                return DockTools.aboveDiagonal(x, y, x2, y1, w, 0) ? EWhere.TOP : EWhere.RIGHT;
+                return GeometryUtils.aboveDiagonal(x, y, x2, y1, w, 0) ? EWhere.TOP : EWhere.RIGHT;
             } else if (y < y2) {
                 return EWhere.RIGHT;
             } else {
-                return DockTools.aboveDiagonal(x, y, x2, y2, w, h) ? EWhere.RIGHT : EWhere.BOTTOM;
+                return GeometryUtils.aboveDiagonal(x, y, x2, y2, w, h) ? EWhere.RIGHT : EWhere.BOTTOM;
             }
         }
     }
@@ -408,14 +415,14 @@ public class DragAndDropHandler {
 
     /**
      *
-     * @param client :
-     * @param parent :
+     * @param client  :
+     * @param parent  :
      * @param screenx :
      * @param screeny :
      * @return :
      */
     protected static ADockDropOperation createDropOnDivider(FxDockPane client, FxDockSplitPane parent, double screenx, double screeny) {
-        List<Pane> splits = DockTools.collectDividers(parent);
+        List<Pane> splits = GeometryUtils.collectDividers(parent);
         int sz = splits.size();
         for (int i = 0; i < sz; i++) {
             Pane n = splits.get(i);
@@ -424,10 +431,10 @@ public class DragAndDropHandler {
                 int ix = i + 1;
 
                 // found the divider, check if it's adjacent
-                Node pc = DockTools.getParent(client);
+                Node pc = ParentTrackerUtils.getParent(client);
                 if (pc == parent) {
                     // do not allow to drop on adjacent split
-                    int d = ix - DockTools.indexInParent(client);
+                    int d = ix - DockNodeUtils.indexInParent(client);
                     switch (d) {
                         case 0, 1:
                             return null;
@@ -439,7 +446,7 @@ public class DragAndDropHandler {
                 ADockDropOperation op = new ADockDropOperation(n, ix) {
                     @Override
                     public void executePrivate() {
-                        DockTools.moveToSplit(client, parent, ix);
+                        LayoutComposerUtils.moveToSplit(client, parent, ix);
                     }
                 };
                 op.addRect(n, 0, 0, n.getWidth(), n.getHeight());
@@ -451,14 +458,14 @@ public class DragAndDropHandler {
 
     /**
      *
-     * @param client :
+     * @param client  :
      * @param screenx :
      * @param screeny :
      * @return :
      */
     public static ADockDropOperation createDropOp(FxDockPane client, double screenx, double screeny) {
         // first, check if we are outside of any window
-        FxDockWindow w = DockTools.findWindow(screenx, screeny);
+        FxDockWindow w = WindowLocatorUtils.findWindow(screenx, screeny);
         if (w == null) {
             return createDropToNewWindow(client, screenx, screeny);
         }
@@ -470,14 +477,14 @@ public class DragAndDropHandler {
         }
 
         // find the topmost docking element to accept the drop
-        Node n = DockTools.findDockElement(w.getContent(), screenx, screeny);
+        Node n = WindowLocatorUtils.findDockElement(w.getContent(), screenx, screeny);
         if (n == null) {
             return createDropToNewWindow(client, screenx, screeny);
         } else if (n instanceof FxDockSplitPane fxDockSplitPane) {
             // drop on a divider
             return createDropOnDivider(client, fxDockSplitPane, screenx, screeny);
-        } else if (n instanceof Pane) {
-            return createDropOnPane(client, (Pane) n, screenx, screeny);
+        } else if (n instanceof Pane pane) {
+            return createDropOnPane(client, pane, screenx, screeny);
         } else {
             throw new IllegalArgumentException("?" + n);
         }

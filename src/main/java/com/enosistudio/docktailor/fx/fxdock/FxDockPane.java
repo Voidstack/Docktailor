@@ -1,10 +1,11 @@
 package com.enosistudio.docktailor.fx.fxdock;
 
 import com.enosistudio.docktailor.fx.FxAction;
-import com.enosistudio.docktailor.fx.fxdock.internal.DockTools;
 import com.enosistudio.docktailor.fx.fxdock.internal.DragAndDropHandler;
 import com.enosistudio.docktailor.fx.fxdock.internal.FxDockBorderPane;
 import com.enosistudio.docktailor.fx.fxdock.internal.FxDockTabPane;
+import com.enosistudio.docktailor.utils.HierarchyCleanupUtils;
+import com.enosistudio.docktailor.utils.LayoutComposerUtils;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -40,7 +41,7 @@ public abstract class FxDockPane extends FxDockBorderPane {
 
         DragAndDropHandler.attach(titleField, this);
 
-        parent.addListener((s, old, cur) -> setTabMode(cur instanceof FxDockTabPane));
+        dockParent.addListener((s, old, cur) -> setTabMode(cur instanceof FxDockTabPane));
 
         this.setFocusTraversable(true); // permet au pane de recevoir le focus
         this.focusedProperty().addListener((obs, oldVal, newVal) -> {
@@ -125,11 +126,11 @@ public abstract class FxDockPane extends FxDockBorderPane {
     }
 
     public void actionClose() {
-        DockTools.remove(this);
+        HierarchyCleanupUtils.remove(this);
     }
 
 
     public void actionPopToWindow() {
-        DockTools.moveToNewWindow(this);
+        LayoutComposerUtils.moveToNewWindow(this);
     }
 }

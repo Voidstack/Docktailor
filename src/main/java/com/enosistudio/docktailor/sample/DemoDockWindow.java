@@ -1,73 +1,56 @@
 package com.enosistudio.docktailor.sample;
 
 import com.enosistudio.docktailor.DocktailorService;
-import com.enosistudio.docktailor.DocktailorUtility;
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.FxTooltipDebugCss;
-import com.enosistudio.docktailor.common.GlobalSettings;
-import com.enosistudio.docktailor.fx.FxAction;
 import com.enosistudio.docktailor.fx.FxMenuBar;
-import com.enosistudio.docktailor.fx.LocalSettings;
 import com.enosistudio.docktailor.fx.fxdock.FxDockWindow;
-import com.enosistudio.docktailor.sample.controller.PersonDockPane;
-import com.enosistudio.docktailor.sample.controller.TestDockPane;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.yetihafen.javafx.customcaption.CaptionConfiguration;
 import net.yetihafen.javafx.customcaption.CustomCaption;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Demo Window.
  */
 @Slf4j
 public class DemoDockWindow extends FxDockWindow {
-    @Getter
-    private static final String FILE_1 = Path.of(DocktailorService.getDocktailorSaveFolder(), "docktailor_1.ui").toString();
-    @Getter
-    private static final String FILE_2 = Path.of(DocktailorService.getDocktailorSaveFolder(), "docktailor_2.ui").toString();
-    @Getter
-    private static final String FILE_3 = Path.of(DocktailorService.getDocktailorSaveFolder(), "docktailor_3.ui").toString();
-
-    public final FxAction windowCheckAction = new FxAction();
-    //private static int seq;
-
-    private static final List<DemoDockWindow> demoDockWindows = new ArrayList<>();
-
     private CustomMenuBar customMenuBar = null;
 
     public DemoDockWindow() {
         super("DemoWindow");
-        demoDockWindows.add(this);
 
         getIcons().add(MainApp.IMAGE);
 
-        // Creation de la barre supérieur.
+        // Create the top menu bar
         FxMenuBar fxMenuBar = createMenu();
 
         HBox hBox = new HBox(fxMenuBar);
-        // largeur de la MenuBar = largeur de la fenêtre - 50
+        // MenuBar width = window width - 138
         getScene().widthProperty().addListener((obs, oldVal, newVal) ->
                 hBox.setMaxWidth(newVal.doubleValue() - 138));
         setTop(hBox);
 
         setTitle(MainApp.TITLE);
 
-        LocalSettings.get(this).add("CHECKBOX_MENU", windowCheckAction);
-
-        // On a besoin d'avoir les bounds généré
+        // Need to have the bounds generated
         this.setOnShown(observable -> {
             this.customMenuBar = new CustomMenuBar(hBox, fxMenuBar);
             CaptionConfiguration cc = new CaptionConfiguration().setCaptionDragRegion(customMenuBar).setControlBackgroundColor(Color.rgb(60, 63, 65)).setCaptionHeight((int)fxMenuBar.getHeight());
@@ -87,17 +70,17 @@ public class DemoDockWindow extends FxDockWindow {
 
     private static void loadDefaultAction() {
         log.info("Docktailor : Load default interface configuration");
-        actionLoadSettings(DocktailorService.getDefaultUiFile());
+        actionLoadSettings(DocktailorService.getInstance().getDefaultUiFile());
     }
 
     protected static void actionLoadSettings(String fileName) {
         log.info("Docktailor : Load default interface configuration : {}", fileName);
 
-        GlobalSettings.getInstance().setFileProvider(fileName);
-        AGlobalSettings store = GlobalSettings.getInstance();
+        DocktailorService.getInstance().getGlobalSettings().setFileProvider(fileName);
+        AGlobalSettings store = DocktailorService.getInstance().getGlobalSettings();
         DemoDockSchema demoDockSchema = new DemoDockSchema(store);
 
-        DocktailorUtility.openDockSystemConf(demoDockSchema);
+        DocktailorService.openDockSystemConf(demoDockSchema);
 
         DocktailorService.getInstance().setLastUIConfigUsed(fileName);
     }
@@ -109,7 +92,7 @@ public class DemoDockWindow extends FxDockWindow {
      */
     protected static void actionSaveSettings(String fileName) {
         log.info("Docktailor : Save current interface configuration in {}", fileName);
-        DocktailorUtility.storeLayout(fileName);
+        DocktailorService.getSchema().storeLayout(fileName);
         DocktailorService.getInstance().getConfigDocktailor().save();
         DocktailorService.getInstance().setLastUIConfigUsed(fileName);
 
@@ -125,19 +108,28 @@ public class DemoDockWindow extends FxDockWindow {
 
         Platform.runLater(() -> {
 
-            // Custom config
-            menuApplication.getItems().add(addCustomConfiguration("Configuration #1", getFILE_1()));
-            menuApplication.getItems().add(addCustomConfiguration("Configuration #2", getFILE_2()));
-            menuApplication.getItems().add(addCustomConfiguration("Configuration #3", getFILE_3()));
+            DocktailorService.getInstance().getPredefinedUiFiles().forEach((s, s2) ->
+                    menuApplication.getItems().add(addCustomConfiguration(s, s2)));
 
             menuApplication.getItems().add(new SeparatorMenuItem());
 
-            MenuItem menuItemDefaultConf = new MenuItem("Charger la configuration par défaut");
+            MenuItem menuOpenSaveFolder = new MenuItem("Open save folder");
+            menuOpenSaveFolder.setOnAction(e -> {
+                try {
+                    File configFile = new File(DocktailorService.getInstance().getConfigFile());
+                    Desktop.getDesktop().open(configFile.getParentFile());
+                } catch (IOException ex) {
+                    log.error(ex.getMessage(), ex);
+                }
+            });
+            menuApplication.getItems().add(menuOpenSaveFolder);
+
+            MenuItem menuItemDefaultConf = new MenuItem("Load default configuration");
             menuItemDefaultConf.setOnAction(e -> DemoDockWindow.loadDefaultAction());
             menuApplication.getItems().add(menuItemDefaultConf);
 
-            MenuItem menuLeaveApp = new MenuItem("Quitter l'application");
-            menuLeaveApp.setOnAction(e -> DocktailorUtility.exit());
+            MenuItem menuLeaveApp = new MenuItem("Exit application");
+            menuLeaveApp.setOnAction(e -> DocktailorService.exit());
             menuApplication.getItems().add(menuLeaveApp);
 
             MenuItem showPopup = new MenuItem("Show popup save");
@@ -156,7 +148,6 @@ public class DemoDockWindow extends FxDockWindow {
         });
 
         Menu menuWindows = new Menu("Windows");
-        DocktailorService.getInstance().setAll(PersonDockPane.class, TestDockPane.class);
         menuWindows.getItems().addAll(DocktailorService.getInstance().createMenuItems(this));
         fxMenuBar.add(menuWindows);
 
@@ -164,10 +155,10 @@ public class DemoDockWindow extends FxDockWindow {
     }
 
     /**
-     * Permet d'ajouter une Node pour un fxMenuBar.
+     * Adds a Node to an FxMenuBar.
      *
-     * @param strLabel : Nom affiché
-     * @param fileName : Nom du fichier
+     * @param strLabel : Displayed name
+     * @param fileName : File name
      * @return CustomMenuItem
      */
     private CustomMenuItem addCustomConfiguration(String strLabel, String fileName) {
@@ -185,12 +176,12 @@ public class DemoDockWindow extends FxDockWindow {
 
         hbox.getChildren().addAll(label, separator);
 
-        Button btnSave = new Button("Sauvegarder");
+        Button btnSave = new Button("Save");
         btnSave.setOnAction(event -> actionSaveSettings(fileName));
         hbox.getChildren().add(btnSave);
 
         if (Files.exists(Path.of(fileName))) {
-            Button btnLoad = new Button("Charger");
+            Button btnLoad = new Button("Load");
             btnLoad.setOnAction(event -> actionLoadSettings(fileName));
             hbox.getChildren().add(btnLoad);
         }
