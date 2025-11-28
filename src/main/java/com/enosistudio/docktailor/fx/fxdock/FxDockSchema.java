@@ -191,6 +191,10 @@ public abstract class FxDockSchema extends FxSettingsSchema {
         } else if (n instanceof FxDockSplitPane p) {
             int ct = p.getPaneCount();
             Orientation or = p.getOrientation();
+
+            // Save divider positions
+            s.add(SerializableDividers.ofDividers(p.getDividers()));
+
             s.add(or == Orientation.HORIZONTAL ? TYPE_HSPLIT : TYPE_VSPLIT);
             s.add(ct);
             for (Node ch : p.getPanes()) {
