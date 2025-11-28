@@ -128,13 +128,21 @@ public abstract class FxDockSchema extends FxSettingsSchema {
     /**
      * Loads a split pane from the storage.
      *
-     * @param s  the stream containing the split pane data
-     * @param or the orientation of the split pane
+     * @param s        the stream containing the split pane data
+     * @param or       the orientation of the split pane
+     * @param dividers
      * @return the loaded FxDockSplitPane
      */
-    protected FxDockSplitPane loadSplit(SStream s, Orientation or) {
+    protected FxDockSplitPane loadSplit(SStream s, Orientation or, SerializableDividers dividers) {
         FxDockSplitPane sp = new FxDockSplitPane();
         sp.setOrientation(or);
+
+        // Set divider positions
+        double[] positions = dividers.getPositions().stream()
+                .mapToDouble(d -> d) // inversion
+                .toArray();
+        sp.setDividerPositions(positions);
+
         int sz = s.nextInt();
         for (int i = 0; i < sz; i++) {
             Node ch = loadContentRecursively(s);
@@ -156,10 +164,20 @@ public abstract class FxDockSchema extends FxSettingsSchema {
         } else if (TYPE_PANE.equals(t)) {
             String type = s.nextString();
             return createPane(type);
-        } else if (TYPE_HSPLIT.equals(t)) {
-            return loadSplit(s, Orientation.HORIZONTAL);
-        } else if (TYPE_VSPLIT.equals(t)) {
-            return loadSplit(s, Orientation.VERTICAL);
+        } else if (t.contains(TYPE_HSPLIT + "(DividerData")) {
+
+            String test = t.replaceFirst("H\\(", "");
+            test = test.replaceFirst("\\)", "");
+            SerializableDividers dividers = SerializableDividers.fromString(test);
+
+            return loadSplit(s, Orientation.HORIZONTAL, dividers);
+        } else if (t.contains(TYPE_VSPLIT + "(DividerData")) {
+
+            String test = t.replaceFirst("V\\(", "");
+            test = test.replaceFirst("\\)", "");
+            SerializableDividers dividers = SerializableDividers.fromString(test);
+
+            return loadSplit(s, Orientation.VERTICAL, dividers);
         } else if (TYPE_TAB.equals(t)) {
             FxDockTabPane tp = new FxDockTabPane();
             int sz = s.nextInt();
@@ -193,9 +211,11 @@ public abstract class FxDockSchema extends FxSettingsSchema {
             Orientation or = p.getOrientation();
 
             // Save divider positions
-            s.add(SerializableDividers.ofDividers(p.getDividers()));
+            //s.add(SerializableDividers.ofDividers(p.getDividers()));
 
-            s.add(or == Orientation.HORIZONTAL ? TYPE_HSPLIT : TYPE_VSPLIT);
+            String str = "(" + SerializableDividers.ofDividers(p.getDividers()) + ")";
+
+            s.add((or == Orientation.HORIZONTAL ? TYPE_HSPLIT : TYPE_VSPLIT) + str); // ajouter les infos ici ?
             s.add(ct);
             for (Node ch : p.getPanes()) {
                 saveContentRecursively(s, ch);
