@@ -137,17 +137,23 @@ public abstract class FxDockSchema extends FxSettingsSchema {
         FxDockSplitPane sp = new FxDockSplitPane();
         sp.setOrientation(or);
 
-        // Set divider positions
-        double[] positions = dividers.getPositions().stream()
-                .mapToDouble(d -> d) // inversion
-                .toArray();
-        sp.setDividerPositions(positions);
-
+        // First, load and add all children
         int sz = s.nextInt();
         for (int i = 0; i < sz; i++) {
             Node ch = loadContentRecursively(s);
             sp.addPane(ch);
         }
+
+        // Then set divider positions AFTER children exist
+        // Use Platform.runLater to work around JavaFX SplitPane layout timing bug
+        double[] positions = dividers.getPositions().stream()
+                .mapToDouble(d -> d)
+                .toArray();
+
+        if (positions.length > 0) {
+            Platform.runLater(() -> sp.setDividerPositions(positions));
+        }
+
         return sp;
     }
 
@@ -286,6 +292,21 @@ public abstract class FxDockSchema extends FxSettingsSchema {
     }
 
     /**
+     * Override storeNode to prevent FxDockSplitPane from being processed by FxSettingsSchema.
+     * FxDockSplitPane dividers are saved in the layout string, not as separate settings.
+     *
+     * @param n the node to store
+     */
+    @Override
+    public void storeNode(Node n) {
+        // Skip FxDockSplitPane entirely - dividers are saved in layout string
+        if (n instanceof FxDockSplitPane) {
+            return;
+        }
+        super.storeNode(n);
+    }
+
+    /**
      * Restores the content settings for a node, including split positions and bindings.
      *
      * @param prefix the prefix for the content settings
@@ -296,10 +317,11 @@ public abstract class FxDockSchema extends FxSettingsSchema {
             if (n instanceof FxDockPane) {
                 // Load pane-specific settings
             } else if (n instanceof FxDockSplitPane p) {
+                // Only restore children's settings, NOT dividers
+                // Dividers were already set during tree construction in loadSplit()
                 for (Node ch : p.getPanes()) {
                     restoreContent(prefix, ch);
                 }
-                Platform.runLater(() -> loadSplitPaneSettings(prefix, p));
             } else if (n instanceof FxDockTabPane p) {
                 loadTabPaneSettings(prefix, p);
                 for (Node ch : p.getPanes()) {
@@ -317,11 +339,17 @@ public abstract class FxDockSchema extends FxSettingsSchema {
      */
     protected void storeContent(String prefix, Node n) {
         if (n != null) {
-            storeNode(n);
+            // Don't call storeNode for FxDockSplitPane - we handle it specifically below
+            // This prevents double-saving divider positions via FxSettingsSchema
+            if (!(n instanceof FxDockSplitPane)) {
+                storeNode(n);
+            }
+
             if (n instanceof FxDockPane) {
                 // Save pane-specific settings
             } else if (n instanceof FxDockSplitPane p) {
-                saveSplitPaneSettings(prefix, p);
+                // Dividers are already saved in the layout string via saveContentRecursively()
+                // No need to save them again in separate keys
                 for (Node ch : p.getPanes()) {
                     storeContent(prefix, ch);
                 }
@@ -339,13 +367,14 @@ public abstract class FxDockSchema extends FxSettingsSchema {
      *
      * @param prefix the prefix for the split pane settings
      * @param p      the split pane to save settings for
+     * @deprecated No longer used - dividers are saved in the layout string via saveContentRecursively().
+     *             This method created redundant S.splits keys that were never read.
+     *             Kept for backward compatibility.
      */
+    @Deprecated
     protected void saveSplitPaneSettings(String prefix, FxDockSplitPane p) {
-        double[] divs = p.getDividerPositions();
-        SStream s = new SStream();
-        s.addAll(divs);
-        String k = getPath(prefix, p, SUFFIX_SPLITS);
-        store().setStream(k, s);
+        // No longer saves - dividers are already in the layout string
+        // This eliminates redundant S.splits keys in the save file
     }
 
     /**
@@ -353,7 +382,10 @@ public abstract class FxDockSchema extends FxSettingsSchema {
      *
      * @param prefix the prefix for the split pane settings
      * @param p      the split pane to load settings for
+     * @deprecated No longer used - dividers are loaded in loadSplit() during tree construction.
+     *             Kept for backward compatibility.
      */
+    @Deprecated
     protected void loadSplitPaneSettings(String prefix, FxDockSplitPane p) {
         String k = getPath(prefix, p, SUFFIX_SPLITS);
         SStream s = store().getStream(k);
