@@ -54,11 +54,11 @@ public class DemoDockWindow extends FxDockWindow {
 
         getIcons().add(MainApp.IMAGE);
 
-        // Creation de la barre supérieur.
+        // Create the top menu bar
         FxMenuBar fxMenuBar = createMenu();
 
         HBox hBox = new HBox(fxMenuBar);
-        // largeur de la MenuBar = largeur de la fenêtre - 50
+        // MenuBar width = window width - 138
         getScene().widthProperty().addListener((obs, oldVal, newVal) ->
                 hBox.setMaxWidth(newVal.doubleValue() - 138));
         setTop(hBox);
@@ -67,7 +67,7 @@ public class DemoDockWindow extends FxDockWindow {
 
         LocalSettings.get(this).add("CHECKBOX_MENU", windowCheckAction);
 
-        // On a besoin d'avoir les bounds généré
+        // Need to have the bounds generated
         this.setOnShown(observable -> {
             this.customMenuBar = new CustomMenuBar(hBox, fxMenuBar);
             CaptionConfiguration cc = new CaptionConfiguration().setCaptionDragRegion(customMenuBar).setControlBackgroundColor(Color.rgb(60, 63, 65)).setCaptionHeight((int)fxMenuBar.getHeight());
@@ -132,11 +132,11 @@ public class DemoDockWindow extends FxDockWindow {
 
             menuApplication.getItems().add(new SeparatorMenuItem());
 
-            MenuItem menuItemDefaultConf = new MenuItem("Charger la configuration par défaut");
+            MenuItem menuItemDefaultConf = new MenuItem("Load default configuration");
             menuItemDefaultConf.setOnAction(e -> DemoDockWindow.loadDefaultAction());
             menuApplication.getItems().add(menuItemDefaultConf);
 
-            MenuItem menuLeaveApp = new MenuItem("Quitter l'application");
+            MenuItem menuLeaveApp = new MenuItem("Exit application");
             menuLeaveApp.setOnAction(e -> DocktailorUtility.exit());
             menuApplication.getItems().add(menuLeaveApp);
 
@@ -164,10 +164,10 @@ public class DemoDockWindow extends FxDockWindow {
     }
 
     /**
-     * Permet d'ajouter une Node pour un fxMenuBar.
+     * Adds a Node to an FxMenuBar.
      *
-     * @param strLabel : Nom affiché
-     * @param fileName : Nom du fichier
+     * @param strLabel : Displayed name
+     * @param fileName : File name
      * @return CustomMenuItem
      */
     private CustomMenuItem addCustomConfiguration(String strLabel, String fileName) {
@@ -185,12 +185,12 @@ public class DemoDockWindow extends FxDockWindow {
 
         hbox.getChildren().addAll(label, separator);
 
-        Button btnSave = new Button("Sauvegarder");
+        Button btnSave = new Button("Save");
         btnSave.setOnAction(event -> actionSaveSettings(fileName));
         hbox.getChildren().add(btnSave);
 
         if (Files.exists(Path.of(fileName))) {
-            Button btnLoad = new Button("Charger");
+            Button btnLoad = new Button("Load");
             btnLoad.setOnAction(event -> actionLoadSettings(fileName));
             hbox.getChildren().add(btnLoad);
         }

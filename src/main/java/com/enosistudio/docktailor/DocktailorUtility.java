@@ -34,7 +34,7 @@ public class DocktailorUtility {
      * @param fxDockSchema The FxDockSchema to be used for the new layout.
      */
     public static void openDockSystemConf(FxDockSchema fxDockSchema) {
-        log.info("Docktailor : Ouverture de la configuration d'interface, {}", DocktailorService.getInstance().getLastUIConfigUsed());
+        log.info("Docktailor: Opening UI configuration: {}", DocktailorService.getInstance().getLastUIConfigUsed());
 
         if (schema != null) {
             DocktailorUtility.closeCurrentLayout();
@@ -49,7 +49,7 @@ public class DocktailorUtility {
      * This method is private and is used internally to ensure proper cleanup.
      */
     private static void closeCurrentLayout() {
-        // fermeture
+        // Close current layout
         schema.closeLayout();
     }
 

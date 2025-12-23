@@ -44,7 +44,7 @@ public final class ConfigDocktailor {
      */
     public void save() {
         try {
-            // Crée le dossier parent si nécessaire
+            // Create parent directory if necessary
             File parent = cacheFile.getParentFile();
             if (parent != null && !parent.exists()) {
                 parent.mkdirs();
@@ -66,10 +66,10 @@ public final class ConfigDocktailor {
         @Serial
         private static final long serialVersionUID = 1L;
 
-        // Nom du fichier de configuration utilisé pour la dernière fois.
+        // Name of the configuration file used last time.
         private String lastUIConfigUsed = "docktailor_default.ui";
 
-        // List des différentes fenêtres de l'application trouvé par réflexion.
+        // List of different application windows found by reflection.
         private Set<Class<? extends IDockPane>> iControllerDockPane = new HashSet<>();
     }
 }

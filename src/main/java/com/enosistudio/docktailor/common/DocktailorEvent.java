@@ -6,29 +6,29 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class DocktailorEvent {
     private final List<Runnable> listeners = new CopyOnWriteArrayList<>();
 
-    /** Ajoute un listener */
+    /** Adds a listener */
     public void addListener(Runnable listener) {
         listeners.add(listener);
     }
 
-    /** Supprime un listener */
+    /** Removes a listener */
     public void removeListener(Runnable listener) {
         listeners.remove(listener);
     }
 
-    /** Déclenche l’événement pour tous les listeners */
+    /** Triggers the event for all listeners */
     public void invoke() {
         for (Runnable listener : listeners) {
             listener.run();
         }
     }
 
-    /** Vérifie si un listener est déjà enregistré */
+    /** Checks if a listener is already registered */
     public boolean hasListener(Runnable listener) {
         return listeners.contains(listener);
     }
 
-    /** Supprime tous les listeners */
+    /** Removes all listeners */
     public void clear() {
         listeners.clear();
     }

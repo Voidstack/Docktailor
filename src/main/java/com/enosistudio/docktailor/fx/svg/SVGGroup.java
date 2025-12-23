@@ -13,7 +13,7 @@ import org.w3c.dom.Element;
 import java.util.regex.Pattern;
 
 /**
- * Gère les bordures mais complexe a resize
+ * Handles borders but complex to resize
  */
 @Getter
 public class SVGGroup extends Group implements ISVG {

@@ -60,7 +60,7 @@ public class FxDockWindow extends Stage {
         } else if (getContent() instanceof FxDockTabPane fxDockPane) {
             fxDockPane.addTab(newDockPane);
         } else {
-            throw new IllegalArgumentException("Impossible d'ajouter la node car le parent n'est pas géré");
+            throw new IllegalArgumentException("Cannot add node because the parent type is not supported");
         }
     }
 

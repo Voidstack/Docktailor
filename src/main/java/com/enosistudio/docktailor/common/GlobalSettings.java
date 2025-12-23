@@ -41,7 +41,7 @@ public final class GlobalSettings extends AGlobalSettings {
         try {
             file = new File(fileName);
         } catch (NullPointerException e) {
-            log.info("Docktailor : Le fichier le configuration d'interface n'a pas été trouvé : {}", fileName);
+            log.info("Docktailor: UI configuration file not found: {}", fileName);
             file = new File(DocktailorService.getDefaultUiFile());
         }
         setFileProvider(file);

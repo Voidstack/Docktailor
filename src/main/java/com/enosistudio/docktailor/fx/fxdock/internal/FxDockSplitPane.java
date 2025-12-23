@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 /**
- * FxDockSplitPane - Un conteneur divisé pour gérer les panneaux dockables.
+ * FxDockSplitPane - A split container for managing dockable panels.
  */
 public class FxDockSplitPane extends SplitPane {
     protected final ReadOnlyObjectWrapper<Node> parentNode = new ReadOnlyObjectWrapper<>();
@@ -37,7 +37,7 @@ public class FxDockSplitPane extends SplitPane {
     }
 
     /**
-     * Supprime les panneaux vides qui sont trop petits après un redimensionnement.
+     * Removes empty panes that are too small after resizing.
      */
     protected void collapseEmptyPanes() {
         Orientation orientation = getOrientation();
@@ -56,7 +56,7 @@ public class FxDockSplitPane extends SplitPane {
     }
 
     /**
-     * Récupère un panneau à l'index spécifié.
+     * Gets a pane at the specified index.
      */
     public Node getPane(int index) {
         if (index < 0) {
@@ -68,15 +68,15 @@ public class FxDockSplitPane extends SplitPane {
     }
 
     /**
-     * Ajoute un panneau à la fin du conteneur. Si le panneau est un FxDockPane, il est automatiquement encapsulé dans
-     * un FxDockTabPane.
+     * Adds a pane to the end of the container. If the pane is a FxDockPane, it is automatically wrapped in
+     * a FxDockTabPane.
      */
     public void addPane(Node pane) {
         addPane(this.getPaneCount(), pane);
     }
 
     /**
-     * Insère un panneau à l'index spécifié.
+     * Inserts a pane at the specified index.
      */
     public void addPane(int index, Node pane) {
         Node preparedPane = wrapIfNeeded(pane);
@@ -118,36 +118,36 @@ public class FxDockSplitPane extends SplitPane {
             case TOP, LEFT -> addPaneWithSlideFromStart(pane);
             case RIGHT, BOTTOM -> addPaneWithSlideFromEnd(pane);
             case CENTER -> {
-                // Aucune action à effectuer
+                // No action required
             }
         }
     }
 
     /**
-     * Ajoute un panneau avec une animation du divider pour simuler un glissement depuis la gauche/début. Le panneau
-     * commence à une taille quasi nulle et s'expand progressivement.
+     * Adds a pane with a divider animation to simulate sliding from the left/start. The pane
+     * starts at almost zero size and expands progressively.
      *
-     * @param pane Le panneau à ajouter
+     * @param pane The pane to add
      */
     public void addPaneWithSlideFromStart(Node pane) {
         addPaneWithSlideAnimation(pane, true);
     }
 
     /**
-     * Ajoute un panneau avec une animation du divider pour simuler un glissement depuis la droite/fin. Le panneau
-     * existant se réduit progressivement pour faire place au nouveau.
+     * Adds a pane with a divider animation to simulate sliding from the right/end. The existing
+     * pane shrinks progressively to make room for the new one.
      *
-     * @param pane Le panneau à ajouter
+     * @param pane The pane to add
      */
     public void addPaneWithSlideFromEnd(Node pane) {
         addPaneWithSlideAnimation(pane, false);
     }
 
     /**
-     * Logique commune pour l'animation d'ajout de panneau.
+     * Common logic for pane addition animation.
      *
-     * @param pane      Le panneau à ajouter
-     * @param fromStart true pour ajouter au début, false pour ajouter à la fin
+     * @param pane      The pane to add
+     * @param fromStart true to add at the start, false to add at the end
      */
     private void addPaneWithSlideAnimation(Node pane, boolean fromStart) {
         Node preparedPane = wrapIfNeeded(pane);
@@ -156,21 +156,21 @@ public class FxDockSplitPane extends SplitPane {
         int paneCount = getPaneCount();
 
         if (fromStart) {
-            // Ajoute au début
+            // Add at the start
             getItems().add(0, preparedPane);
             DockTools.setParent(this, preparedPane);
 
             if (paneCount > 0) {
-                // Anime le premier divider de 0.0 (panneau invisible) à 0.3 (30% de l'espace)
+                // Animate the first divider from 0.0 (invisible pane) to 0.3 (30% of space)
                 animateDivider(0, 0.1, 0.3);
             }
         } else {
-            // Ajoute à la fin
+            // Add at the end
             getItems().add(preparedPane);
             DockTools.setParent(this, preparedPane);
 
             if (paneCount > 0) {
-                // Anime le dernier divider de 1.0 (panneau invisible) à 0.7 (30% de l'espace pour le nouveau)
+                // Animate the last divider from 1.0 (invisible pane) to 0.7 (30% of space for the new one)
                 int dividerIndex = paneCount - 1;
                 animateDivider(dividerIndex, 0.9, 0.7);
             }
@@ -178,17 +178,17 @@ public class FxDockSplitPane extends SplitPane {
     }
 
     /**
-     * Anime la position d'un divider spécifique.
+     * Animates the position of a specific divider.
      *
-     * @param dividerIndex L'index du divider à animer
-     * @param fromPosition Position initiale (0.0 à 1.0)
-     * @param toPosition   Position finale (0.0 à 1.0)
+     * @param dividerIndex The index of the divider to animate
+     * @param fromPosition Initial position (0.0 to 1.0)
+     * @param toPosition   Final position (0.0 to 1.0)
      */
     private void animateDivider(int dividerIndex, double fromPosition, double toPosition) {
-        // Applique la position initiale immédiatement
+        // Apply the initial position immediately
         setDividerPosition(dividerIndex, fromPosition);
 
-        // Crée l'animation vers la position finale
+        // Create the animation to the final position
         Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, new KeyValue(getDividers().get(dividerIndex).positionProperty(), fromPosition)), new KeyFrame(Duration.millis(300), new KeyValue(getDividers().get(dividerIndex).positionProperty(), toPosition)));
 
         timeline.play();
@@ -200,7 +200,7 @@ public class FxDockSplitPane extends SplitPane {
 
 
     /**
-     * Encapsule un FxDockPane dans un FxDockTabPane si nécessaire.
+     * Wraps a FxDockPane in a FxDockTabPane if necessary.
      */
     private Node wrapIfNeeded(Node pane) {
         if (pane instanceof FxDockPane) {
@@ -212,7 +212,7 @@ public class FxDockSplitPane extends SplitPane {
     }
 
     /**
-     * Remplace un panneau à l'index spécifié.
+     * Replaces a pane at the specified index.
      */
     public void setPane(int index, Node pane) {
         removePane(index);
@@ -220,7 +220,7 @@ public class FxDockSplitPane extends SplitPane {
     }
 
     /**
-     * Supprime et retourne le panneau à l'index spécifié.
+     * Removes and returns the pane at the specified index.
      */
     public Node removePane(int index) {
         Node removedPane = getItems().remove(index);
@@ -229,7 +229,7 @@ public class FxDockSplitPane extends SplitPane {
     }
 
     /**
-     * Supprime un panneau spécifique.
+     * Removes a specific pane.
      */
     public void removePane(Node pane) {
         int index = indexOfPane(pane);

@@ -83,8 +83,8 @@ public class FxDockTabPane extends TabPane {
             getTabs().add(t);
             DockTools.setParent(this, n);
         }
-        // Pour éviter d'ajouter une fenêtre vide lorsqu'on drag&drop une fenêtre sur elle-même.
-        // ca provoque des bugs de placement un peu bizarre mais flemme.
+        // To avoid adding an empty window when drag & drop a window onto itself.
+        // This causes some weird placement bugs but it's acceptable.
     }
 
 

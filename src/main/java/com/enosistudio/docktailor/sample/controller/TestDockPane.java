@@ -12,7 +12,7 @@ import lombok.Getter;
 public class TestDockPane extends ADockPane {
     private final Side defaultSide = Side.LEFT;
     private final String tabName = "TestControler";
-    private final String information = "Ceci est un test de controller";
+    private final String information = "This is a test controller";
 
     private final String svgIconFile = R.com.enosistudio.docktailor.fontawesome.magnifyingGlassSvg.getResourcePath();
 

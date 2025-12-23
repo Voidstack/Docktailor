@@ -165,8 +165,8 @@ public abstract class FxSettingsSchema {
                     }
 
                     switch (state) {
-                        // Platform.runLater obligatoire sinon bug
-                        // surtout pour "Maximized"
+                        // Platform.runLater required otherwise bug occurs
+                        // especially for "Maximized"
                         case WINDOW_FULLSCREEN:
                             Platform.runLater(() -> s.setFullScreen(true));
                             break;

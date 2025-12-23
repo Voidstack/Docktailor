@@ -17,7 +17,7 @@ public class FileWatcher {
         dir.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
 
         AtomicLong lastTrigger = new AtomicLong(0);
-        long debounceDelayMs = 300; // temps minimal entre 2 déclenchements
+        long debounceDelayMs = 300; // minimum time between 2 triggers
 
         Thread thread = new Thread(() -> {
             try {

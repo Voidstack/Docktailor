@@ -1,9 +1,9 @@
 /*
-    Les composants jfx sont basé sur le fichier css modena.css
-    On instancie des variables du même nom que celle dans le fichier modena.css mais avec des valeurs différentes
-    Permet de ne pas "casser" les composants jfx et devoir réecrire 156 fois tout les bg/hover/clicked...
+    The JavaFX components are based on the modena.css file
+    We instantiate variables with the same name as those in modena.css but with different values
+    This allows us to not "break" the JavaFX components and avoid rewriting all bg/hover/clicked... 156 times
 
-    Le fichier modena.css est dans le projet pour pouvoir copy/paste mais ne dois pas être utiliser sauf à titre d'exemple.
+    The modena.css file is included in the project for copy/paste purposes but should not be used except as an example.
 */
 
 /* Import */

@@ -277,7 +277,7 @@ public class WindowMonitor {
         for (int i = stack.size() - 1; i >= 0; i--) {
             Window w = stack.get(i);
             if (list.contains(w)) {
-                return (W) w;         // cast nécessaire
+                return (W) w;         // cast required
             }
         }
         return null;
