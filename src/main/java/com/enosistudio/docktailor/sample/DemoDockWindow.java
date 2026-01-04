@@ -3,10 +3,8 @@ package com.enosistudio.docktailor.sample;
 import com.enosistudio.docktailor.DocktailorService;
 import com.enosistudio.docktailor.common.AGlobalSettings;
 import com.enosistudio.docktailor.common.FxTooltipDebugCss;
-import com.enosistudio.docktailor.fx.FxAction;
 import com.enosistudio.docktailor.fx.FxMenuBar;
 import com.enosistudio.docktailor.fx.fxdock.FxDockWindow;
-import com.enosistudio.docktailor.sample.controller.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,7 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.yetihafen.javafx.customcaption.CaptionConfiguration;
 import net.yetihafen.javafx.customcaption.CustomCaption;
@@ -29,8 +26,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Demo Window.
@@ -77,7 +72,7 @@ public class DemoDockWindow extends FxDockWindow {
 
     private static void loadDefaultAction() {
         log.info("Docktailor : Load default interface configuration");
-        actionLoadSettings(DocktailorService.getDefaultUiFile());
+        actionLoadSettings(DocktailorService.getInstance().getDefaultUiFile());
     }
 
     protected static void actionLoadSettings(String fileName) {
@@ -115,7 +110,7 @@ public class DemoDockWindow extends FxDockWindow {
 
         Platform.runLater(() -> {
 
-            DocktailorService.getInstance().getPredefinedConfigFiles().forEach((s, s2) ->
+            DocktailorService.getInstance().getPredefinedUiFiles().forEach((s, s2) ->
                     menuApplication.getItems().add(addCustomConfiguration(s, s2)));
 
             menuApplication.getItems().add(new SeparatorMenuItem());
@@ -123,7 +118,7 @@ public class DemoDockWindow extends FxDockWindow {
             MenuItem menuOpenSaveFolder = new MenuItem("Open save folder");
             menuOpenSaveFolder.setOnAction(e -> {
                 try {
-                    Desktop.getDesktop().open(new File(DocktailorService.getDocktailorSaveFolder()));
+                    Desktop.getDesktop().open(new File(DocktailorService.getInstance().getDocktailorDefaultSaveFolder()));
                 } catch (IOException ex) {
                     log.error(ex.getMessage(), ex);
                 }
@@ -154,7 +149,6 @@ public class DemoDockWindow extends FxDockWindow {
         });
 
         Menu menuWindows = new Menu("Windows");
-        DocktailorService.getInstance().setAll(PersonDockPane.class, TestDockPane.class, RedDockPane.class, BlueDockPane.class, GreenDockPane.class);
         menuWindows.getItems().addAll(DocktailorService.getInstance().createMenuItems(this));
         fxMenuBar.add(menuWindows);
 

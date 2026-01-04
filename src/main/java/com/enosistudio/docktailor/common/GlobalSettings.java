@@ -16,15 +16,6 @@ import java.io.File;
 @Slf4j
 public final class GlobalSettings extends AGlobalSettings {
     private ASettingsProviderBase provider;
-    private static GlobalSettings instance;
-
-    public GlobalSettings() {
-
-    }
-
-    public void setDefaultFileProvider() {
-        setFileProvider(new File(DocktailorService.getDefaultUiFile()));
-    }
 
     /**
      * @param fileName : GlobalSettings.FILE_X
@@ -35,7 +26,7 @@ public final class GlobalSettings extends AGlobalSettings {
             file = new File(fileName);
         } catch (NullPointerException e) {
             log.info("Docktailor: UI configuration file not found: {}", fileName);
-            file = new File(DocktailorService.getDefaultUiFile());
+            file = new File(DocktailorService.getInstance().getDefaultUiFile());
         }
         setFileProvider(file);
     }
@@ -106,7 +97,7 @@ public final class GlobalSettings extends AGlobalSettings {
     private boolean isUsingDefaultFile() {
         if (provider instanceof FileASettingsProvider fileProvider) {
             File currentFile = fileProvider.getFile();
-            File defaultFile = new File(DocktailorService.getDefaultUiFile());
+            File defaultFile = new File(DocktailorService.getInstance().getDefaultUiFile());
 
             try {
                 return currentFile.getCanonicalPath().equals(defaultFile.getCanonicalPath());
@@ -124,7 +115,7 @@ public final class GlobalSettings extends AGlobalSettings {
     private boolean isDefaultFile(String fileName) {
         try {
             File targetFile = new File(fileName);
-            File defaultFile = new File(DocktailorService.getDefaultUiFile());
+            File defaultFile = new File(DocktailorService.getInstance().getDefaultUiFile());
             return targetFile.getCanonicalPath().equals(defaultFile.getCanonicalPath());
         } catch (Exception e) {
             log.error("Docktailor: Error comparing file paths", e);
@@ -137,7 +128,7 @@ public final class GlobalSettings extends AGlobalSettings {
      */
     private String getFirstPredefinedConfigFile() {
         return DocktailorService.getInstance()
-                .getPredefinedConfigFiles()
+                .getPredefinedUiFiles()
                 .values()
                 .stream()
                 .findFirst()

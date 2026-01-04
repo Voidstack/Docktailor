@@ -13,11 +13,7 @@ import com.enosistudio.docktailor.generated.R;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.MenuItem;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -42,18 +38,20 @@ public class DocktailorService {
     @Getter
     private static FxSettingsSchema schema;
 
+
     /**
      * The folder where Docktailor's configuration files are saved.
      */
-    @Setter @Getter
-    private static String docktailorSaveFolder = Path.of(System.getenv("APPDATA"), "enosistudio", "docktailor").toString();
+    @Getter
+    private String docktailorDefaultSaveFolder = Path.of(System.getenv("APPDATA"), "enosistudio", "docktailor").toString();
+
 
     /**
      * The default configuration file for Docktailor.
      * This file is used if the user's configuration file does not exist.
      */
-    @Setter @Getter
-    private static String defaultUiFile = R.com.enosistudio.docktailor.docktailorDefaultUi.getURL().getFile();
+    @Getter
+    private String defaultUiFile = R.com.enosistudio.docktailor.docktailorDefaultUi.getURL().getFile();
 
     /**
      * The name of the configuration file that stores the last used configuration.
@@ -77,21 +75,21 @@ public class DocktailorService {
      * Configuration object for managing Docktailor's settings.
      */
     @Getter
-    private final ConfigDocktailor configDocktailor = new ConfigDocktailor(String.join(File.separator, docktailorSaveFolder, DOCKTAILOR_CONFIG_FILE));
+    private final ConfigDocktailor configDocktailor = new ConfigDocktailor(String.join(File.separator, docktailorDefaultSaveFolder, DOCKTAILOR_CONFIG_FILE));
 
     /**
-     * List of draggable tab classes managed by this service.
+     * List of the registered draggable tab classes managed by this service.
      */
-    @Delegate
+    @Getter
     private final ObservableList<Class<? extends IDockPane>> draggableTabs = FXCollections.observableArrayList();
 
     @Getter
-    private final Map<String, String> predefinedConfigFiles = new HashMap<>();
+    private final Map<String, String> predefinedUiFiles = new HashMap<>();
 
     public DocktailorService(){
-        predefinedConfigFiles.put("Configuration #1", Path.of(DocktailorService.getDocktailorSaveFolder(), "docktailor_1.ui").toString());
-        predefinedConfigFiles.put("Configuration #2", Path.of(DocktailorService.getDocktailorSaveFolder(), "docktailor_2.ui").toString());
-        predefinedConfigFiles.put("Configuration #3", Path.of(DocktailorService.getDocktailorSaveFolder(), "docktailor_3.ui").toString());
+        predefinedUiFiles.put("Configuration #1", Path.of(docktailorDefaultSaveFolder, "docktailor_1.ui").toString());
+        predefinedUiFiles.put("Configuration #2", Path.of(docktailorDefaultSaveFolder, "docktailor_2.ui").toString());
+        predefinedUiFiles.put("Configuration #3", Path.of(docktailorDefaultSaveFolder, "docktailor_3.ui").toString());
     }
 
     /**
@@ -188,4 +186,31 @@ public class DocktailorService {
         return menuItems;
     }
 
+    public DocktailorService setSaveFolder(String docktailorDefaultSaveFolder) {
+        this.docktailorDefaultSaveFolder = docktailorDefaultSaveFolder;
+        return this;
+    }
+
+
+    public DocktailorService setDefaultUiFile(String defaultUiFile) {
+        this.defaultUiFile = defaultUiFile;
+        return this;
+    }
+
+    @SafeVarargs
+    public final DocktailorService setDraggableTab(Class<? extends IDockPane>... draggableTabs) {
+        this.draggableTabs.setAll(draggableTabs);
+        return this;
+    }
+
+    public DocktailorService setPredefinedUiFiles(Map<String, String> predefinedConfigFiles) {
+        this.predefinedUiFiles.clear();
+        this.predefinedUiFiles.putAll(predefinedConfigFiles);
+        return this;
+    }
+
+    public GlobalSettings init() {
+        this.getGlobalSettings().setFileProvider(this.getLastUIConfigUsed());
+        return this.getGlobalSettings();
+    }
 }
