@@ -43,7 +43,7 @@ public class MainApp extends Application {
         Application.setUserAgentStylesheet(R.com.enosistudio.docktailor.css.modena.mainCss.toExternalForm());
 
         GlobalSettings docktailorSettings = DocktailorService.getInstance()
-                .setSaveFolder(saveFolder)
+                .setConfigFile(Path.of(saveFolder, "docktailor.conf").toString())
                 .setDefaultUiFile(R.com.enosistudio.docktailor.docktailorDefaultUi.getURL().getFile())
                 .setPredefinedUiFiles(predefinedUiFiles)
                 .setDraggableTab(PersonDockPane.class, TestDockPane.class, RedDockPane.class, BlueDockPane.class, GreenDockPane.class)

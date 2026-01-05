@@ -118,7 +118,8 @@ public class DemoDockWindow extends FxDockWindow {
             MenuItem menuOpenSaveFolder = new MenuItem("Open save folder");
             menuOpenSaveFolder.setOnAction(e -> {
                 try {
-                    Desktop.getDesktop().open(new File(DocktailorService.getInstance().getDocktailorDefaultSaveFolder()));
+                    File configFile = new File(DocktailorService.getInstance().getConfigFile());
+                    Desktop.getDesktop().open(configFile.getParentFile());
                 } catch (IOException ex) {
                     log.error(ex.getMessage(), ex);
                 }
