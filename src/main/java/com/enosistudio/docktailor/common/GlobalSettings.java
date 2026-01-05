@@ -113,6 +113,7 @@ public final class GlobalSettings extends AGlobalSettings {
      * Check if the given filename is the default UI file
      */
     private boolean isDefaultFile(String fileName) {
+        if(fileName == null) return true;
         try {
             File targetFile = new File(fileName);
             File defaultFile = new File(DocktailorService.getInstance().getDefaultUiFile());
