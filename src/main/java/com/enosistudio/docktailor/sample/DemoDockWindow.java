@@ -50,8 +50,6 @@ public class DemoDockWindow extends FxDockWindow {
 
         setTitle(MainApp.TITLE);
 
-//        LocalSettings.get(this).add("CHECKBOX_MENU", windowCheckAction);
-
         // Need to have the bounds generated
         this.setOnShown(observable -> {
             this.customMenuBar = new CustomMenuBar(hBox, fxMenuBar);

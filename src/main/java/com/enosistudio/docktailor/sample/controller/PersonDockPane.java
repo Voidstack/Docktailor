@@ -28,7 +28,7 @@ public class PersonDockPane extends ADockPane {
     @Override
     public Parent loadView() {
         try {
-            return FXMLLoader.load(R.com.enosistudio.docktailor.fxml.personneFxml.getURL());
+            return FXMLLoader.load(R.com.enosistudio.docktailor.sample.fxml.personneFxml.getURL());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

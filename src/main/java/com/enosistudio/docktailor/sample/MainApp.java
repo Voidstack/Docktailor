@@ -19,7 +19,7 @@ import java.util.Map;
 public class MainApp extends Application {
     public static final List<String> ARGS = new ArrayList<>();
 
-    public static final Image IMAGE = new Image(R.com.enosistudio.docktailor.icons.logoPng.getResourcePath());
+    public static final Image IMAGE = new Image(R.com.enosistudio.docktailor.sample.icons.logoPng.getResourcePath());
     public static final String TITLE = "DockTailor example";
 
     private final String saveFolder = Path.of(System.getenv("APPDATA"), "enosistudio", "docktailor").toString();
@@ -40,7 +40,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         log.info("MainApp : Application start");
-        Application.setUserAgentStylesheet(R.com.enosistudio.docktailor.css.modena.mainCss.toExternalForm());
+        Application.setUserAgentStylesheet(R.com.enosistudio.docktailor.sample.css.modena.mainCss.toExternalForm());
 
         GlobalSettings docktailorSettings = DocktailorService.getInstance()
                 .setConfigFile(Path.of(saveFolder, "docktailor.conf").toString())
