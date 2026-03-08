@@ -23,4 +23,14 @@ public interface IDockPane {
     String getInformation();
 
     FxDockPane createDockPane();
+
+    /**
+     * Executed when the tab is discard throught the tab or the window parent, for whatever reason.
+     */
+    void onClose();
+
+    /**
+     * Executed when the tab is dragged out from his window parent.
+     */
+    void onDragOutFromWindow();
 }

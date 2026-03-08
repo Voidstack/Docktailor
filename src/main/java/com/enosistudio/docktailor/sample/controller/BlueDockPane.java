@@ -5,7 +5,9 @@ import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Region;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j(topic = "BlueDockPane")
 public class BlueDockPane extends ADockPane {
     @Override
     public Side getDefaultSide() {
@@ -32,5 +34,17 @@ public class BlueDockPane extends ADockPane {
     @Override
     public String getInformation() {
         return "lorem ipsum";
+    }
+
+    @Override
+    public void onClose() {
+        super.onClose();
+        log.info("onClose");
+    }
+
+    @Override
+    public void onDragOutFromWindow() {
+        super.onDragOutFromWindow();
+        log.info("onDragOutFromWindow");
     }
 }

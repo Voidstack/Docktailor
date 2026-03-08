@@ -66,6 +66,9 @@ public class FxDockTabPane extends TabPane implements IFxDockPane {
             t.setGraphic(p.getCustomTab());
 
             t.setOnClosed(ev -> {
+                if (p.getDockController() != null) {
+                    p.getDockController().onClose();
+                }
                 Node pp = ParentTrackerUtils.getParent(this);
                 HierarchyCleanupUtils.collapseEmptySpace(pp);
             });

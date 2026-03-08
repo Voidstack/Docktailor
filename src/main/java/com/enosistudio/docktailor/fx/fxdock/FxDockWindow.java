@@ -11,7 +11,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base class for docking framework Stage.
@@ -38,6 +42,39 @@ public class FxDockWindow extends Stage {
         setScene(sc);
 
         initDockEvent();
+        initWindowClose();
+    }
+
+    private void initWindowClose() {
+        addEventHandler(WindowEvent.WINDOW_HIDING, ev -> {
+            for (FxDockPane p : collectFxDockPanes(root.getContent())) {
+                if (p.getDockController() != null) {
+                    p.getDockController().onClose();
+                }
+            }
+        });
+    }
+
+    private static List<FxDockPane> collectFxDockPanes(Node n) {
+        List<FxDockPane> result = new ArrayList<>();
+        collectFxDockPanesRec(n, result);
+        return result;
+    }
+
+    private static void collectFxDockPanesRec(Node n, List<FxDockPane> result) {
+        if (n instanceof FxDockPane p) {
+            result.add(p);
+        } else if (n instanceof FxDockTabPane tp) {
+            for (Node tab : tp.getPanes()) {
+                collectFxDockPanesRec(tab, result);
+            }
+        } else if (n instanceof FxDockSplitPane sp) {
+            for (Node pane : sp.getPanes()) {
+                collectFxDockPanesRec(pane, result);
+            }
+        } else if (n instanceof FxDockRootPane rp) {
+            collectFxDockPanesRec(rp.getContent(), result);
+        }
     }
 
     private void initDockEvent() {

@@ -16,7 +16,18 @@ public abstract class ADockPane implements IDockPane {
         fxDockPane.setTitle(this.getTabName());
         fxDockPane.setContent(this.loadView());
         fxDockPane.getTitleField().setGraphic(this.getTabIcon());
+        fxDockPane.setDockController(this);
 
         return fxDockPane;
+    }
+
+    @Override
+    public void onClose() {
+
+    }
+
+    @Override
+    public void onDragOutFromWindow() {
+
     }
 }

@@ -37,6 +37,8 @@ public class DragAndDropHandler {
     protected static double deltaX, deltaY;
     protected static Stage dragWindow;
     protected static ADockDropOperation dockDropOperation;
+    protected static FxDockPane dragClient;
+    protected static FxDockWindow dragClientOriginalWindow;
 
     /**
      *
@@ -52,7 +54,7 @@ public class DragAndDropHandler {
     public static void attach(Node n, FxDockPane client) {
         n.addEventHandler(MouseEvent.DRAG_DETECTED, ev -> onDragDetected(ev, client));
         n.addEventHandler(MouseEvent.MOUSE_DRAGGED, ev -> onMouseDragged(ev, client));
-        n.addEventHandler(MouseEvent.MOUSE_RELEASED, ev -> onMouseReleased());
+        n.addEventHandler(MouseEvent.MOUSE_RELEASED, ev -> onMouseReleased(ev));
     }
 
     /**
@@ -68,6 +70,9 @@ public class DragAndDropHandler {
             Point2D p = client.screenToLocal(x, y);
             deltaX = p.getX();
             deltaY = p.getY(); // gets modified in createDragWindow()
+
+            dragClient = client;
+            dragClientOriginalWindow = WindowLocatorUtils.getWindow(client);
 
             dragWindow = createDragWindow(client);
             dragWindow.addEventHandler(KeyEvent.KEY_PRESSED, ke -> cancelDrag());
@@ -88,6 +93,8 @@ public class DragAndDropHandler {
         // any key cancels the drag operation
         stopDrag();
         dockDropOperation = null;
+        dragClient = null;
+        dragClientOriginalWindow = null;
     }
 
     /**
@@ -131,14 +138,29 @@ public class DragAndDropHandler {
     /**
      *
      */
-    protected static void onMouseReleased() {
+    protected static void onMouseReleased(MouseEvent ev) {
         // remove drag window
         stopDrag();
 
+        // Determine the target window from the release coordinates BEFORE executing the operation,
+        // so the scene graph is still in its original state.
+        FxDockWindow dropTargetWindow = dragClientOriginalWindow;
         if (dockDropOperation != null) {
+            dropTargetWindow = WindowLocatorUtils.findWindow(ev.getScreenX(), ev.getScreenY());
             dockDropOperation.execute();
             dockDropOperation = null;
         }
+
+        if (dragClient != null && dragClientOriginalWindow != null) {
+            if (dropTargetWindow != dragClientOriginalWindow) {
+                IDockPane controller = dragClient.getDockController();
+                if (controller != null) {
+                    controller.onDragOutFromWindow();
+                }
+            }
+        }
+        dragClient = null;
+        dragClientOriginalWindow = null;
     }
 
     /**

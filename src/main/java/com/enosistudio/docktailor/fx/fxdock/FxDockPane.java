@@ -4,6 +4,7 @@ import com.enosistudio.docktailor.fx.FxAction;
 import com.enosistudio.docktailor.fx.fxdock.internal.DragAndDropHandler;
 import com.enosistudio.docktailor.fx.fxdock.internal.FxDockBorderPane;
 import com.enosistudio.docktailor.fx.fxdock.internal.FxDockTabPane;
+import com.enosistudio.docktailor.fx.fxdock.internal.IDockPane;
 import com.enosistudio.docktailor.utils.HierarchyCleanupUtils;
 import com.enosistudio.docktailor.utils.LayoutComposerUtils;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -16,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.HBox;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -33,6 +35,10 @@ public abstract class FxDockPane extends FxDockBorderPane {
 
     @Getter
     protected String type;
+
+    @Getter
+    @Setter
+    private IDockPane dockController;
 
     protected FxDockPane(String type) {
         this.type = type;
@@ -126,6 +132,9 @@ public abstract class FxDockPane extends FxDockBorderPane {
     }
 
     public void actionClose() {
+        if (dockController != null) {
+            dockController.onClose();
+        }
         HierarchyCleanupUtils.remove(this);
     }
 

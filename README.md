@@ -47,8 +47,7 @@ Inspired by the docking systems used in professional IDEs, Docktailor provides a
 ## 📝 Roadmap
 
 * Complete API documentation
-* Smooth transition
-* Save separator position on SplitPane
+* Add event onClose()
 
 ---
 
