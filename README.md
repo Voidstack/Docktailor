@@ -47,7 +47,6 @@ Inspired by the docking systems used in professional IDEs, Docktailor provides a
 ## 📝 Roadmap
 
 * Complete API documentation
-* Add event onClose()
 
 ---
 
