@@ -3,7 +3,6 @@ package com.enosistudio.docktailor.utils;
 import com.enosistudio.docktailor.fx.fxdock.internal.DeletedPane;
 import com.enosistudio.docktailor.fx.fxdock.internal.FxDockSplitPane;
 import com.enosistudio.docktailor.fx.fxdock.internal.IFxDockPane;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.scene.Node;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +23,8 @@ public class ParentTrackerUtils {
      * @param child the child node to set the parent for
      */
     public static void setParent(Node p, Node child) {
-        ReadOnlyObjectWrapper<Node> prop = getParentProperty(child);
-        if (prop != null) {
-            Node oldp = prop.get();
+        if (child instanceof IFxDockPane pane) {
+            Node oldp = pane.dockParentProperty().get();
             if (oldp != null) {
                 if (oldp == p) {
                     log.warn(String.format("same parent: %s", p)); // FIX ???
@@ -37,7 +35,9 @@ public class ParentTrackerUtils {
                     }
                 }
             }
-            prop.set(p);
+            pane.setDockParent(p);
+        } else if (!(child instanceof DeletedPane)) {
+            throw new IllegalArgumentException("?" + child);
         }
     }
 
@@ -49,7 +49,7 @@ public class ParentTrackerUtils {
      */
     public static Node getParent(Node n) {
         if (n instanceof IFxDockPane p) {
-            return p.getDockParent().get();
+            return p.dockParentProperty().get();
         }
         return null;
     }
@@ -69,21 +69,5 @@ public class ParentTrackerUtils {
             }
             parent = getParent(parent);
         }
-    }
-
-    /**
-     * Retrieves the parent property of a given node.
-     *
-     * @param n the node to retrieve the parent property for
-     * @return the parent property of the node, or null if the node has no parent property
-     * @throws IllegalArgumentException if the node type is not recognized
-     */
-    private static ReadOnlyObjectWrapper<Node> getParentProperty(Node n) {
-        if (n instanceof IFxDockPane p) {
-            return p.getDockParent();
-        } else if (n instanceof DeletedPane) {
-            return null;
-        }
-        throw new IllegalArgumentException("?" + n);
     }
 }

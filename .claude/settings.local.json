@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -n \"class.*DockPane\" /c/Users/bapti/IdeaProjects/Docktailor/src/main/java/com/enosistudio/docktailor/sample/controller/*.java)",
+      "Bash(cd \"C:/Users/bapti/IdeaProjects/Docktailor\" && mvn clean compile -q 2>&1 | tail -40)",
+      "Bash(cd \"C:/Users/bapti/IdeaProjects/Docktailor\" && ./mvnw clean compile -q 2>&1 | tail -40)",
+      "Bash(cd \"C:/Users/bapti/IdeaProjects/Docktailor\" && ./mvnw clean compile -q 2>&1 | tail -20)"
+    ]
+  }
+}

@@ -1,5 +1,6 @@
 package com.enosistudio.docktailor.fx.fxdock.internal;
 
+import com.enosistudio.docktailor.fx.fxdock.IDockPane;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

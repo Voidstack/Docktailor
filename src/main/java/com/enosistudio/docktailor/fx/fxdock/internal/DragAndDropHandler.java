@@ -3,6 +3,7 @@ package com.enosistudio.docktailor.fx.fxdock.internal;
 import com.enosistudio.docktailor.fx.FX;
 import com.enosistudio.docktailor.fx.fxdock.FxDockPane;
 import com.enosistudio.docktailor.fx.fxdock.FxDockWindow;
+import com.enosistudio.docktailor.fx.fxdock.IDockPane;
 import com.enosistudio.docktailor.utils.*;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;

@@ -4,7 +4,6 @@ import com.enosistudio.docktailor.fx.FxAction;
 import com.enosistudio.docktailor.fx.fxdock.internal.DragAndDropHandler;
 import com.enosistudio.docktailor.fx.fxdock.internal.FxDockBorderPane;
 import com.enosistudio.docktailor.fx.fxdock.internal.FxDockTabPane;
-import com.enosistudio.docktailor.fx.fxdock.internal.IDockPane;
 import com.enosistudio.docktailor.utils.HierarchyCleanupUtils;
 import com.enosistudio.docktailor.utils.LayoutComposerUtils;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -47,7 +46,7 @@ public abstract class FxDockPane extends FxDockBorderPane {
 
         DragAndDropHandler.attach(titleField, this);
 
-        dockParent.addListener((s, old, cur) -> setTabMode(cur instanceof FxDockTabPane));
+        dockParentProperty().addListener((s, old, cur) -> setTabMode(cur instanceof FxDockTabPane));
 
         this.setFocusTraversable(true); // permet au pane de recevoir le focus
         this.focusedProperty().addListener((obs, oldVal, newVal) -> {

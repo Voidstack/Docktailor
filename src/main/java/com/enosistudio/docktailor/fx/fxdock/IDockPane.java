@@ -1,6 +1,5 @@
-package com.enosistudio.docktailor.fx.fxdock.internal;
+package com.enosistudio.docktailor.fx.fxdock;
 
-import com.enosistudio.docktailor.fx.fxdock.FxDockPane;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 

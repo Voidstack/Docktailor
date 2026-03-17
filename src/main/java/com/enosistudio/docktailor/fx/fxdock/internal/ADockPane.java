@@ -1,5 +1,6 @@
 package com.enosistudio.docktailor.fx.fxdock.internal;
 
+import com.enosistudio.docktailor.fx.fxdock.IDockPane;
 import com.enosistudio.docktailor.fx.fxdock.FxDockPane;
 import lombok.extern.slf4j.Slf4j;
 
