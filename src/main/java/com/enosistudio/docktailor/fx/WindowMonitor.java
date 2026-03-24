@@ -22,7 +22,7 @@ import java.util.*;
 /**
  * Window Monitor. Remembers the location/size and attributes of windows. Keeps track of Z order of open windows.
  */
-@Slf4j(topic = "WindowMonitor")
+@Slf4j
 @SuppressWarnings("unused")
 public class WindowMonitor {
     private static final String SEPARATOR = "_";

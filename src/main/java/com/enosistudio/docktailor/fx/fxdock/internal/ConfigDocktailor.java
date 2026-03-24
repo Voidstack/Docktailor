@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-@Slf4j(topic = "ConfigDocktailor" )
+@Slf4j
 public class ConfigDocktailor {
     @Getter
     private DataConfigDocktailor dataConfigDocktailor = new DataConfigDocktailor();

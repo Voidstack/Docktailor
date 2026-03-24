@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Convenience methods that attempt to extract requested value, returning null if the said value can not be extracted.
  */
-@Slf4j(topic = "Parsers")
+@Slf4j
 @UtilityClass
 public class ParserUtils {
 

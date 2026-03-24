@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
  * FxDock framework schema for the layout storage. Provides methods for saving, loading, and managing the layout of
  * dockable panes and windows.
  */
-@Slf4j(topic = "FxDockSchema")
+@Slf4j
 public abstract class FxDockSchema extends FxSettingsSchema {
     private static final String NAME_PANE = ".P";
     private static final String NAME_TAB = ".T";

@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.Region;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j(topic = "BlueDockPane")
+@Slf4j
 public class BlueDockPane extends ADockPane {
     @Override
     public Side getDefaultSide() {

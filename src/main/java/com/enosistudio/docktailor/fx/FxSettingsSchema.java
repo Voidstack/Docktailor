@@ -28,7 +28,7 @@ import java.util.List;
  * Stores and restores the UI state.
  */
 // TODO consider making it generic <ActualWindow>
-@Slf4j(topic = "FxSettingsSchema")
+@Slf4j
 public abstract class FxSettingsSchema {
     protected static final String FX_PREFIX = "FX.";
     private static final String SFX_WINDOWS = "WINDOWS";

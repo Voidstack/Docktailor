@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * File-based Settings Provider.
  */
-@Setter @Slf4j(topic = "FileSettingsProvider")
+@Setter @Slf4j
 public class FileASettingsProvider extends ASettingsProviderBase {
     @lombok.Getter
     private File file;

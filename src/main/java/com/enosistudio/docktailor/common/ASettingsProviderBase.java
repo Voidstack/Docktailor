@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * In-memory map-based Settings Provider.
  */
-@Slf4j(topic = "SettingsProviderBase")
+@Slf4j
 public abstract class ASettingsProviderBase {
     // stores String or String[]
     protected HashMap<String, Object> data = new HashMap<>();

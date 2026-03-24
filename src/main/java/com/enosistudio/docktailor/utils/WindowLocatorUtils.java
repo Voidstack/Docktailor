@@ -23,7 +23,7 @@ import java.util.Objects;
  * Utility class for locating windows and dock elements in the docking system.
  * Provides spatial discovery of UI components based on screen coordinates.
  */
-@Slf4j(topic = "WindowLocator")
+@Slf4j
 @UtilityClass
 public class WindowLocatorUtils {
     /**

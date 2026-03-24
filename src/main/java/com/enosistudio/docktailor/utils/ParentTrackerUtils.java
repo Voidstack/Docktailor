@@ -14,7 +14,7 @@ import java.util.function.Consumer;
  * Manages parent-child relationships in the docking system.
  * Provides exclusive responsibility for tracking and maintaining node hierarchy.
  */
-@Slf4j(topic = "ParentTracker")
+@Slf4j
 @UtilityClass
 public class ParentTrackerUtils {
     /**

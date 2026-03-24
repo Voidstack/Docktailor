@@ -6,7 +6,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-@Slf4j(topic = "CKit")
+@Slf4j
 public final class CKit {
     public static final char BOM = '\ufeff';
     public static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;

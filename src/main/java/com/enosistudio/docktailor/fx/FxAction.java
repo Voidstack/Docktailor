@@ -14,7 +14,7 @@ import java.util.function.Consumer;
  * An AbstractAction equivalent for FX, using method references. Usage: public final FxAction backAction = new
  * FxAction(this::actionBack);
  */
-@Slf4j(topic = "FxAction")
+@Slf4j
 public class FxAction implements EventHandler<ActionEvent> {
     public static final FxAction DISABLED = new FxAction(null, false);
     private final SimpleBooleanProperty selectedProperty = new SimpleBooleanProperty();
