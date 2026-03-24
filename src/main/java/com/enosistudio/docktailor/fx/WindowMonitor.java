@@ -1,7 +1,10 @@
 package com.enosistudio.docktailor.fx;
 
 import com.enosistudio.docktailor.DocktailorService;
+import com.enosistudio.docktailor.common.DocktailorEvent;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
@@ -15,6 +18,9 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.*;
 
@@ -32,7 +38,9 @@ public class WindowMonitor {
     /**
      * in reverse order: top window is last
      */
-    private static final List<Window> stack = new ArrayList<>();
+    private static final ObservableList<Window> stack = FXCollections.observableArrayList();
+    private static final ObservableList<Window> unmodifiableStack = FXCollections.unmodifiableObservableList(stack);
+    private static final DocktailorEvent<Void> onAllWindowsClosed = new DocktailorEvent<>();
     private static final ReadOnlyObjectWrapper<Node> lastFocusOwner = new ReadOnlyObjectWrapper<>();
     private static boolean exiting;
     private static EShutdownChoice shutdownChoice;
@@ -45,18 +53,20 @@ public class WindowMonitor {
     private final Window window;
     @Getter
     private final String id;
-    @Getter
-    private double x, y, width, height;
+    private final ReadOnlyDoubleWrapper x = new ReadOnlyDoubleWrapper();
+    private final ReadOnlyDoubleWrapper y = new ReadOnlyDoubleWrapper();
+    private final ReadOnlyDoubleWrapper width = new ReadOnlyDoubleWrapper();
+    private final ReadOnlyDoubleWrapper height = new ReadOnlyDoubleWrapper();
     private double xNorm, yNorm, widthNorm, heightNorm;
 
     public WindowMonitor(Window w, String id) {
         this.window = w;
         this.id = id;
 
-        x = w.getX();
-        y = w.getY();
-        width = w.getWidth();
-        height = w.getHeight();
+        x.set(w.getX());
+        y.set(w.getY());
+        width.set(w.getWidth());
+        height.set(w.getHeight());
 
         ChangeListener<Node> focusListener = (s, p, c) -> updateFocusOwner(c);
 
@@ -81,50 +91,62 @@ public class WindowMonitor {
         });
 
         w.xProperty().addListener(p -> {
-            xNorm = x;
-            x = w.getX();
+            xNorm = x.get();
+            x.set(w.getX());
         });
 
         w.yProperty().addListener(p -> {
-            yNorm = y;
-            y = w.getY();
+            yNorm = y.get();
+            y.set(w.getY());
         });
 
         w.widthProperty().addListener(p -> {
-            widthNorm = width;
-            width = w.getWidth();
+            widthNorm = width.get();
+            width.set(w.getWidth());
         });
 
         w.heightProperty().addListener(p -> {
-            heightNorm = height;
-            height = w.getHeight();
+            heightNorm = height.get();
+            height.set(w.getHeight());
         });
 
         if (w instanceof Stage s) {
             s.iconifiedProperty().addListener(p -> {
                 if (s.isIconified()) {
-                    x = xNorm;
-                    y = yNorm;
+                    x.set(xNorm);
+                    y.set(yNorm);
                 }
             });
 
             s.maximizedProperty().addListener(p -> {
                 if (s.isMaximized()) {
-                    x = xNorm;
-                    y = yNorm;
+                    x.set(xNorm);
+                    y.set(yNorm);
                 }
             });
 
             s.fullScreenProperty().addListener(p -> {
                 if (s.isFullScreen()) {
-                    x = xNorm;
-                    y = yNorm;
-                    width = widthNorm;
-                    height = heightNorm;
+                    x.set(xNorm);
+                    y.set(yNorm);
+                    width.set(widthNorm);
+                    height.set(heightNorm);
                 }
             });
         }
     }
+
+    public double getX() { return x.get(); }
+    public ReadOnlyDoubleProperty xProperty() { return x.getReadOnlyProperty(); }
+
+    public double getY() { return y.get(); }
+    public ReadOnlyDoubleProperty yProperty() { return y.getReadOnlyProperty(); }
+
+    public double getWidth() { return width.get(); }
+    public ReadOnlyDoubleProperty widthProperty() { return width.getReadOnlyProperty(); }
+
+    public double getHeight() { return height.get(); }
+    public ReadOnlyDoubleProperty heightProperty() { return height.getReadOnlyProperty(); }
 
     private static void init() {
         FX.addChangeListener(Window.getWindows(), ch -> {
@@ -149,6 +171,9 @@ public class WindowMonitor {
                             stack.remove(w);
                             save = true;
                         }
+                    }
+                    if (stack.isEmpty()) {
+                        onAllWindowsClosed.invoke(null);
                     }
                 }
 
@@ -266,10 +291,25 @@ public class WindowMonitor {
     }
 
     /**
-     * returns the list of windows in the reverse order - the top window is last.
+     * Returns a snapshot of the window stack in reverse Z-order (top window is last).
      */
     public static List<Window> getWindowStack() {
         return new ArrayList<>(stack);
+    }
+
+    /**
+     * Returns an unmodifiable observable list of windows in reverse Z-order (top window is last).
+     * Listeners attached to this list will be notified when windows are added or removed.
+     */
+    public static ObservableList<Window> getObservableWindowStack() {
+        return unmodifiableStack;
+    }
+
+    /**
+     * Returns the event fired when all Docktailor windows have been closed.
+     */
+    public static DocktailorEvent<Void> getOnAllWindowsClosed() {
+        return onAllWindowsClosed;
     }
 
     @SuppressWarnings("unchecked")

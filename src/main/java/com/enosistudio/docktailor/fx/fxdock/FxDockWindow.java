@@ -27,7 +27,7 @@ public class FxDockWindow extends Stage {
     private final FxDockRootPane root;
 
     @Getter
-    private final DocktailorEvent onDocktailorEvent = new DocktailorEvent();
+    private final DocktailorEvent<WindowChangeType> onDocktailorEvent = new DocktailorEvent<>();
 
     public FxDockWindow(String name) {
         FX.setName(this, name);
@@ -78,10 +78,10 @@ public class FxDockWindow extends Stage {
     }
 
     private void initDockEvent() {
-        this.widthProperty().addListener((obs, oldVal, newVal) -> onDocktailorEvent.invoke());
-        this.heightProperty().addListener((obs, oldVal, newVal) -> onDocktailorEvent.invoke());
-        this.xProperty().addListener((obs, oldVal, newVal) -> onDocktailorEvent.invoke());
-        this.yProperty().addListener((obs, oldVal, newVal) -> onDocktailorEvent.invoke());
+        this.widthProperty().addListener((obs, oldVal, newVal) -> onDocktailorEvent.invoke(WindowChangeType.WIDTH));
+        this.heightProperty().addListener((obs, oldVal, newVal) -> onDocktailorEvent.invoke(WindowChangeType.HEIGHT));
+        this.xProperty().addListener((obs, oldVal, newVal) -> onDocktailorEvent.invoke(WindowChangeType.X));
+        this.yProperty().addListener((obs, oldVal, newVal) -> onDocktailorEvent.invoke(WindowChangeType.Y));
     }
 
     public void addDockPane(FxDockPane newDockPane) {

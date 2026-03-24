@@ -3,12 +3,12 @@ package com.enosistudio.docktailor.fx.fxdock.internal;
 import com.enosistudio.docktailor.fx.fxdock.FxDockPane;
 import com.enosistudio.docktailor.utils.HierarchyCleanupUtils;
 import com.enosistudio.docktailor.utils.ParentTrackerUtils;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -19,8 +19,17 @@ import java.util.List;
  */
 @Slf4j
 public class FxDockTabPane extends TabPane implements IFxDockPane {
-    @Getter
     protected final ReadOnlyObjectWrapper<Node> dockParent = new ReadOnlyObjectWrapper<>();
+
+    @Override
+    public ReadOnlyObjectProperty<Node> dockParentProperty() {
+        return dockParent.getReadOnlyProperty();
+    }
+
+    @Override
+    public void setDockParent(Node parent) {
+        dockParent.set(parent);
+    }
 
     public FxDockTabPane() {
         this.setTabClosingPolicy(TabClosingPolicy.ALL_TABS);

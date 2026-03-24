@@ -6,6 +6,7 @@ import com.enosistudio.docktailor.utils.ParentTrackerUtils;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
@@ -25,8 +26,17 @@ public class FxDockSplitPane extends SplitPane implements IFxDockPane {
     private static final double COMPRESSED_END_POSITION = 0.9;
     private static final double MIDDLE_OFFSET = 0.05;
 
-    @Getter
     protected final ReadOnlyObjectWrapper<Node> dockParent = new ReadOnlyObjectWrapper<>();
+
+    @Override
+    public ReadOnlyObjectProperty<Node> dockParentProperty() {
+        return dockParent.getReadOnlyProperty();
+    }
+
+    @Override
+    public void setDockParent(Node parent) {
+        dockParent.set(parent);
+    }
 
     public FxDockSplitPane() {
         initializeEventHandlers();
